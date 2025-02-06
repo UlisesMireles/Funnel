@@ -1,0 +1,67 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.loginComponent {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+#menuDiv {
+    top: 0;
+    background: #103D66;
+    width: 100%;
+    line-height: 50px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.header-login {
+    border-bottom: 10px solid #7F7F7F;
+}
+
+.container-all {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.imagenFondo {
+    background-repeat: no-repeat;
+    background-image: url('../../../assets/img/PMA\ GRISES.png');
+    background-size: cover;
+    flex: 1 0 auto;
+}
+
+
+
+/* @media screen and (max-width: 1920px) {
+    .log {
+        padding: 11% 0% !important;
+        padding-top: 5%;
+    }
+
+    .logincard {
+        height: 88vh;
+    }
+
+}
+
+@media screen and (max-width: 1366px) {
+    .log {
+        padding: 3% 0% !important;
+        padding-top: 5%;
+    }
+
+    .logincard {
+        height: 80.8vh;
+    }
+} */

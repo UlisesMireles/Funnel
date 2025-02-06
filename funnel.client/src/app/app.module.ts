@@ -8,16 +8,23 @@ import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
+import { LoginComponent } from './components/login/login.component';
+
+export function getBaseUrl() {
+  return 'https://localhost:47440/'
+}
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
     AppRoutingModule
   ],
   providers: [
+    { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
     provideAnimationsAsync(),
         providePrimeNG({
             theme: {
