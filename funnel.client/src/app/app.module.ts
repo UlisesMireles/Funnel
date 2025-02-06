@@ -19,11 +19,11 @@ import Aura from '@primeng/themes/aura';
   ],
   providers: [
     provideAnimationsAsync(),
-    providePrimeNG({
-      theme: {
-        preset: Aura
-    }
-    })
+        providePrimeNG({
+            theme: {
+                preset: Aura
+            }
+        })
   ],
   bootstrap: [AppComponent]
 })
