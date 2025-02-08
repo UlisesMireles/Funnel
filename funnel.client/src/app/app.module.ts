@@ -9,21 +9,46 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { TagModule } from 'primeng/tag';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { ButtonModule } from 'primeng/button';
+import { InputIcon } from 'primeng/inputicon';
+import { IconField } from 'primeng/iconfield';
+import { Tag } from 'primeng/tag';
+
+import { EmpresasComponent } from './components/empresas/empresas.component';
+
+import { EmpresasService } from './services/empresas.service';
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EmpresasComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    TableModule,
+    InputTextModule,
+    TagModule,
+    MultiSelectModule,
+    SelectButtonModule,
+    ButtonModule,
+    InputIcon,
+    IconField,
+    Tag
   ],
   providers: [
     provideAnimationsAsync(),
-        providePrimeNG({
-            theme: {
-                preset: Aura
-            }
-        })
+    providePrimeNG({
+    theme: {
+    preset: Aura
+      }
+    }),
+    EmpresasService
   ],
   bootstrap: [AppComponent]
 })
