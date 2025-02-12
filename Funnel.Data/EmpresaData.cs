@@ -56,12 +56,12 @@ namespace Funnel.Data
                 {
                     case "UPD-EMPRESA":
                         result.ErrorMessage = "La empresa se actualizó correctamente.";
-                        result.Id = 0;
+                        result.Id = 1;
                         result.Result = true;
                         break;
                     case "INS-EMPRESA":
                         result.ErrorMessage = "La empresa se insertó correctamente.";
-                        result.Id = 0;
+                        result.Id = 1;
                         result.Result = true;
                         break;
                 }
@@ -73,12 +73,12 @@ namespace Funnel.Data
                 {
                     case "UPD-EMPRESA":
                         result.ErrorMessage = "Error al actualizar empresa: " + ex.Message;
-                        result.Id = -1;
+                        result.Id = 0;
                         result.Result = false;
                         break;
                     case "INS-EMPRESA":
                         result.ErrorMessage = "Error al insertar empresa: " + ex.Message;
-                        result.Id = -1;
+                        result.Id = 0;
                         result.Result = false;
                         break;
                 }

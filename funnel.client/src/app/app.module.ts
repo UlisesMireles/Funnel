@@ -24,7 +24,8 @@ import { DialogModule } from 'primeng/dialog';
 import { SelectModule } from 'primeng/select';
 import { DatePickerModule } from 'primeng/datepicker';
 import { CheckboxModule } from 'primeng/checkbox';
-
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 import { EmpresasComponent } from './components/empresas/empresas.component';
 
@@ -54,7 +55,8 @@ import { ModalEmpresasComponent } from './components/empresas/modal-empresas/mod
     DialogModule,
     SelectModule,
     DatePickerModule,
-    CheckboxModule
+    CheckboxModule,
+    ToastModule
   ],
   providers: [
     provideAnimationsAsync(),
@@ -63,7 +65,8 @@ import { ModalEmpresasComponent } from './components/empresas/modal-empresas/mod
     preset: Aura
       }
     }),
-    EmpresasService
+    EmpresasService,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

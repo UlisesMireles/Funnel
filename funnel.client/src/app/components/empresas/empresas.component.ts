@@ -1,10 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+
+/*PrimeNG*/
+import { LazyLoadEvent } from 'primeng/api';
+import { Table } from 'primeng/table';
+import { MessageService } from 'primeng/api';
+
+/*Services*/
 import { EmpresasService } from '../../services/empresas.service';
+
+/*Interfaces*/
 import { Empresa } from '../../interfaces/sel_Empresa';
 import { Licencia } from '../../interfaces/Licencia';
+import { baseOut } from '../../interfaces/utils/baseOut'
 
-import { LazyLoadEvent } from 'primeng/api';
-import { Table } from 'primeng/table'; 
+
 
 @Component({
   selector: 'app-empresas',
@@ -18,7 +27,7 @@ export class EmpresasComponent implements OnInit {
   empresas: Empresa[] = []
   licencias: Licencia[] = [];
   empresaSeleccionada!: Empresa;
-  insertar: boolean =false;
+
 
   licenciasDropdown: { label: string; value: number }[] = [];
   EstatusDropdown = [
@@ -26,31 +35,21 @@ export class EmpresasComponent implements OnInit {
     { label: 'Activo', value: true },
     { label: 'Inactivo', value: false }
   ];
-  selectedEstatus: any=null;
 
+  selectedEstatus: any=null;
   loading: boolean = true;
   modalVisible: boolean = false;
-
+  insertar: boolean = false;
   first: number = 0;
-  rows :number = 10;
-
+  rows: number = 10;
   searchValue: string = '';
 
-  constructor(private empresasService: EmpresasService) { }
+  constructor(private empresasService: EmpresasService, private messageService: MessageService) { }
   ngOnInit() {
     this.getEmpresas();
 
   }
 
-  FiltrarPorEstatus() {
-    if (this.selectedEstatus == null) {
-      // Si no se seleccionó un filtro de estatus, limpia el filtro 'activo'
-      this.dt.filter('', 'activo', 'equals'); // Limpia el filtro específico de la columna 'activo'
-      this.dt.filterGlobal('', 'contains'); // Limpia el filtro global de texto (si lo tienes)
-    } else {
-      this.dt.filter(this.selectedEstatus, 'activo', 'equals'); // Filtra según el valor de estatus
-    }
-  }
 
   getEmpresas() {
     this.empresasService.getEmpresas().subscribe({
@@ -65,6 +64,14 @@ export class EmpresasComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+  FiltrarPorEstatus() {
+    if (this.selectedEstatus == null) {
+      this.dt.filter('', 'activo', 'equals');
+      this.dt.filterGlobal('', 'contains');
+    } else {
+      this.dt.filter(this.selectedEstatus, 'activo', 'equals');
+    }
   }
 
   applyFilter(value: any, field: string) {
@@ -133,5 +140,13 @@ export class EmpresasComponent implements OnInit {
   onModalClose() {
     this.modalVisible = false;
    
+  }
+  manejarResultado(result: baseOut) {
+    if (result.result) {
+      this.messageService.add({ severity: 'success', summary: 'La operación se realizó con éxito.', detail: result.errorMessage });
+      this.getEmpresas();
+    } else {
+      this.messageService.add({ severity: 'error', summary: 'Se ha producido un error.', detail: result.errorMessage });
+    }
   }
 }
