@@ -1,1 +1,46 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+    height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Raleway', sans-serif !important;
+}
+
+.content-wrapper {
+    margin: 0 auto;
+    max-width: 960px;
+}
+
+header .content-wrapper {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+
+footer {
+    background: #103D70;
+    color: #ffffff;
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    border-top: 2px solid #ffffff;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 35px;
+    /* Footer height */
+}
+
+@media only screen and (max-width: 767px) {
+    #footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        height: 48px;
+    }
+}
