@@ -2,23 +2,23 @@
 {
     public class INS_UPD_Empresa
     {
-        public string Bandera { get; set; }
-        public int IdEmpresa { get; set; }
-        public string NombreEmpresa { get; set; }
-        public int IdAdministrador { get; set; }
-        public int IdLicencia { get; set; }
-        public string Alias { get; set; }
-        public string RFC { get; set; }
-        public DateTime VInicio { get; set; }
-        public DateTime VTerminacion { get; set; }
-        public int UsuarioCreador { get; set; }
-        public string Nombre { get; set; }
-        public string ApellidoPaterno { get; set; }
-        public string ApellidoMaterno { get; set; }
-        public string Iniciales { get; set; }
-        public string Correo { get; set; }
-        public string Usuario { get; set; }
-        public string UrlSitio { get; set; }
-        public int Activo { get; set; }
+        public string bandera { get; set; }
+        public int idEmpresa { get; set; }
+        public string nombreEmpresa { get; set; }
+        public int idAdministrador { get; set; }
+        public int idLicencia { get; set; }
+        public string alias { get; set; }
+        public string rfc { get; set; }
+        public DateTime vInicio { get; set; }
+        public DateTime vTerminacion { get; set; }
+        public int usuarioCreador { get; set; }
+        public string nombre { get; set; }
+        public string apellidoPaterno { get; set; }
+        public string apellidoMaterno { get; set; }
+        public string iniciales { get; set; }
+        public string correo { get; set; }
+        public string usuario { get; set; }
+        public string urlSitio { get; set; }
+        public int activo { get; set; }
     }
 }

@@ -1,129 +1,154 @@
-<div class="mb-4">
-  <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" [disabled]="isFirstPage()" text />
-  <p-button type="button" icon="pi pi-refresh" (click)="reset()" text />
-  <p-button type="button" icon="pi pi-chevron-right" (click)="next()" [disabled]="isLastPage()" text />
+<div class="container">
+
+  <div class="row contenedorTabla">
+    <!-- Mostrar un indicador de carga si la variable loading es true -->
+    <div *ngIf="loading">Cargando...</div>
+
+    <p-table *ngIf="!loading && empresas.length > 0"
+             #dt
+             [stripedRows]="true"
+             [value]="empresas"
+             [paginator]="true"
+             [rows]="10"
+             [rowsPerPageOptions]="[10, 20, 50]"
+             (onPage)="pageChange($event)"
+             [showCurrentPageReport]="true"
+             [first]="first"
+             currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
+             [globalFilterFields]="['nombreEmpresa', 'alias', 'administrador', 'nombreLicencia']"
+              >
+
+      <ng-template class="divAccionesTabla" #caption>
+        <div class="row">
+          <div class="col inDivDatatableHeader" style="text-align:left;">
+            <div>            <p-iconfield iconPosition="left" class="ml-auto">
+              <p-inputicon>
+                <i class="pi pi-search"></i>
+              </p-inputicon>
+              <input pInputText
+                     type="text"
+                     (input)="onInput($event)"
+                     placeholder="Buscar" />
+            </p-iconfield></div>
+
+          </div>
+          <div class="col inDivDatatableHeader">
+            <div class="mb-4">
+              <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" class="Iconos" [disabled]="isFirstPage()" text />
+              <p-button type="button" icon="pi pi-refresh" class="Iconos" (click)="reset()" text />
+              <p-button type="button" icon="pi pi-chevron-right"  class="Iconos" (click)="next()" [disabled]="isLastPage()" text />
+            </div>
+          </div>
+          <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
+            <p-button label="" icon="pi pi-plus" severity="secondary" (click)="inserta()" />
+          </div>
+        </div>
+      </ng-template>
+
+
+
+      <ng-template #header>
+        <tr class="custom-header">
+          <th></th>
+          <th pSortableColumn="nombreEmpresa">Empresa <p-sortIcon field="nombreEmpresa" /></th>
+          <th pSortableColumn="alias">Alias <p-sortIcon field="alias" /></th>
+          <th pSortableColumn="urlSitio">Url Sitio <p-sortIcon field="urlSitio" /></th>
+          <th pSortableColumn="administrador">Administrador <p-sortIcon field="administrador" /></th>
+          <th pSortableColumn="usuarioAdministrador">User Admin <p-sortIcon field="usuarioAdministrador" /></th>
+          <th pSortableColumn="vInicio">Inicio <p-sortIcon field="vInicio" /></th>
+          <th pSortableColumn="vTerminacion">Terminación <p-sortIcon field="vTerminacion" /></th>
+          <th pSortableColumn="nombreLicencia">Licencia <p-sortIcon field="nombreLicencia" /></th>
+          <th pSortableColumn="cantidadUsuarios">User L <p-sortIcon field="cantidadUsuarios" /></th>
+          <th pSortableColumn="userReal">User A <p-sortIcon field="userReal" /></th>
+          <th pSortableColumn="cantidadOportunidades">Oport L <p-sortIcon field="cantidadOportunidades" /></th>
+          <th pSortableColumn="oportAct">Oport A <p-sortIcon field="oportAct" /></th>
+          <th pSortableColumn="oportEmp">Oport R <p-sortIcon field="oportEmp" /></th>
+          <th pSortableColumn="activo">Estatus <p-sortIcon field="activo" /></th>
+        </tr>
+        <tr class="custom-header2">
+          <th></th>
+          <th>
+            <p-columnFilter type="text"
+                            field="nombreEmpresa"
+                            placeholder="Buscar Por Empresa"
+                            ariaLabel="Empresa"
+                            class="hide-filter-icon"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text"
+                            field="alias"
+                            placeholder="Buscar Por Alias"
+                            ariaLabel="Alias"
+                            class="hide-filter-icon"></p-columnFilter>
+          </th>
+          <th>
+            <p-columnFilter type="text"
+                            field="urlSitio"
+                            placeholder="Buscar Por URL"
+                            ariaLabel="URL"
+                            class="hide-filter-icon"></p-columnFilter>
+          </th>
+          <th>
+          </th>
+          <th>
+          </th>
+          <th>
+          </th>
+          <th>
+          </th>
+          <th>
+            <p-columnFilter type="text"
+                            field="nombreLicencia"
+                            placeholder="Buscar Por Licencia"
+                            ariaLabel="Licencia"
+                            class="hide-filter-icon"></p-columnFilter>
+          </th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+
+          <th>
+            <p-select [options]="EstatusDropdown"
+                        [(ngModel)]="selectedEstatus"
+                        
+                        (onChange)="FiltrarPorEstatus()"
+                        placeholder="Seleccionar Estatus"
+                        optionLabel="label"
+                        optionValue="value">
+            </p-select>
+          </th>
+        </tr>
+
+      </ng-template>
+      <ng-template #body let-empresa>
+        <tr class="custom-header3 custom-row">
+          <td>
+            <p-button type="button" icon="pi pi-pencil" (click)="actualiza(empresa)" text />
+          </td>
+          <td>{{ empresa.nombreEmpresa }}</td>
+          <td>{{ empresa.alias }}</td>
+          <td>{{ empresa.urlSitio}}</td>
+          <td>{{ empresa.administrador }}</td>
+          <td>{{ empresa.usuarioAdministrador }}</td>
+          <td>{{ empresa.vInicio | date: 'shortDate' }}</td>
+          <td>{{ empresa.vTerminacion | date: 'shortDate' }}</td>
+          <td>{{ empresa.nombreLicencia }}</td>
+          <td>{{ empresa.cantidadUsuarios }}</td>
+          <td>{{ empresa.userReal }}</td>
+          <td>{{ empresa.cantidadOportunidades }}</td>
+          <td>{{ empresa.oportAct}}</td>
+          <td>{{ empresa.oportEmp}}</td>
+          <td>{{ empresa.activo === 1 ? 'Activo' : 'Inactivo' }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
 </div>
-<div class="card">
-  <!-- Mostrar un indicador de carga si la variable loading es true -->
-  <div *ngIf="loading">Cargando...</div>
-
-  <p-table *ngIf="!loading && empresas.length > 0"
-           #dt
-           stripedRows
-           [value]="empresas"
-           [paginator]="true"
-           [rows]="10"
-           [tableStyle]="{ 'min-width': '50rem' }"
-           [rowsPerPageOptions]="[10, 20, 50]"
-           (onPage)="pageChange($event)"
-           [showCurrentPageReport]="true"
-           [first]="first"
-           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
-           [globalFilterFields]="['nombreEmpresa', 'alias', 'administrador', 'nombreLicencia']">
-
-    <ng-template #caption>
-      <div class="flex">
-        <p-iconfield iconPosition="left" class="ml-auto">
-          <p-inputicon>
-            <i class="pi pi-search"></i>
-          </p-inputicon>
-          <input pInputText
-                 type="text"
-                 (input)="onInput($event)"
-                 placeholder="Search keyword" />
-        </p-iconfield>
-      </div>
-    </ng-template>
-
-
-
-    <ng-template #header>
-      <tr>
-        <th pSortableColumn="nombreEmpresa">Empresa <p-sortIcon field="nombreEmpresa" /></th>
-        <th pSortableColumn="alias">Alias <p-sortIcon field="alias" /></th>
-        <th pSortableColumn="urlSitio">Url Sitio <p-sortIcon field="urlSitio" /></th>
-        <th pSortableColumn="administrador">Administrador <p-sortIcon field="administrador" /></th>
-        <th pSortableColumn="usuarioAdministrador">User Admin <p-sortIcon field="usuarioAdministrador" /></th>
-        <th pSortableColumn="vInicio">Inicio <p-sortIcon field="vInicio" /></th>
-        <th pSortableColumn="vTerminacion">Terminación <p-sortIcon field="vTerminacion" /></th>
-        <th pSortableColumn="nombreLicencia">Licencia <p-sortIcon field="nombreLicencia" /></th>
-        <th pSortableColumn="cantidadUsuarios">User L <p-sortIcon field="cantidadUsuarios" /></th>
-        <th pSortableColumn="userReal">User A <p-sortIcon field="userReal" /></th>
-        <th pSortableColumn="cantidadOportunidades">Oport L <p-sortIcon field="cantidadOportunidades" /></th>
-        <th pSortableColumn="oportAct">Oport A <p-sortIcon field="oportAct" /></th>
-        <th pSortableColumn="oportEmp">Oport R <p-sortIcon field="oportEmp" /></th>
-        <th pSortableColumn="activo">Estatus <p-sortIcon field="activo" /></th>
-      </tr>
-      <tr>
-        <th>
-          <p-columnFilter type="text"
-                          field="nombreEmpresa"
-                          placeholder="Buscar Por Empresa"
-                          ariaLabel="Filter Name"></p-columnFilter>
-        </th>
-        <th>
-          <p-columnFilter type="text"
-                          field="alias"
-                          placeholder="Buscar Por Alias"
-                          ariaLabel="Filter Name"></p-columnFilter>
-        </th>
-        <th>
-          <p-columnFilter type="text"
-                          field="urlSitio"
-                          placeholder="Buscar Por URL"
-                          ariaLabel="Filter Name"></p-columnFilter>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-        <th>
-        </th>
-        <th>
-          <p-columnFilter type="text"
-                          field="nombreLicencia"
-                          placeholder="Buscar Por URL"
-                          ariaLabel="Filter Name"></p-columnFilter>
-        </th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th></th>
-        <th>
-          <p-columnFilter field="nombreLicencia" [showFilterMenu]="false" [showClear]="true">
-            <ng-template pTemplate="filter" let-filter>
-              <p-dropdown [options]="licencias"
-                          optionLabel="nombre"
-                          placeholder="Seleccionar Licencia"
-                          [showClear]="true"
-                          (onChange)="filterCallback(filter, $event.value)">
-              </p-dropdown>
-            </ng-template>
-          </p-columnFilter>
-        </th>
-      </tr>
-
-    </ng-template>
-    <ng-template #body let-empresa>
-      <tr>
-        <td>{{ empresa.nombreEmpresa }}</td>
-        <td>{{ empresa.alias }}</td>
-        <td>{{ empresa.urlSitio}}</td>
-        <td>{{ empresa.administrador }}</td>
-        <td>{{ empresa.usuarioAdministrador }}</td>
-        <td>{{ empresa.vInicio | date: 'shortDate' }}</td>
-        <td>{{ empresa.vTerminacion | date: 'shortDate' }}</td>
-        <td>{{ empresa.nombreLicencia }}</td>
-        <td>{{ empresa.cantidadUsuarios }}</td>
-        <td>{{ empresa.userReal }}</td>
-        <td>{{ empresa.cantidadOportunidades }}</td>
-        <td>{{ empresa.oportAct}}</td>
-        <td>{{ empresa.oportEmp}}</td>
-        <td>{{ empresa.activo === 1 ? 'Activo' : 'Inactivo' }}</td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
+<app-modal-empresas [(visible)]="modalVisible"
+                    [title]="'Editar Datos de '"
+                    (closeModal)="onModalClose()"
+                    [insertar]="insertar"
+                    [empresa]="empresaSeleccionada">
+</app-modal-empresas>

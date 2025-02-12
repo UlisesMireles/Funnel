@@ -1,71 +1,74 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EmpresasService } from '../../services/empresas.service';
-import { Empresa } from '../../interfaces/Empresa';
-import { Licencia } from '../../interfaces/Licencia'
+import { Empresa } from '../../interfaces/sel_Empresa';
+import { Licencia } from '../../interfaces/Licencia';
 
 import { LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table'; 
 
 @Component({
   selector: 'app-empresas',
-  standalone: false,  
+  standalone: false,
   templateUrl: './empresas.component.html',
   styleUrl: './empresas.component.css'
 })
 export class EmpresasComponent implements OnInit {
-  @ViewChild('dt') dt: Table | undefined;
+  @ViewChild('dt') dt!: Table; // Referencia a la tabla
 
   empresas: Empresa[] = []
   licencias: Licencia[] = [];
+  empresaSeleccionada!: Empresa;
+  insertar: boolean =false;
+
   licenciasDropdown: { label: string; value: number }[] = [];
+  EstatusDropdown = [
+    { label: 'Todo', value: null },
+    { label: 'Activo', value: true },
+    { label: 'Inactivo', value: false }
+  ];
+  selectedEstatus: any=null;
 
   loading: boolean = true;
+  modalVisible: boolean = false;
 
-  first = 0;
-  rows = 10;
+  first: number = 0;
+  rows :number = 10;
 
   searchValue: string = '';
 
-  constructor(private empresasService: EmpresasService) { } 
+  constructor(private empresasService: EmpresasService) { }
   ngOnInit() {
     this.getEmpresas();
-    console.error("test");
+
+  }
+
+  FiltrarPorEstatus() {
+    if (this.selectedEstatus == null) {
+      // Si no se seleccionó un filtro de estatus, limpia el filtro 'activo'
+      this.dt.filter('', 'activo', 'equals'); // Limpia el filtro específico de la columna 'activo'
+      this.dt.filterGlobal('', 'contains'); // Limpia el filtro global de texto (si lo tienes)
+    } else {
+      this.dt.filter(this.selectedEstatus, 'activo', 'equals'); // Filtra según el valor de estatus
+    }
   }
 
   getEmpresas() {
     this.empresasService.getEmpresas().subscribe({
       next: (result: Empresa[]) => {
-        console.log(result); // Verifica la respuesta en consola
-        this.empresas = result; // Asigna el array de empresas a la variable
+       
+        this.empresas = result;
+        
         this.loading = false;
       },
       error: (error) => {
-        console.error(error);
+       
         this.loading = false;
       }
     });
   }
-  getLicencias() {
-    this.empresasService.getLicencias().subscribe({
-      next: (result: Licencia[]) => {
-        console.log('Datos recibidos:', result);
 
-        // Mantén los datos originales
-        this.licencias = result;
-
-        // Transforma los datos para el dropdown
-        this.licenciasDropdown = result.map((licencia: any) => ({
-          label: licencia.NombreLicencia ? String(licencia.NombreLicencia) : 'Desconocido',
-          value: licencia.IdLicencia ?? 0
-        }));
-
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error al obtener licencias:', error);
-        this.loading = false;
-      }
-    });
+  applyFilter(value: any, field: string) {
+    this.dt.filter(value, field, 'equals');
   }
 
   next() {
@@ -101,5 +104,34 @@ export class EmpresasComponent implements OnInit {
     if (this.dt) {
       this.dt.filterGlobal(input.value, 'contains');
     }
+  }
+
+  actualiza(empresa: Empresa) {
+    this.empresaSeleccionada = empresa;
+    this.insertar = false;
+    this.modalVisible = true;
+  }
+  inserta() {
+    this.empresaSeleccionada = this.empresaSeleccionada = {
+      idEmpresa: 0,
+      vInicio: new Date(),
+      vTerminacion: new Date(),
+      idLicencia: 1,
+      cantidadUsuarios: 0,
+      urlSitio:'www.',
+      cantidadOportunidades: 0,
+      idAdministrador: 0,
+      userReal: 0,
+      oportEmp: 0,
+      oportAct: 0,
+      activo: 0, // Si representa activo/inactivo (1/0)
+      usuarioCreador: 0
+    } as Empresa;
+    this.insertar = true;
+    this.modalVisible = true;
+  }
+  onModalClose() {
+    this.modalVisible = false;
+   
   }
 }

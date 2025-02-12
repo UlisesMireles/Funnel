@@ -1,4 +1,4 @@
 export interface Licencia {
-  IdLicencia: number;
-  NombreLicencia?: string;  
+  idLicencia: number;
+  nombreLicencia?: string;  
 }

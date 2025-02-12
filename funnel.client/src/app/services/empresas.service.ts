@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { INSUPDEmpresa } from '../interfaces/ins-upd-empresa'
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class EmpresasService {
   }
 
   // Método POST (si necesitas enviar datos)
-  postData(data: any): Observable<any> {
-    return this.http.post(this.apiUrl, data);
+  postINSUPDEmpresa(data: INSUPDEmpresa): Observable<any> {
+    return this.http.post(this.apiUrl+"api/empresa/INS_UPD_Empresa", data);
   }
 }

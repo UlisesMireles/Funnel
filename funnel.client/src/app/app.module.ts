@@ -18,15 +18,24 @@ import { ButtonModule } from 'primeng/button';
 import { InputIcon } from 'primeng/inputicon';
 import { IconField } from 'primeng/iconfield';
 import { Tag } from 'primeng/tag';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
+import { CheckboxModule } from 'primeng/checkbox';
+
 
 import { EmpresasComponent } from './components/empresas/empresas.component';
 
 import { EmpresasService } from './services/empresas.service';
+import { ModalEmpresasComponent } from './components/empresas/modal-empresas/modal-empresas.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EmpresasComponent
+    EmpresasComponent,
+    ModalEmpresasComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
@@ -39,7 +48,13 @@ import { EmpresasService } from './services/empresas.service';
     ButtonModule,
     InputIcon,
     IconField,
-    Tag
+    Tag,
+    DropdownModule,
+    FormsModule,
+    DialogModule,
+    SelectModule,
+    DatePickerModule,
+    CheckboxModule
   ],
   providers: [
     provideAnimationsAsync(),
