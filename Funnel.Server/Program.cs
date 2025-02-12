@@ -2,6 +2,7 @@ using Funnel.Data;
 using Funnel.Data.Interfaces;
 using Funnnel.Logic;
 using Funnnel.Logic.Interfaces;
+using Funnnel.Logic.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddCors();
 // Add services to the container.
 builder.Services.AddScoped<ILoginData, LoginData>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IEmail, Email>();
 
 
 
@@ -29,6 +31,15 @@ builder.Services.AddControllers();
 //builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Manejo de sesion
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -49,6 +60,7 @@ app.UseCors(x => x
     .SetIsOriginAllowed(origin => true)
     .AllowCredentials());
 
+app.UseSession();
 
 app.UseHttpsRedirection();
 
