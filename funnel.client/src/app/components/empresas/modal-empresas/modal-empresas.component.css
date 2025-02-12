@@ -1,0 +1,31 @@
+::ng-deep .p-dialog .p-dialog-header {
+  background: rgb(247,106,19);
+  background: linear-gradient(0deg, rgba(247,106,19,1) 0%, rgba(200,87,24,1) 35%, rgba(231,91,42,1) 100%);
+  color: white;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: 50px;
+}
+
+  ::ng-deep .p-dialog .p-dialog-header .p-icon {
+    background-color: transparent !important;
+    /* padding: 5px;*/ /* Ajusta el tamaño del ícono según necesites */
+    color: grey;
+  }
+::ng-deep .lbl {
+  margin-top: 5px;
+  text-align: left !important;
+}
+
+::ng-deep .inptSpace {
+  text-align: left !important;
+  padding: 0px;
+  padding-top: 5px;
+}
+.margen{
+    margin-top:10px
+}
+::ng-deep .bodyDialog {
+  background: #F0F0F0 !important;
+}
+

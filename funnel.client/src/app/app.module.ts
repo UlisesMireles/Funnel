@@ -24,9 +24,33 @@ export function getBaseUrl() {
   return 'https://localhost:47440/'
 }
 
+import { TableModule } from 'primeng/table';
+import { InputTextModule } from 'primeng/inputtext';
+import { TagModule } from 'primeng/tag';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { SelectButtonModule } from 'primeng/selectbutton';
+import { InputIcon } from 'primeng/inputicon';
+import { IconField } from 'primeng/iconfield';
+import { Tag } from 'primeng/tag';
+import { DropdownModule } from 'primeng/dropdown';
+import { FormsModule } from '@angular/forms';
+import { DialogModule } from 'primeng/dialog';
+import { SelectModule } from 'primeng/select';
+import { DatePickerModule } from 'primeng/datepicker';
+import { CheckboxModule } from 'primeng/checkbox';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
+
+import { EmpresasComponent } from './components/empresas/empresas.component';
+
+import { EmpresasService } from './services/empresas.service';
+import { ModalEmpresasComponent } from './components/empresas/modal-empresas/modal-empresas.component';
+
 @NgModule({
   declarations: [
     AppComponent,
+    EmpresasComponent,
+    ModalEmpresasComponent,
     LoginComponent,
     ResetPasswordComponent,
     FooterComponent,
@@ -36,6 +60,22 @@ export function getBaseUrl() {
   imports: [
     BrowserModule, HttpClientModule,
     AppRoutingModule,
+    TableModule,
+    InputTextModule,
+    TagModule,
+    MultiSelectModule,
+    SelectButtonModule,
+    ButtonModule,
+    InputIcon,
+    IconField,
+    Tag,
+    DropdownModule,
+    FormsModule,
+    DialogModule,
+    SelectModule,
+    DatePickerModule,
+    CheckboxModule,
+    ToastModule,
     ReactiveFormsModule,
     MenubarModule,
     ButtonModule,
@@ -45,10 +85,12 @@ export function getBaseUrl() {
     { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
     provideAnimationsAsync(),
     providePrimeNG({
-      theme: {
-        preset: Aura
+    theme: {
+    preset: Aura
       }
     }),
+    EmpresasService,
+    MessageService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

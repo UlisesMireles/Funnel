@@ -22,6 +22,9 @@ builder.Services.AddCors();
 // Add services to the container.
 builder.Services.AddScoped<ILoginData, LoginData>();
 builder.Services.AddScoped<ILoginService, LoginService>();
+builder.Services.AddScoped<IEmpresaData, EmpresaData>();
+builder.Services.AddScoped<IEmpresaService, EmpresaService>();
+
 builder.Services.AddScoped<IEmail, Email>();
 
 
