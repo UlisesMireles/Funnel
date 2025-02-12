@@ -1,10 +1,13 @@
 ﻿
 using Funnel.Models;
+using Funnel.Models.Base;
 
 namespace Funnnel.Logic.Interfaces
 {
     public interface ILoginService
     {
-        public Task<List<Prueba>> Prueba();
+        public Task<UsuarioLogin> Autenticar(string user, string contrasena);
+        public Task<BaseOut> ResetPassword(string usuario);
+        public Task<BaseOut> ObtenerVersion();
     }
 }

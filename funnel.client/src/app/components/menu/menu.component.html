@@ -1,0 +1,41 @@
+<div class="custom-menubar d-flex align-items-center justify-content-between">
+    <div class="d-flex align-items-center">
+      <img src="../assets/img/SFS blanco.png" class="imagenLogo" alt="SFS Logo" />
+      <span class="menu-title">ADMINISTRACIÓN</span>
+    </div>
+  
+    <div class="menu-center">
+      <ul class="menu-items">
+        <li class="menuI"><a [routerLink]="['/empresas']">EMPRESAS</a></li>
+        <li class="menuI"><a [routerLink]="['/licencias']">LICENCIAS</a></li>
+        <li class="menuI"><a [routerLink]="['/administracion']">ADMINISTRACIÓN</a></li>
+        <li class="menuI nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="catalogosDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            CATÁLOGOS
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="catalogosDropdown">
+            <li class="submenu"><a class="subm dropdown-item" [routerLink]="['/sectores']">SECTORES</a></li>
+          </ul>
+        </li>
+        <li class="menuI"><a [routerLink]="['/stats']">STATS</a></li>
+      </ul>
+    </div>
+  
+    <div class="menu-end d-flex align-items-center" style="margin-right: 15px;" (document:click)="onDocumentClick($event)">
+      <span class="user-name" (click)="toggleUserPanel($event)" style="cursor: pointer;">
+        <i class="fa fa-user-circle"></i> {{nombreUsuario}}
+      </span>
+    
+      <!-- Panel de usuario -->
+      <div class="user-panel" [class.show]="isUserPanelVisible">
+        <div class="user-header">
+          <img src="{{rutaImgen}}" alt="Usuario" class="user-image" />
+          <h5>{{tipoUsuario}}</h5>
+        </div>
+        <div class="user-actions">
+          <button (click)="logout()" type="button" class="btn btn-cancel btnmenuuser">Cerrar Sesión</button>
+        </div>
+      </div>
+    </div>
+  </div>
