@@ -1,11 +1,12 @@
-<p-dialog [(visible)]="visible"
-          [modal]="true"
-          [closable]="true"
-          [style]="{ width: '35rem', heigth: '25rem' }"
-          (onHide)="close()"
-          (onShow)="onDialogShow()"
-          class="bodyDialog">
-
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '35rem', heigth: '25rem' }"
+  (onHide)="close()"
+  (onShow)="onDialogShow()"
+  class="bodyDialog"
+>
   <ng-template pTemplate="header">
     <h6 class="margen">{{ title + empresa.nombreEmpresa }}</h6>
   </ng-template>
@@ -15,79 +16,167 @@
       <div class="col-sm-4 lbl">
         <label for="nombreEmpresa">Nombre de Empresa: </label>
       </div>
-      <div class="col-sm-8 inptSpace"><input pInputText id="nombreEmpresa" style="width:80%" [(ngModel)]="empresa.nombreEmpresa" /></div>
+      <div class="col-sm-8 inptSpace">
+        <input
+          pInputText
+          id="nombreEmpresa"
+          style="width: 80%"
+          [(ngModel)]="empresa.nombreEmpresa"
+        />
+      </div>
     </div>
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
         <label for="alias">Alias: </label>
       </div>
-      <div class="col-sm-8 inptSpace"><input pInputText id="Alias" style="width:80%" [(ngModel)]="empresa.alias" (ngModelChange)="onAliasChange($event)" /></div>
+      <div class="col-sm-8 inptSpace">
+        <input
+          pInputText
+          id="Alias"
+          style="width: 80%"
+          [(ngModel)]="empresa.alias"
+          (ngModelChange)="onAliasChange($event)"
+        />
+      </div>
     </div>
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
         <label for="url">Url De Sitio: </label>
       </div>
-      <div class="col-sm-8 inptSpace"><input pInputText id="url" style="width:80%" [(ngModel)]="empresa.urlSitio" /></div>
+      <div class="col-sm-8 inptSpace">
+        <input
+          pInputText
+          id="url"
+          style="width: 80%"
+          [(ngModel)]="empresa.urlSitio"
+        />
+      </div>
     </div>
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
         <label for="rfc">RFC: </label>
       </div>
-      <div class="col-sm-8 inptSpace"><input pInputText id="rfc" style="width:80%" [(ngModel)]="empresa.rfc" /></div>
+      <div class="col-sm-8 inptSpace">
+        <input
+          pInputText
+          id="rfc"
+          style="width: 80%"
+          [(ngModel)]="empresa.rfc"
+        />
+      </div>
     </div>
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
         <label for="Licencia">Licencia: </label>
       </div>
       <div class="col-sm-8 inptSpace">
-        <p-select [options]="licenciasDropdown" [(ngModel)]="empresa.idLicencia" optionValue="idLicencia" optionLabel="nombreLicencia" placeholder="Selecciona una licencia" class="w-full md:w-70" />
+        <p-select
+          [options]="licenciasDropdown"
+          [(ngModel)]="empresa.idLicencia"
+          optionValue="idLicencia"
+          optionLabel="nombreLicencia"
+          placeholder="Selecciona una licencia"
+          class="w-full md:w-70"
+        />
       </div>
     </div>
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
-        <label for="NombreAdmin">	Nombre (del administrador): </label>
+        <label for="NombreAdmin"> Nombre (del administrador): </label>
       </div>
-      <div class="col-sm-8 inptSpace"><input pInputText id="Nombre" style="width:80%" [(ngModel)]="empresa.nombre" /></div>
+      <div class="col-sm-8 inptSpace">
+        <input
+          pInputText
+          id="Nombre"
+          style="width: 80%"
+          [(ngModel)]="empresa.nombre"
+        />
+      </div>
     </div>
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
         <label for="APaterno">Apellido Paterno: </label>
       </div>
-      <div class="col-sm-8 inptSpace"><input pInputText id="ApellidoPaterno" style="width:80%" [(ngModel)]="empresa.apellidoPaterno" /></div>
+      <div class="col-sm-8 inptSpace">
+        <input
+          pInputText
+          id="ApellidoPaterno"
+          style="width: 80%"
+          [(ngModel)]="empresa.apellidoPaterno"
+        />
+      </div>
     </div>
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
-        <label for="AMaterno">	Apellido Materno: </label>
+        <label for="AMaterno"> Apellido Materno: </label>
       </div>
-      <div class="col-sm-8 inptSpace"><input pInputText id="ApellidoMaterno" style="width:80%" [(ngModel)]="empresa.apellidoMaterno" /></div>
+      <div class="col-sm-8 inptSpace">
+        <input
+          pInputText
+          id="ApellidoMaterno"
+          style="width: 80%"
+          [(ngModel)]="empresa.apellidoMaterno"
+        />
+      </div>
     </div>
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
-        <label for="Usuario">	Usuario: </label>
+        <label for="Usuario"> Usuario: </label>
       </div>
-      <div class="col-sm-8 inptSpace"><input pInputText id="Usuario" style="width:80%" [(ngModel)]="empresa.usuarioAdministrador" disabled /></div>
+      <div class="col-sm-8 inptSpace">
+        <input
+          pInputText
+          id="Usuario"
+          style="width: 80%"
+          [(ngModel)]="empresa.usuarioAdministrador"
+          disabled
+        />
+      </div>
     </div>
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
-        <label for="Correo">	Correo: </label>
+        <label for="Correo"> Correo: </label>
       </div>
-      <div class="col-sm-8 inptSpace"><input pInputText id="Correo" style="width:80%" [(ngModel)]="empresa.correoAdministrador" /></div>
+      <div class="col-sm-8 inptSpace">
+        <input
+          pInputText
+          id="Correo"
+          style="width: 80%"
+          [(ngModel)]="empresa.correoAdministrador"
+        />
+      </div>
     </div>
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
-        <label for="fInicio">	Inicio: </label>
+        <label for="fInicio"> Inicio: </label>
       </div>
-      <div class="col-sm-8 inptSpace"><p-datepicker [(ngModel)]="empresa.vInicio" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" dateFormat="dd/mm/yy"/></div>
+      <div class="col-sm-8 inptSpace">
+        <p-datepicker
+          [(ngModel)]="empresa.vInicio"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          inputId="icondisplay"
+          dateFormat="dd/mm/yy"
+        />
+      </div>
     </div>
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
-        <label for="fTermionacion">	Terminacion: </label>
+        <label for="fTermionacion"> Terminacion: </label>
       </div>
-      <div class="col-sm-8 inptSpace"><p-datepicker [(ngModel)]="empresa.vTerminacion" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" dateFormat="dd/mm/yy"/></div>
+      <div class="col-sm-8 inptSpace">
+        <p-datepicker
+          [(ngModel)]="empresa.vTerminacion"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          inputId="icondisplay"
+          dateFormat="dd/mm/yy"
+        />
+      </div>
     </div>
     <div class="row inptSpace" *ngIf="!insertar">
       <div class="col-sm-4 lbl">
-        <label for="Estatus">	Estatus: </label>
+        <label for="Estatus"> Estatus: </label>
       </div>
       <div class="col-sm-8 inptSpace">
         <p-checkbox [(ngModel)]="empresaActiva" [binary]="true" />
@@ -96,9 +185,26 @@
   </ng-template>
 
   <ng-template pTemplate="footer">
-    <button *ngIf="!insertar" pButton label="Actualizar" (click)="actualizaEmpresa()" severity="secondary"></button>
-    <button *ngIf="insertar" pButton label="Agregar" (click)="guardarEmpresa()" severity="secondary"></button>
-    <button pButton label="Cancelar" (click)="close()" severity="secondary"></button>
+    <button
+      *ngIf="!insertar"
+      pButton
+      label="Actualizar"
+      (click)="actualizaEmpresa()"
+      severity="secondary"
+    ></button>
+    <button
+      *ngIf="insertar"
+      pButton
+      label="Agregar"
+      (click)="guardarEmpresa()"
+      severity="secondary"
+    ></button>
+    <button
+      pButton
+      label="Cancelar"
+      (click)="close()"
+      severity="secondary"
+    ></button>
   </ng-template>
   <p-toast position="center"></p-toast>
 </p-dialog>

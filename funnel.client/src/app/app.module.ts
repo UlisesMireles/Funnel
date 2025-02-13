@@ -45,6 +45,8 @@ import { EmpresasComponent } from './components/empresas/empresas.component';
 
 import { EmpresasService } from './services/empresas.service';
 import { ModalEmpresasComponent } from './components/empresas/modal-empresas/modal-empresas.component';
+import { LicenciasComponent } from './components/licencias/licencias.component';
+import { ModalLicenciasComponent } from './components/licencias/modal-licencias/modal-licencias.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { ModalEmpresasComponent } from './components/empresas/modal-empresas/mod
     ResetPasswordComponent,
     FooterComponent,
     AdministracionComponent,
-    MenuComponent
+    MenuComponent,
+    LicenciasComponent,
+    ModalLicenciasComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

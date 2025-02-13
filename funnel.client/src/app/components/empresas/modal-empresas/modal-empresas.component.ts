@@ -7,10 +7,10 @@ import { MessageService } from 'primeng/api';
 import { EmpresasService } from '../../../services/empresas.service';
 
 /*Intefaces*/
-import { INSUPDEmpresa } from '../../../interfaces/ins-upd-empresa';
+import { requestEmpresa } from '../../../interfaces/Empresa';
 import { baseOut } from '../../../interfaces/utils/baseOut'
-import { Empresa } from '../../../interfaces/sel_Empresa';
-import { Licencia } from '../../../interfaces/Licencia';
+import { dataEmpresa } from '../../../interfaces/Empresa';
+import { dropdownLicencia } from '../../../interfaces/Licencia';
 
 @Component({
   selector: 'app-modal-empresas',
@@ -20,13 +20,13 @@ import { Licencia } from '../../../interfaces/Licencia';
 })
 export class ModalEmpresasComponent {
   @Input() title: string = 'Modal';
-  @Input() visible: boolean = false;  
-  @Input() insertar: boolean = false; 
-  @Input() empresa!: Empresa;
-  request!: INSUPDEmpresa;
+  @Input() visible: boolean = false;
+  @Input() insertar: boolean = false;
+  @Input() empresa!: dataEmpresa;
+  request!: requestEmpresa;
 
   empresaActiva: boolean = false;
-  licenciasDropdown:Licencia[] = [];
+  licenciasDropdown:dropdownLicencia[] = [];
   selectedLicencia: number | undefined;
 
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -51,17 +51,17 @@ export class ModalEmpresasComponent {
 
   getLicencias() {
     this.empresasService.getLicencias().subscribe({
-      next: (result: Licencia[]) => {
+      next: (result: dropdownLicencia[]) => {
         this.licenciasDropdown = result;
       },
       error: (error) => {
-        console.error(error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
       }
     });
   }
   guardarEmpresa() {
     if (!this.request) {
-      this.request = {} as INSUPDEmpresa;
+      this.request = {} as requestEmpresa;
     }
     if (!this.validarCampos()) {
       return;
@@ -84,7 +84,6 @@ export class ModalEmpresasComponent {
     this.request.usuario = this.empresa.usuarioAdministrador;
     this.request.urlSitio = this.empresa.urlSitio;
     this.request.activo = 1;
-    console.log(this.request);
     this.empresasService.postINSUPDEmpresa(this.request).subscribe(
       {
         next: (result: baseOut) => {
@@ -104,7 +103,7 @@ export class ModalEmpresasComponent {
   }
   actualizaEmpresa() {
     if (!this.request) {
-      this.request = {} as INSUPDEmpresa;
+      this.request = {} as requestEmpresa;
     }
     if (!this.validarCampos()) {
       return;
@@ -127,7 +126,6 @@ export class ModalEmpresasComponent {
     this.request.usuario = this.empresa.usuarioAdministrador;
     this.request.urlSitio = this.empresa.urlSitio;
     this.request.activo = this.empresaActiva ? 1 : 0;
-    console.log(this.request);
     this.empresasService.postINSUPDEmpresa(this.request).subscribe(
       {
         next: (result: baseOut) => {
@@ -150,7 +148,7 @@ export class ModalEmpresasComponent {
       return texto!
         .trim()
         .split(/\s+/)
-        .map(palabra => palabra.charAt(0).toUpperCase()) 
+        .map(palabra => palabra.charAt(0).toUpperCase())
         .join('');
     };
     const inicialesNombre = obtenerIniciales(this.empresa.nombre);
