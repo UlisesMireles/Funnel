@@ -20,7 +20,7 @@ export class EmpresasService {
     return this.http.get(this.baseUrl + 'api/empresa/Catalog_Licencias');
   }
 
-  // Método POST (si necesitas enviar datos)
+  // Método POST
   postINSUPDEmpresa(data: requestEmpresa): Observable<any> {
     return this.http.post(this.baseUrl+"api/empresa/INS_UPD_Empresa", data);
   }

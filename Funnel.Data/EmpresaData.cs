@@ -3,7 +3,6 @@ using Funnel.Models;
 using Microsoft.Extensions.Configuration;
 using Funnel.Data.Utils;
 using Funnel.Data.Interfaces;
-using Azure.Core;
 using Funnel.Models.Base;
 
 namespace Funnel.Data

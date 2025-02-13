@@ -41,6 +41,8 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { TextareaModule } from 'primeng/textarea';
+
 
 import { EmpresasComponent } from './components/empresas/empresas.component';
 
@@ -48,7 +50,8 @@ import { EmpresasService } from './services/empresas.service';
 import { ModalEmpresasComponent } from './components/empresas/modal-empresas/modal-empresas.component';
 import { LicenciasComponent } from './components/licencias/licencias.component';
 import { ModalLicenciasComponent } from './components/licencias/modal-licencias/modal-licencias.component';
-
+import { SectoresComponent } from './components/catalogos/sectores/sectores.component';
+import { ModalSectoresComponent } from './components/catalogos/sectores/modal-sectores/modal-sectores.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +64,9 @@ import { ModalLicenciasComponent } from './components/licencias/modal-licencias/
     MenuComponent,
     LicenciasComponent,
     ModalLicenciasComponent,
-    AdministradorAgregarDialog
+    AdministradorAgregarDialog,
+    SectoresComponent,
+    ModalSectoresComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
@@ -86,7 +91,8 @@ import { ModalLicenciasComponent } from './components/licencias/modal-licencias/
     MenubarModule,
     ButtonModule,
     OverlayPanelModule,
-    InputNumberModule
+    InputNumberModule,
+    TextareaModule
   ],
   providers: [
     { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },

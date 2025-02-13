@@ -1,0 +1,77 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '25rem', heigth: '20rem' }"
+  (onHide)="close()"
+  (onShow)="onDialogShow()"
+  class="bodyDialog"
+>
+  <ng-template pTemplate="header">
+    <h6 *ngIf="!insertar" class="margen">{{ title + sector.nombreSector }}</h6>
+    <h6 *ngIf="insertar" class="margen">Nuevo Sector</h6>
+  </ng-template>
+
+  <ng-template pTemplate="content">
+
+
+    <div class="row inptSpace">
+      <div class="col-sm-4 lbl">
+        <label for="nombreEmpresa">Nombre del Sector: </label>
+      </div>
+      <div class="col-sm-8 inptSpace">
+        <input
+          pInputText
+          class="inptSize"
+          id="nombreLicencia"
+          [(ngModel)]="sector.nombreSector"
+        />&nbsp;
+        <span *ngIf="esCampoInvalido(sector.nombreSector)" class="text-danger">*</span>
+      </div>
+    </div>
+
+    <div class="row inptSpace">
+      <div class="col-sm-4 lbl">
+        <label for="alias">decripcion: </label>
+      </div>
+      <div class="col-sm-8 inptSpace">
+        <textarea rows="5" cols="24" pTextarea [(ngModel)]="sector.descripcionSector"></textarea>
+        <span *ngIf="esCampoInvalido(sector.descripcionSector)" class="text-danger">*</span>
+      </div>
+    </div>
+    <div class="row inptSpace" *ngIf="!insertar">
+      <div class="col-sm-4 lbl">
+        <label for="Estatus"> Estatus: </label>
+      </div>
+      <div class="col-sm-8 inptSpace">
+        <p-checkbox [(ngModel)]="sectorActivo" [binary]="true" />
+      </div>
+    </div>
+
+
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      *ngIf="!insertar"
+      pButton
+      label="Actualizar"
+      (click)="actualizaSector()"
+      severity="secondary"
+    ></button>
+    <button
+      *ngIf="insertar"
+      pButton
+      label="Agregar"
+      (click)="guardarSector()"
+      severity="secondary"
+    ></button>
+    <button
+      pButton
+      label="Cancelar"
+      (click)="close()"
+      severity="secondary"
+    ></button>
+  </ng-template>
+</p-dialog>

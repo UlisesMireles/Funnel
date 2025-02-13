@@ -6,7 +6,6 @@ import { environment } from '../../enviroment/enviroment';
 
 import { requestLicencia } from '../interfaces/Licencia';
 import { baseOut } from '../interfaces/utils/baseOut';
-import { SEL_Licencia} from '../interfaces/Licencia'
 
 @Injectable({
   providedIn: 'root'
@@ -21,3 +20,4 @@ export class LicenciasService {
     return this.http.post<baseOut>(this.baseUrl + 'api/Licencia/INS_UPD_Licencia', data);
   }
 }
+
