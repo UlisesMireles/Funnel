@@ -1,0 +1,55 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12 titulo">
+            <h3>Administración de Usuarios Master</h3>
+        </div>
+        <div class="col-12">
+            <div class="row contenedorTabla">
+                <div *ngIf="loading">Cargando...</div>
+
+                <p-table #dt [stripedRows]="true" [value]="administradores" [paginator]="true" [rows]="10"
+                    [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)" [showCurrentPageReport]="true"
+                    [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
+                    [globalFilterFields]="['nombreEmpresa', 'alias', 'administrador', 'nombreLicencia']">
+
+                    <ng-template class="divAccionesTabla" #caption>
+                        <div class="row">
+                            <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
+                                <p-button type="button" icon="pi pi-refresh" class="Iconos" (click)="reset()"
+                                    [ngStyle]="{'margin-right': '5px'}" text />
+                                <p-button label="" icon="pi pi-plus" severity="secondary"
+                                    (click)="insertarAdministrador()" />
+                            </div>
+                        </div>
+                    </ng-template>
+
+                    <ng-template #header>
+                        <tr class="custom-header">
+                            <th></th>
+                            <th>Nombre</th>
+                            <th>Usuario</th>
+                            <th>Correo Electrónico</th>
+                            <th>Estatus</th>
+                        </tr>
+                    </ng-template>
+
+                    <ng-template #body let-administrador>
+                        <tr>
+                            <td>
+                                <p-button type="button" icon="pi pi-pencil" (click)="editar(administrador)" text />
+                            </td>
+                            <td>{{ administrador.nombre }}</td>
+                            <td>{{ administrador.usuario }}</td>
+                            <td>{{ administrador.correoElectronico }}</td>
+                            <td>{{ administrador.descActivo }}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <p-toast position="center"></p-toast>
+        </div>
+    </div>
+</div>
+
+<agregar-admin-dialog [(visible)]="modalVisible" [title]="'Editar Datos de '" (closeModal)="onModalClose()"
+    (result)="resultadoModal($event)" [data]="dataModal"></agregar-admin-dialog>

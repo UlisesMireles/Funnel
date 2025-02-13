@@ -17,7 +17,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
-import { AdministracionComponent } from './components/administracion/administracion.component';
+import { AdministracionComponent, AdministradorAgregarDialog } from './components/administracion/administracion.component';
 import { MenuComponent } from './components/menu/menu.component';
 
 export function getBaseUrl() {
@@ -60,7 +60,8 @@ import { ModalLicenciasComponent } from './components/licencias/modal-licencias/
     AdministracionComponent,
     MenuComponent,
     LicenciasComponent,
-    ModalLicenciasComponent
+    ModalLicenciasComponent,
+    AdministradorAgregarDialog
   ],
   imports: [
     BrowserModule, HttpClientModule,
@@ -91,17 +92,15 @@ import { ModalLicenciasComponent } from './components/licencias/modal-licencias/
     { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
     provideAnimationsAsync(),
     providePrimeNG({
-    theme: {
-    preset: Aura
+      theme: {
+        preset: Aura,
+        options: {
+          darkModeSelector: false || 'none'
+        }
       }
     }),
     EmpresasService,
-    MessageService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

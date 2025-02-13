@@ -1,11 +1,4 @@
-﻿using Funnel.Models.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Funnel.Models
+﻿namespace Funnel.Models
 {
     public class Administrador
     {

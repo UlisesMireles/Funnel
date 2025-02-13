@@ -1,38 +1,28 @@
 ﻿router-outlet {
-    flex: 1 0 auto;
-    overflow-y: auto;
-  }
+  flex: 1 0 auto;
+  overflow-y: auto;
+}
 
 :host {
-    max-width: 1280px;
-    padding: 2rem;
-    text-align: center;
+  max-width: 1280px;
+  padding: 2rem;
+  text-align: center;
 }
 
 app-menu {
-    flex: 0 0 auto;
-  }
-  
-  router-outlet {
-    flex: 1 0 auto;
-    overflow-y: auto;
-  }
-
-th,
-td {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  flex: 0 0 auto;
 }
 
-table {
-    margin: 0 auto;
+router-outlet {
+  flex: 1 0 auto;
+  overflow-y: auto;
 }
 
 .footer {
-    width: 100%;
-    height: 50px;
-    color: white;
-    text-align: justify;
-    position: absolute;
-    bottom: 50;
+  width: 100%;
+  height: 50px;
+  color: white;
+  text-align: justify;
+  position: absolute;
+  bottom: 50;
 }
