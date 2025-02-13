@@ -29,7 +29,6 @@ export class AdministracionComponent {
   getAdministradores(): void {
     this.adminService.getAdministradores().subscribe({
       next: (data) => {
-        console.log(data);
         this.administradores = data;
       },
       error: (error) => {
@@ -56,6 +55,7 @@ export class AdministracionComponent {
   }
 
   reset() {
+    this.getAdministradores();
     this.first = 0;
   }
 
@@ -72,22 +72,26 @@ export class AdministracionComponent {
   }
 
   resultadoModal(result: baseOut) {
-    if (result.result) {
-      this.messageService.add({ severity: 'success', summary: 'La operación se realizó con éxito.', detail: result.errorMessage });
-      this.getAdministradores();
-    } else {
-      this.messageService.add({ severity: 'error', summary: 'Se ha producido un error.', detail: result.errorMessage });
-    }
+    const isInsert = result.errorMessage === 'instertar';
+    const summary = result.result
+      ? `Administrador ${isInsert ? 'registrado' : 'actualizado'} correctamente`
+      : 'Se ha producido un error.';
+  
+    this.messageService.add({
+      severity: result.result ? 'success' : 'error',
+      summary,
+      detail: result.result ? '' : result.errorMessage
+    });
+  
+    this.getAdministradores();
   }
 
   insertarAdministrador() : void {
-    console.log('Insertar administrador');
     this.dataModal = { isEdicion: false, administrador: {} as Administrador }; 
     this.modalVisible = true;
   }
 
   editar(admin: Administrador) : void {
-    console.log(admin);
     this.dataModal = { isEdicion: true, administrador: admin }; 
     this.modalVisible = true;
   }
@@ -111,36 +115,41 @@ export class AdministradorAgregarDialog {
   administrador: Administrador = {} as Administrador;
   form!: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    console.log(this.data);
+  constructor(private fb: FormBuilder, private adminService: AdministradoresService) {
     this.form = this.fb.group({
-      idInformacion: [0],
+      idAdministrador: [0],
       nombre: ['', Validators.required],
       usuario: ['', Validators.required],
-      correo: ['', Validators.required]
+      correo: ['', Validators.required],
+      activo: [true]
     })
   }
 
   onDialogShow() {
-    console.log('Dialog show');
     this.administrador = this.data.administrador;
     this.isEdicion = this.data.isEdicion;
     if(this.isEdicion){
       this.form.patchValue({
-        idInformacion: this.administrador.idAdministrador,
+        idAdministrador: this.administrador.idAdministrador,
         nombre: this.administrador.nombre,
         usuario: this.administrador.usuario,
-        correo: this.administrador.correoElectronico
+        correo: this.administrador.correoElectronico,
+        activo: this.administrador.activo == 1 ? true : false
       })
     } else {
       this.form = this.fb.group({
-        idInformacion: [0],
+        idAdministrador: [0],
         nombre: ['', Validators.required],
         usuario: ['', Validators.required],
-        correo: ['', Validators.required]
+        correo: ['', Validators.required],
+        activo: [true]
       })
     }
-    console.log(this.data);
+  }
+
+  esCampoInvalido(campo: string): boolean {
+    const control = this.form.get(campo);
+    return control ? (control.invalid && (control.dirty || control.touched)) : false;
   }
 
   close() {
@@ -150,9 +159,52 @@ export class AdministradorAgregarDialog {
   }
 
   agregarAdmin():void{
-    console.log(this.form.value);
+    if (this.form.invalid) {
+      Object.keys(this.form.controls).forEach(key => {
+        const control = this.form.get(key);
+        control?.markAsTouched();
+      });
+      return;
+    }
+    const param = this.form.value;
+    param.activo = 1;
+    param.correoElectronico = param.correo;
+    this.adminService.insetarAdministradores(this.form.value).subscribe({
+      next: (data) => {
+        const resp:baseOut = {id: 0, result:data.result, errorMessage: 'instertar'};
+        this.result.emit(resp);
+        this.visible = false;
+        this.visibleChange.emit(this.visible);
+        this.closeModal.emit();
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 
   editarAdmin():void{
+    if (this.form.invalid) {
+      Object.keys(this.form.controls).forEach(key => {
+        const control = this.form.get(key);
+        control?.markAsTouched();
+      });
+      return;
+    }
+    const param = this.form.value;
+    param.activo = param.activo ? 1 : 0;
+    param.correoElectronico = param.correo;
+    this.adminService.editarAdministrador(param).subscribe({
+      next: (data) => {
+        const resp:baseOut = {id: 0, result:data.result, errorMessage: 'actualiza'};
+        this.result.emit(resp);
+        this.visible = false;
+        this.visibleChange.emit(this.visible);
+        this.closeModal.emit();
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
 }

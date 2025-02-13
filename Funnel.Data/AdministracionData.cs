@@ -77,10 +77,7 @@ namespace Funnel.Data
                 };
                 using (IDataReader reader = await DataBase.GetReaderSql("F_AdministradoresTenant", CommandType.StoredProcedure, list, _connectionString))
                 {
-                    while (reader.Read())
-                    {
-                        result.Result = true;
-                    }
+                    result.Result = true;
                 }
             }
             catch (Exception ex)
@@ -108,10 +105,7 @@ namespace Funnel.Data
                 };
                 using (IDataReader reader = await DataBase.GetReaderSql("F_AdministradoresTenant", CommandType.StoredProcedure, list, _connectionString))
                 {
-                    while (reader.Read())
-                    {
-                        result.Result = true;
-                    }
+                    result.Result = true;
                 }
             }
             catch (Exception ex)

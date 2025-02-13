@@ -1,28 +1,45 @@
 <p-dialog [(visible)]="visible" [modal]="true" [closable]="true" [style]="{ width: '35rem', heigth: '25rem' }"
     (onHide)="close()" (onShow)="onDialogShow()" class="bodyDialog">
     <ng-template pTemplate="header">
-        <h6 *ngIf="!isEdicion" class="margen">Nuevo Usuario</h6>
-        <h6 *ngIf="isEdicion" class="margen">Editar datos de {{ administrador.nombre }}</h6>
+        <h6 class="margen" *ngIf="!isEdicion" class="margen">Nuevo Usuario</h6>
+        <h6 class="margen" *ngIf="isEdicion" class="margen">Editar datos de {{ administrador.nombre }}</h6>
     </ng-template>
-    <ng-template pTemplate="content">
+    <ng-template pTemplate="content inptSpace">
         <form [formGroup]="form">
             <div class="row d-flex">
-                <div class="col-4 lbl">
+                <div class="col-3 lbl">
                     <label for="nombre">Nombre: </label>
                 </div>
-                <div class="col-sm-8 inptSpace"><input pInputText id="nombre" formControlName="nombre" /></div>
+                <div class="col-9 inptSpace">                        
+                    <input pInputText class="inptSpace" id="nombre" formControlName="nombre" style="width: 80% !important;"/>&nbsp;
+                    <span *ngIf="esCampoInvalido('nombre')" class="text-danger">*</span>
+                </div>
             </div>
             <div class="row d-flex">
-                <div class="col-4 lbl">
+                <div class="col-3 lbl">
                     <label for="nombre">Usuario: </label>
                 </div>
-                <div class="col-sm-8 inptSpace"><input pInputText id="usuario" formControlName="usuario" /></div>
+                <div class="col-9 inptSpace">                        
+                    <input pInputText class="inptSpace" id="usuario" formControlName="usuario" style="width: 80% !important;" />&nbsp;
+                    <span *ngIf="esCampoInvalido('usuario')" class="text-danger">*</span>
+                </div>
             </div>
             <div class="row d-flex">
-                <div class="col-4 lbl">
+                <div class="col-3 lbl">
                     <label for="nombre">Correo: </label>
                 </div>
-                <div class="col-sm-8 inptSpace"><input pInputText id="correo" formControlName="correo" /></div>
+                <div class="col-9 inptSpace">                        
+                    <input pInputText class="inptSpace" id="correo" formControlName="correo" style="width: 80% !important;"/>&nbsp;
+                    <span *ngIf="esCampoInvalido('correo')" class="text-danger">*</span>
+                </div>
+            </div>
+            <div *ngIf="isEdicion" class="row d-flex">
+                <div class="col-3 lbl">
+                    <label for="activo">Estatus: </label>
+                </div>
+                <div class="col-9 inptSpace">                        
+                    <p-checkbox id="activo" formControlName="activo" [binary]="true"/>
+                </div>
             </div>
         </form>
     </ng-template>
