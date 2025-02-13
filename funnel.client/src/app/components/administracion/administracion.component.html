@@ -7,7 +7,7 @@
             <div class="row contenedorTabla">
                 <div *ngIf="loading">Cargando...</div>
 
-                <p-table #dt [stripedRows]="true" [value]="administradores" [paginator]="true" [rows]="10"
+                <p-table *ngIf="!loading && administradores.length > 0" #dt [stripedRows]="true" [value]="administradores" [paginator]="true" [rows]="10"
                     [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)" [showCurrentPageReport]="true"
                     [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
                     [globalFilterFields]="['nombreEmpresa', 'alias', 'administrador', 'nombreLicencia']">

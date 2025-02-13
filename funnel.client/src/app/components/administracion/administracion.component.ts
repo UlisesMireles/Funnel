@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './administracion.component.css'
 })
 export class AdministracionComponent {
-  loading: boolean = false;
+  loading: boolean = true;
   administradores: Administrador[] = [];
   first: number = 0;
   rows: number = 10;
@@ -30,9 +30,15 @@ export class AdministracionComponent {
     this.adminService.getAdministradores().subscribe({
       next: (data) => {
         this.administradores = data;
+        this.loading = false;
       },
       error: (error) => {
-        console.error(error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Se ha producido un error.',
+          detail: error.errorMessage,
+        });
+        this.loading = false;
       }
     });
   }
