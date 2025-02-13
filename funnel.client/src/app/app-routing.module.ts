@@ -5,11 +5,14 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { AdministracionComponent } from './components/administracion/administracion.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { EmpresasComponent } from './components/empresas/empresas.component';
+import { LicenciasComponent } from './components/licencias/licencias.component';
+
 
 const routes: Routes = [
   { path: '', component: LoginComponent, title: 'Login' },
   { path: 'login', component: LoginComponent, title: 'Login' },
   { path: 'empresas', component: EmpresasComponent, title: 'Empresas', canActivate: [AuthGuard]  },
+  { path: 'licencias', component: LicenciasComponent, title: 'Licencias', canActivate: [AuthGuard]  },
   { path: 'recuperar-contrasena', component: ResetPasswordComponent, title: 'Recuperar contraseña' },
   { path: 'administracion', component: AdministracionComponent, title: 'Administración', canActivate: [AuthGuard]  },
   { path: '**', component: AdministracionComponent, title: 'Administración', canActivate: [AuthGuard]  }
