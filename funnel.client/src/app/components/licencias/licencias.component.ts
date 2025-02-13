@@ -56,6 +56,12 @@ export class LicenciasComponent implements OnInit {
   }
   // eventosBotones
     inserta() {
+      this.licenciaSeleccionada = {
+        idLicencia: 0,
+        nombreLicencia: '',
+        cantidadUsuarios: 0,
+        cantidadOportunidades: 0
+      }
       this.insertar = true;
       this.modalVisible = true;
     }

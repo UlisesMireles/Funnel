@@ -46,7 +46,7 @@ export class ModalEmpresasComponent {
   close() {
     this.visible = false;
     this.visibleChange.emit(this.visible);
-    this.closeModal.emit();
+    this.closeModal.emit();  
   }
 
   getLicencias() {
@@ -63,7 +63,8 @@ export class ModalEmpresasComponent {
     if (!this.request) {
       this.request = {} as requestEmpresa;
     }
-    if (!this.validarCampos()) {
+    if (this.camposInvalidos()) {
+      this.mostrarToastError();
       return;
     }
     this.request.idEmpresa = 0;
@@ -105,7 +106,8 @@ export class ModalEmpresasComponent {
     if (!this.request) {
       this.request = {} as requestEmpresa;
     }
-    if (!this.validarCampos()) {
+    if (this.camposInvalidos()) {
+      this.mostrarToastError();
       return;
     }
     this.request.idEmpresa = this.empresa.idEmpresa;
@@ -159,59 +161,51 @@ export class ModalEmpresasComponent {
   onAliasChange(newValue: string) {
     this.empresa.usuarioAdministrador = "admin." + newValue;
   }
-
-  validarCampos(): boolean {
-    this.messageService.clear();
-
-    if (!this.empresa.nombreEmpresa) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El nombre de la empresa es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.alias) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El alias es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.rfc) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El RFC es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.idLicencia) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'La licencia es obligatoria.' });
-      return false;
-    }
-    if (!this.empresa.nombre) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El nombre del administrador es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.apellidoPaterno) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El apellido paterno es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.apellidoMaterno) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El apellido materno es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.usuarioAdministrador) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El usuario es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.correoAdministrador) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El correo es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.vInicio) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'La fecha de inicio es obligatoria.' });
-      return false;
-    }
-    if (!this.empresa.vTerminacion) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'La fecha de terminación es obligatoria.' });
-      return false;
-    }
-    if (this.empresa.vInicio > this.empresa.vTerminacion) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'La fecha de inicio no puede ser mayor a la fecha de terminación.' });
-      return false;
-    }
-    return true;
+  esCampoInvalido(valor: any): boolean {
+    return valor === null || valor === undefined || valor === '' || valor <= 0;
   }
+  camposInvalidos(): boolean {
+    return (
+      this.esCampoInvalido(this.empresa.nombreEmpresa) ||
+      this.esCampoInvalido(this.empresa.alias) ||
+      this.esCampoInvalido(this.empresa.urlSitio) ||
+      this.esCampoInvalido(this.empresa.rfc) ||
+      this.esCampoInvalido(this.empresa.idLicencia) ||
+      this.esCampoInvalido(this.empresa.nombre) ||
+      this.esCampoInvalido(this.empresa.vInicio) ||
+      this.esCampoInvalido(this.empresa.vTerminacion) ||
+      !this.validarFechas()
+    );
+  }
+  
+  /**
+   * Método para validar que vInicio sea menor a vTerminacion.
+   */
+  validarFechas(): boolean {
+    if (!this.empresa.vInicio || !this.empresa.vTerminacion) {
+      return true; // No validar si las fechas están vacías
+    }
+    return new Date(this.empresa.vInicio) < new Date(this.empresa.vTerminacion);
+  }
+  
+  /**
+   * Método para mostrar un toast de error cuando hay campos vacíos o fechas incorrectas.
+   */
+  mostrarToastError() {
+    this.messageService.clear();
+    let mensaje = 'Es necesario llenar los campos indicados.';
+    
+    if (!this.validarFechas()) {
+      mensaje = 'La fecha de inicio debe ser menor a la fecha de terminación.';
+    }
+  
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: mensaje,
+    });
+  }
+  
+  
 
 }

@@ -79,9 +79,9 @@ namespace Funnel.Data
             List<SEL_Licencias> result = new List<SEL_Licencias>();
             IList<ParameterSQl> list = new List<ParameterSQl>
             {
-                DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, "SEL-EMPRESAS"),
+                DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, "SEL-LICENCIAS"),
             };
-            using (IDataReader reader = await DataBase.GetReaderSql("F_Tenant", CommandType.StoredProcedure, list, _connectionString))
+            using (IDataReader reader = await DataBase.GetReaderSql("F_CatalogoLicencias", CommandType.StoredProcedure, list, _connectionString))
             {
                 while (reader.Read())
                 {

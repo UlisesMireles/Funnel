@@ -1,1 +1,80 @@
-<p>modal-licencias works!</p>
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '25rem', heigth: '20rem' }"
+  (onHide)="close()"
+  (onShow)="onDialogShow()"
+  class="bodyDialog"
+>
+  <ng-template pTemplate="header">
+    <h6 *ngIf="!insertar" class="margen">{{ title + licencia.nombreLicencia }}</h6>
+    <h6 *ngIf="insertar" class="margen">Nueva Licencia</h6>
+  </ng-template>
+
+  <ng-template pTemplate="content">
+
+
+    <div class="row inptSpace">
+      <div class="col-sm-4 lbl">
+        <label for="nombreEmpresa">Nombre de Empresa: </label>
+      </div>
+      <div class="col-sm-8 inptSpace">
+        <input
+          pInputText
+          class="inptSize"
+          id="nombreLicencia"
+          [(ngModel)]="licencia.nombreLicencia"
+        />&nbsp;
+        <span *ngIf="esCampoInvalido(licencia.nombreLicencia)" class="text-danger">*</span>
+      </div>
+    </div>
+
+    <div class="row inptSpace">
+      <div class="col-sm-4 lbl">
+        <label for="alias">Alias: </label>
+      </div>
+      <div class="col-sm-8 inptSpace">
+        <p-inputnumber class="inptSize" inputId="integeronly" [(ngModel)]="licencia.cantidadUsuarios"></p-inputnumber>
+        <span *ngIf="esCampoInvalido(licencia.cantidadUsuarios)" class="text-danger">*</span>
+      </div>
+    </div>
+
+    <div class="row inptSpace">
+      <div class="col-sm-4 lbl">
+        <label for="url">Url De Sitio: </label>
+      </div>
+      <div class="col-sm-8 inptSpace">
+        <p-inputnumber class="inptSize" inputId="integeronly" [(ngModel)]="licencia.cantidadOportunidades"></p-inputnumber>
+        <label *ngIf="esCampoInvalido(licencia.cantidadOportunidades)" class="text-danger">*</label>
+      </div>
+    </div>
+
+
+
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button
+      *ngIf="!insertar"
+      pButton
+      label="Actualizar"
+      (click)="actualizaLicencia()"
+      severity="secondary"
+    ></button>
+    <button
+      *ngIf="insertar"
+      pButton
+      label="Agregar"
+      (click)="guardarLicencia()"
+      severity="secondary"
+    ></button>
+    <button
+      pButton
+      label="Cancelar"
+      (click)="close()"
+      severity="secondary"
+    ></button>
+  </ng-template>
+</p-dialog>

@@ -40,6 +40,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 import { EmpresasComponent } from './components/empresas/empresas.component';
 
@@ -83,7 +84,8 @@ import { ModalLicenciasComponent } from './components/licencias/modal-licencias/
     ReactiveFormsModule,
     MenubarModule,
     ButtonModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    InputNumberModule
   ],
   providers: [
     { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },

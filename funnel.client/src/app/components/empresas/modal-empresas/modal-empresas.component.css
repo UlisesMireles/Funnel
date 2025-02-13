@@ -10,11 +10,12 @@
   ::ng-deep .p-dialog .p-dialog-header .p-icon {
     background-color: transparent !important;
     /* padding: 5px;*/ /* Ajusta el tamaño del ícono según necesites */
-    color: grey;
+    color: #103D70;
   }
 ::ng-deep .lbl {
   margin-top: 5px;
   text-align: left !important;
+  padding-top:5px;
 }
 
 ::ng-deep .inptSpace {
@@ -29,3 +30,7 @@
   background: #F0F0F0 !important;
 }
 
+::ng-deep .inptSize{
+  height: 35px;
+  padding-right: 4px ;
+} 
