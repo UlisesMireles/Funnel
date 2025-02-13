@@ -29,6 +29,9 @@ builder.Services.AddScoped<ILicenciaData, LicenciaData>();
 
 
 builder.Services.AddScoped<IEmail, Email>();
+builder.Services.AddScoped<IAdministracionData, AdministracionData>();
+builder.Services.AddScoped<IAdministracionService, AdministracionService>();
+
 
 
 
