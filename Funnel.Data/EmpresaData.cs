@@ -148,9 +148,10 @@ namespace Funnel.Data
             return result;
         }
 
-        public async Task<List<SEL_Licencias>> SEL_Licencias()
+
+        public async Task<List<Catalog_Licencias>> Catalog_Licencias()
         {
-            List<SEL_Licencias> result = new List<SEL_Licencias>();
+            List<Catalog_Licencias> result = new List<Catalog_Licencias>();
             IList<ParameterSQl> list = new List<ParameterSQl>
             {
                 DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, "SEL-LICENCIAS"),
@@ -159,7 +160,7 @@ namespace Funnel.Data
             {
                 while (reader.Read())
                 {
-                    var dto = new SEL_Licencias();
+                    var dto = new Catalog_Licencias();
                     dto.IdLicencia = ComprobarNulos.CheckIntNull(reader["IdLicencia"]);
                     dto.NombreLicencia = ComprobarNulos.CheckStringNull(reader["NombreLicencia"]);
                     result.Add(dto);

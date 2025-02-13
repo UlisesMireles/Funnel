@@ -7,10 +7,10 @@ import { MessageService } from 'primeng/api';
 import { EmpresasService } from '../../../services/empresas.service';
 
 /*Intefaces*/
-import { INSUPDEmpresa } from '../../../interfaces/ins-upd-empresa';
+import { requestEmpresa } from '../../../interfaces/Empresa';
 import { baseOut } from '../../../interfaces/utils/baseOut'
-import { Empresa } from '../../../interfaces/sel_Empresa';
-import { Licencia } from '../../../interfaces/Licencia';
+import { dataEmpresa } from '../../../interfaces/Empresa';
+import { dropdownLicencia } from '../../../interfaces/Licencia';
 
 @Component({
   selector: 'app-modal-empresas',
@@ -20,13 +20,13 @@ import { Licencia } from '../../../interfaces/Licencia';
 })
 export class ModalEmpresasComponent {
   @Input() title: string = 'Modal';
-  @Input() visible: boolean = false;  
-  @Input() insertar: boolean = false; 
-  @Input() empresa!: Empresa;
-  request!: INSUPDEmpresa;
+  @Input() visible: boolean = false;
+  @Input() insertar: boolean = false;
+  @Input() empresa!: dataEmpresa;
+  request!: requestEmpresa;
 
   empresaActiva: boolean = false;
-  licenciasDropdown:Licencia[] = [];
+  licenciasDropdown:dropdownLicencia[] = [];
   selectedLicencia: number | undefined;
 
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -46,24 +46,25 @@ export class ModalEmpresasComponent {
   close() {
     this.visible = false;
     this.visibleChange.emit(this.visible);
-    this.closeModal.emit();
+    this.closeModal.emit();  
   }
 
   getLicencias() {
     this.empresasService.getLicencias().subscribe({
-      next: (result: Licencia[]) => {
+      next: (result: dropdownLicencia[]) => {
         this.licenciasDropdown = result;
       },
       error: (error) => {
-        console.error(error);
+        this.messageService.add({ severity: 'error', summary: 'Error', detail: error });
       }
     });
   }
   guardarEmpresa() {
     if (!this.request) {
-      this.request = {} as INSUPDEmpresa;
+      this.request = {} as requestEmpresa;
     }
-    if (!this.validarCampos()) {
+    if (this.camposInvalidos()) {
+      this.mostrarToastError();
       return;
     }
     this.request.idEmpresa = 0;
@@ -84,7 +85,6 @@ export class ModalEmpresasComponent {
     this.request.usuario = this.empresa.usuarioAdministrador;
     this.request.urlSitio = this.empresa.urlSitio;
     this.request.activo = 1;
-    console.log(this.request);
     this.empresasService.postINSUPDEmpresa(this.request).subscribe(
       {
         next: (result: baseOut) => {
@@ -104,9 +104,10 @@ export class ModalEmpresasComponent {
   }
   actualizaEmpresa() {
     if (!this.request) {
-      this.request = {} as INSUPDEmpresa;
+      this.request = {} as requestEmpresa;
     }
-    if (!this.validarCampos()) {
+    if (this.camposInvalidos()) {
+      this.mostrarToastError();
       return;
     }
     this.request.idEmpresa = this.empresa.idEmpresa;
@@ -127,7 +128,6 @@ export class ModalEmpresasComponent {
     this.request.usuario = this.empresa.usuarioAdministrador;
     this.request.urlSitio = this.empresa.urlSitio;
     this.request.activo = this.empresaActiva ? 1 : 0;
-    console.log(this.request);
     this.empresasService.postINSUPDEmpresa(this.request).subscribe(
       {
         next: (result: baseOut) => {
@@ -150,7 +150,7 @@ export class ModalEmpresasComponent {
       return texto!
         .trim()
         .split(/\s+/)
-        .map(palabra => palabra.charAt(0).toUpperCase()) 
+        .map(palabra => palabra.charAt(0).toUpperCase())
         .join('');
     };
     const inicialesNombre = obtenerIniciales(this.empresa.nombre);
@@ -161,59 +161,51 @@ export class ModalEmpresasComponent {
   onAliasChange(newValue: string) {
     this.empresa.usuarioAdministrador = "admin." + newValue;
   }
-
-  validarCampos(): boolean {
-    this.messageService.clear();
-
-    if (!this.empresa.nombreEmpresa) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El nombre de la empresa es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.alias) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El alias es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.rfc) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El RFC es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.idLicencia) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'La licencia es obligatoria.' });
-      return false;
-    }
-    if (!this.empresa.nombre) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El nombre del administrador es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.apellidoPaterno) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El apellido paterno es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.apellidoMaterno) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El apellido materno es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.usuarioAdministrador) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El usuario es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.correoAdministrador) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'El correo es obligatorio.' });
-      return false;
-    }
-    if (!this.empresa.vInicio) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'La fecha de inicio es obligatoria.' });
-      return false;
-    }
-    if (!this.empresa.vTerminacion) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'La fecha de terminación es obligatoria.' });
-      return false;
-    }
-    if (this.empresa.vInicio > this.empresa.vTerminacion) {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'La fecha de inicio no puede ser mayor a la fecha de terminación.' });
-      return false;
-    }
-    return true;
+  esCampoInvalido(valor: any): boolean {
+    return valor === null || valor === undefined || valor === '' || valor <= 0;
   }
+  camposInvalidos(): boolean {
+    return (
+      this.esCampoInvalido(this.empresa.nombreEmpresa) ||
+      this.esCampoInvalido(this.empresa.alias) ||
+      this.esCampoInvalido(this.empresa.urlSitio) ||
+      this.esCampoInvalido(this.empresa.rfc) ||
+      this.esCampoInvalido(this.empresa.idLicencia) ||
+      this.esCampoInvalido(this.empresa.nombre) ||
+      this.esCampoInvalido(this.empresa.vInicio) ||
+      this.esCampoInvalido(this.empresa.vTerminacion) ||
+      !this.validarFechas()
+    );
+  }
+  
+  /**
+   * Método para validar que vInicio sea menor a vTerminacion.
+   */
+  validarFechas(): boolean {
+    if (!this.empresa.vInicio || !this.empresa.vTerminacion) {
+      return true; // No validar si las fechas están vacías
+    }
+    return new Date(this.empresa.vInicio) < new Date(this.empresa.vTerminacion);
+  }
+  
+  /**
+   * Método para mostrar un toast de error cuando hay campos vacíos o fechas incorrectas.
+   */
+  mostrarToastError() {
+    this.messageService.clear();
+    let mensaje = 'Es necesario llenar los campos indicados.';
+    
+    if (!this.validarFechas()) {
+      mensaje = 'La fecha de inicio debe ser menor a la fecha de terminación.';
+    }
+  
+    this.messageService.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: mensaje,
+    });
+  }
+  
+  
 
 }

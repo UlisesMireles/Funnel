@@ -1,0 +1,115 @@
+<div class="row" style="text-align: left; font-weight: bold;"><h3>Administración General de Licencias</h3></div>
+<div class="row">
+  <div class="row contrenedorTabla">
+    <div *ngIf="loading">Cargando...</div>
+    <p-table
+      *ngIf="!loading && licencias.length > 0"
+      #dt
+      [stripedRows]="true"
+      [value]="licencias"
+      [paginator]="true"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 20, 50]"
+      (onPage)="pageChange($event)"
+      [first]="first"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
+      [globalFilterFields]="['nombreLicencia']">
+      <<ng-template class="divAccionesTabla" #caption>
+        <div class="row">
+          <div class="col inDivDatatableHeader" style="text-align: left;">
+            <div>
+              <p-iconfield iconPosition="left" class="ml-auto">
+                <p-inputicon>
+                  <i class="pi pi-search"></i>
+                </p-inputicon>
+                <input
+                  pInputText
+                  type="text"
+                  (input)="onInput($event)"
+                  placeholder="Buscar"
+                />
+              </p-iconfield>
+            </div>
+          </div>
+          <div class="col inDivDatatableHeader">
+            <div class="mb-4">
+              <p-button
+                type="button"
+                icon="pi pi-chevron-left"
+                (click)="prev()"
+                class="Iconos"
+                [disabled]="isFirstPage()"
+                text
+              />
+              <p-button
+                type="button"
+                icon="pi pi-refresh"
+                class="Iconos"
+                (click)="reset()"
+                text
+              />
+              <p-button
+                type="button"
+                icon="pi pi-chevron-right"
+                class="Iconos"
+                (click)="next()"
+                [disabled]="isLastPage()"
+                text
+              />
+            </div>
+          </div>
+          <div
+          class="col inDivDatatableHeader"
+          style="text-align: right; margin-right: 5px"
+        >
+          <p-button
+            label=""
+            icon="pi pi-plus"
+            severity="secondary"
+            (click)="inserta()"
+          />
+        </div>
+        </div>
+      </ng-template>
+      <ng-template #header>
+        <tr class="custom-header">
+          <th></th>
+          <th pSortableColumn="nombreLicencia">
+            Tipo de Licencia <p-sortIcon field="nombreLicencia" />
+          </th>
+          <th pSortableColumn="cantidadUsuarios"> Cantidad Usuarios Activos <p-sortIcon field="cantidadUsuarios" /></th>
+          <th pSortableColumn="cantidadOportunidades">
+            Cantidad Oortunidades en Proceso <p-sortIcon field="cantidadOportunidades" />
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-licencia>
+        <tr class="custom-header3 custom-row">
+          <td>
+            <p-button
+              type="button"
+              icon="pi pi-pencil"
+              (click)="actualiza(licencia)"
+              text
+            />
+          </td>
+          <td>{{ licencia.nombreLicencia }}</td>
+          <td>{{ licencia.cantidadUsuarios}}</td>
+          <td>{{ licencia.cantidadOportunidades }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <p-toast position="center"></p-toast>
+</div>
+
+<app-modal-licencias
+  [(visible)]="modalVisible"
+  [title]="'Editar Datos de '"
+  (closeModal)="onModalClose()"
+  (result)="manejarResultado($event)"
+  [insertar]="insertar"
+  [licencia]="licenciaSeleccionada"
+>
+</app-modal-licencias>
+

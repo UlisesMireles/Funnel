@@ -1,5 +1,4 @@
-﻿using Funnel.Data;
-using Funnel.Data.Interfaces;
+﻿using Funnel.Data.Interfaces;
 using Funnel.Models;
 using Funnel.Models.Base;
 using Funnnel.Logic.Interfaces;
@@ -25,9 +24,9 @@ namespace Funnnel.Logic
         {
             return await _EmpresaData.SEL_Admins();
         }
-        public async Task<List<SEL_Licencias>> SEL_Licencias()
+        public async Task<List<Catalog_Licencias>> Catalog_Licencias()
         {
-            return await _EmpresaData.SEL_Licencias();
+            return await _EmpresaData.Catalog_Licencias();
         }
     }
 }

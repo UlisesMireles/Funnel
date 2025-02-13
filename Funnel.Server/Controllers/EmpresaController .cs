@@ -1,6 +1,5 @@
 ﻿using Funnel.Models;
 using Funnel.Models.Base;
-using Funnnel.Logic;
 using Funnnel.Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,9 +34,9 @@ namespace Funnel.Server.Controllers
             return Ok(respuesta);
         }
         [HttpGet("[action]/")]
-        public async Task<ActionResult<List<SEL_Licencias>>> SEL_Licencias()
+        public async Task<ActionResult<List<Catalog_Licencias>>> Catalog_Licencias()
         {
-            var respuesta = await _empresaService.SEL_Licencias();
+            var respuesta = await _empresaService.Catalog_Licencias();
             return Ok(respuesta);
         }
     }
