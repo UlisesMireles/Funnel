@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'sectores', component: SectoresComponent, title: 'Sectores', canActivate: [AuthGuard]  },
   { path: 'recuperar-contrasena', component: ResetPasswordComponent, title: 'Recuperar contraseña' },
   { path: 'administracion', component: AdministracionComponent, title: 'Administración', canActivate: [AuthGuard]  },
-  { path: '**', component: AdministracionComponent, title: 'Administración', canActivate: [AuthGuard]  }
+  { path: '**', component: EmpresasComponent, title: 'Empresas', canActivate: [AuthGuard]  }
 
 ];
 

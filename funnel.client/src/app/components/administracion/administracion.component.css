@@ -13,23 +13,19 @@
     margin-top: 10px
 }
 
-::ng-deep .hide-filter-icon p-button {
-    display: none;
-}
-
 ::ng-deep .p-datatable-header {
     background-color: #665F50 !important;
     padding: 0 !important;
-    height: 55px;
+    height: 35px;
 }
-
+/* 
 ::ng-deep .Iconos .pi {
-    color: white;
+    color: red;
 }
 
 ::ng-deep .Iconos {
-    color: white;
-}
+    color: red;
+} */
 
 .inDivDatatableHeader {
     padding-left: 50px;
@@ -48,8 +44,8 @@
 }
 
 .custom-header3 td {
-    height: 50px;
-    width: 50px;
+    height: 20px;
+    width: 20px;
 }
 
 ::ng-deep .p-paginator .p-component {
@@ -155,4 +151,9 @@
 .inputModal {
     width: 80% !important;
     padding-left: 2px;
+}
+
+::ng-deep div.inDivDatatableHeader > p-button > button.p-button {
+    width: 25px;
+    height: 25px;
 }

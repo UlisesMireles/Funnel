@@ -44,15 +44,43 @@
     margin: 0;
 }
 
-.menu-items li.menuI a {
+ .menu-items li.menuI a {
     color: white;
     font-weight: bold;
     text-decoration: none;
+    padding: 5px;
+    border-bottom: 4px solid transparent;
+    transition: background-color 0.3s, color 0.3s, border-bottom-color 0.3s;
+    display: inline-block;
 }
 
 .menu-items li.menuI a:hover {
+    background-color: white;    
+    color: #103D70;
+    border-bottom: 4px solid #31A3F4;
+} 
+.menu-items .menuI.nav-item.dropdown {
+    position: relative;
+}
+
+.menu-items .menuI.nav-item.dropdown .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1050;
+    margin-top: 0;
+    border: none;
+    border-radius: 0;
+}
+
+.menu-items .menuI.nav-item.dropdown > a {
     padding: 5px;
-    background-color: white;
+    border-bottom: 4px solid transparent;
+}
+
+.menu-items .menuI.nav-item.dropdown:hover > a,
+.menu-items .menuI.nav-item.dropdown .dropdown-menu:hover {
+    background-color: white;    
     color: #103D70;
     border-bottom: 4px solid #31A3F4;
 }
@@ -73,13 +101,6 @@
     margin-top: 0;
 }
 
-.dropdown-menu li.submenu a:hover {
-    padding: 5px;
-    background-color: white;
-    color: #103D70;
-    border-bottom: 4px solid #31A3F4;
-}
-
 .subm {
     background-color: white;
     border-radius: 0 !important;
@@ -87,17 +108,6 @@
     padding: 0 !important;
     padding-bottom: 0 !important;
     margin-bottom: 0 !important;
-    font-size: 14px !important;
-}
-
-.subm:hover {
-    background-color: white;
-    border-radius: 0 !important;
-    color: #103D70 !important;
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-    margin-bottom: 0 !important;
-    border-bottom: 4px solid #31A3F4;
     font-size: 14px !important;
 }
 
@@ -116,6 +126,19 @@
     background-color: white;
     color: #103D70;
 }
+
+ul.subm {
+    border: 1px solid !important;
+}
+
+ul.subm:hover {
+    border-bottom: none !important;
+}
+
+ul.subm > li > a {
+    padding: 5px !important;
+}
+
 
 .navbar-nav {
     align-items: center;
