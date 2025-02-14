@@ -1,4 +1,4 @@
-import { requestEmpresa } from './Empresa';
+
 // Dropdown perteneciente a empresas licencias
 export interface dropdownLicencia {
   idLicencia: number;

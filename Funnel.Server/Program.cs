@@ -26,6 +26,8 @@ builder.Services.AddScoped<IEmpresaData, EmpresaData>();
 builder.Services.AddScoped<IEmpresaService, EmpresaService>();
 builder.Services.AddScoped<ILicenciaService, LicenciaService>();
 builder.Services.AddScoped<ILicenciaData, LicenciaData>();  
+builder.Services.AddScoped<ISectorService, SectorService>();
+builder.Services.AddScoped<ISectorData, SectorData>();  
 
 
 builder.Services.AddScoped<IEmail, Email>();

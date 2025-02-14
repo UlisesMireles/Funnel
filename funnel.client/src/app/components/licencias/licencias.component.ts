@@ -9,7 +9,6 @@ import { MessageService } from 'primeng/api';
 import { LicenciasService } from './../../services/licencias.service';
 
 // Interfaces
-import { requestLicencia } from '../../interfaces/Licencia';
 import { baseOut } from '../../interfaces/utils/baseOut';
 import { SEL_Licencia } from '../../interfaces/Licencia';
 
