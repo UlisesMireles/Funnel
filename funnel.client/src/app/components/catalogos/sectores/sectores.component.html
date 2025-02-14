@@ -18,42 +18,27 @@
       [first]="first"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
       [globalFilterFields]="['nombreLicencia']">
-
       <ng-template class="divAccionesTabla" #caption>
         <div class="row">
-          <div class="col inDivDatatableHeader" style="text-align: left;">
-            <p-iconfield iconPosition="left" class="ml-auto">
-              <p-inputicon>
-                <i class="pi pi-search"></i>
-              </p-inputicon>
-              <input pInputText type="text" (input)="onInput($event)" placeholder="Buscar" />
-            </p-iconfield>
-          </div>
-
-          <div class="col inDivDatatableHeader">
-            <div class="mb-4">
-              <p-button type="button" icon="pi pi-chevron-left" (click)="prev()" class="Iconos" [disabled]="isFirstPage()" text />
-              <p-button type="button" icon="pi pi-refresh" class="Iconos" (click)="reset()" text />
-              <p-button type="button" icon="pi pi-chevron-right" class="Iconos" (click)="next()" [disabled]="isLastPage()" text />
+            <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
+                <p-button label="" icon="pi pi-refresh" (click)="reset()"severity="secondary"
+                    [ngStyle]="{'margin-right': '5px'}" />
+                <p-button label="" icon="pi pi-plus" severity="secondary"
+                    (click)="inserta()" />
             </div>
-          </div>
-
-          <div class="col inDivDatatableHeader" style="text-align: right; margin-right: 5px;">
-            <p-button label="" icon="pi pi-plus" severity="secondary" (click)="inserta()" />
-          </div>
         </div>
-      </ng-template>
+    </ng-template>
 
       <ng-template #header>
         <tr class="custom-header">
           <th></th>
-          <th pSortableColumn="nombreSector">Sector <p-sortIcon field="nombreSector" /></th>
-          <th pSortableColumn="descripcionSector">Descripción Sector <p-sortIcon field="cantidadUsuarios" /></th>
-          <th pSortableColumn="fechaCreacion">Fecha Creación <p-sortIcon field="fechaCreacion" /></th>
-          <th pSortableColumn="usuarioCreador">Usuario Creador <p-sortIcon field="usuarioCreador" /></th>
-          <th pSortableColumn="fechaModificacion">Fecha Modificación <p-sortIcon field="fechaModificacion" /></th>
-          <th pSortableColumn="usuarioModifico">Usuario Modificó<p-sortIcon field="usuarioModifico" /></th>
-          <th pSortableColumn="desEstatusActivo">Estatus <p-sortIcon field="desEstatusActivo" /></th>
+          <th pSortableColumn="nombreSector">Sector </th>
+          <th pSortableColumn="descripcionSector">Descripción Sector</th>
+          <th pSortableColumn="fechaCreacion">Fecha Creación </th>
+          <th pSortableColumn="usuarioCreador">Usuario Creador </th>
+          <th pSortableColumn="fechaModificacion">Fecha Modificación</th>
+          <th pSortableColumn="usuarioModifico">Usuario Modificó</th>
+          <th pSortableColumn="desEstatusActivo">Estatus </th>
         </tr>
         <tr class="custom-header2">
           <th></th>
@@ -62,6 +47,8 @@
               type="text"
               field="nombreSector"
               placeholder=""
+              showClear="false"
+              showMenu="false"
               ariaLabel="nombreSector"
               class="hide-filter-icon"
             ></p-columnFilter>
@@ -71,6 +58,8 @@
               type="text"
               field="descripcionSector"
               ariaLabel="descripcionSector"
+              showClear="false"
+              showMenu="false"
               class="hide-filter-icon custom-width"
               style="width: 50px !important"
             ></p-columnFilter>
@@ -81,6 +70,8 @@
               field="fechaCreacion"
               placeholder=""
               ariaLabel="fechaCreacion"
+              showClear="false"
+              showMenu="false"
               class="hide-filter-icon custom-width2"
             ></p-columnFilter>
           </th>
@@ -89,6 +80,8 @@
             type="text"
             field="usuarioCreador"
             placeholder=""
+            showClear="false"
+            showMenu="false"
             ariaLabel="usuarioCreador"
             class="hide-filter-icon custom-width2"
           ></p-columnFilter>
@@ -98,6 +91,8 @@
             type="text"
             field="fechaModificacion"
             placeholder=""
+            showClear="false"
+            showMenu="false"
             ariaLabel="fechaModificacion"
             class="hide-filter-icon custom-width2"
           ></p-columnFilter>
@@ -107,6 +102,8 @@
               type="text"
               field="usuarioModifico"
               placeholder=""
+              showClear="false"
+              showMenu="false"
               ariaLabel="usuarioModifico"
               class="hide-filter-icon custom-width3"
             ></p-columnFilter>
@@ -116,6 +113,7 @@
             <p-select
               [options]="EstatusDropdown"
               [(ngModel)]="selectedEstatus"
+
               (onChange)="FiltrarPorEstatus()"
               optionLabel="label"
               optionValue="value"
@@ -126,11 +124,11 @@
       </ng-template>
 
       <ng-template #body let-sector>
-        <tr class="custom-header3 custom-row">
+        <tr class="custom-header3 custom-row filas">
           <td>
             <p-button type="button" icon="pi pi-pencil" (click)="actualiza(sector)" text />
           </td>
-          <td>{{ sector.nombreSector }}</td>
+          <td style="font-weight: bold;">{{ sector.nombreSector }}</td>
           <td>{{ sector.descripcionSector }}</td>
           <td>{{ sector.fechaCreacion }}</td>
           <td>{{ sector.usuarioCreador }}</td>

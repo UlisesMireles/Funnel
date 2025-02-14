@@ -14,63 +14,16 @@
       [first]="first"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
       [globalFilterFields]="['nombreLicencia']">
-      <<ng-template class="divAccionesTabla" #caption>
+      <ng-template class="divAccionesTabla" #caption>
         <div class="row">
-          <div class="col inDivDatatableHeader" style="text-align: left;">
-            <div>
-              <p-iconfield iconPosition="left" class="ml-auto">
-                <p-inputicon>
-                  <i class="pi pi-search"></i>
-                </p-inputicon>
-                <input
-                  pInputText
-                  type="text"
-                  (input)="onInput($event)"
-                  placeholder="Buscar"
-                />
-              </p-iconfield>
+            <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
+                <p-button label="" icon="pi pi-refresh" (click)="reset()"severity="secondary"
+                    [ngStyle]="{'margin-right': '5px'}" />
+                <p-button label="" icon="pi pi-plus" severity="secondary"
+                    (click)="inserta()" />
             </div>
-          </div>
-          <div class="col inDivDatatableHeader">
-            <div class="mb-4">
-              <p-button
-                type="button"
-                icon="pi pi-chevron-left"
-                (click)="prev()"
-                class="Iconos"
-                [disabled]="isFirstPage()"
-                text
-              />
-              <p-button
-                type="button"
-                icon="pi pi-refresh"
-                class="Iconos"
-                (click)="reset()"
-                text
-              />
-              <p-button
-                type="button"
-                icon="pi pi-chevron-right"
-                class="Iconos"
-                (click)="next()"
-                [disabled]="isLastPage()"
-                text
-              />
-            </div>
-          </div>
-          <div
-          class="col inDivDatatableHeader"
-          style="text-align: right; margin-right: 5px"
-        >
-          <p-button
-            label=""
-            icon="pi pi-plus"
-            severity="secondary"
-            (click)="inserta()"
-          />
         </div>
-        </div>
-      </ng-template>
+    </ng-template>
       <ng-template #header>
         <tr class="custom-header">
           <th></th>
@@ -84,7 +37,7 @@
         </tr>
       </ng-template>
       <ng-template #body let-licencia>
-        <tr class="custom-header3 custom-row">
+        <tr class="custom-header3 custom-row filas">
           <td>
             <p-button
               type="button"
@@ -93,7 +46,7 @@
               text
             />
           </td>
-          <td>{{ licencia.nombreLicencia }}</td>
+          <td style="font-weight: bold;">{{ licencia.nombreLicencia }}</td>
           <td>{{ licencia.cantidadUsuarios}}</td>
           <td>{{ licencia.cantidadOportunidades }}</td>
         </tr>

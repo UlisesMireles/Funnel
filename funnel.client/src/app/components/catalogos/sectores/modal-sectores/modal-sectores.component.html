@@ -2,14 +2,14 @@
   [(visible)]="visible"
   [modal]="true"
   [closable]="true"
-  [style]="{ width: '25rem', heigth: '20rem' }"
+  [style]="{ width: '35rem', heigth: '25rem' }"
   (onHide)="close()"
   (onShow)="onDialogShow()"
   class="bodyDialog"
 >
   <ng-template pTemplate="header">
-    <h6 *ngIf="!insertar" class="margen">{{ title + sector.nombreSector }}</h6>
-    <h6 *ngIf="insertar" class="margen">Nuevo Sector</h6>
+    <label *ngIf="!insertar" class="margen">{{ title + sector.nombreSector }}</label>
+    <label *ngIf="insertar" class="margen">Nuevo Sector</label>
   </ng-template>
 
   <ng-template pTemplate="content">

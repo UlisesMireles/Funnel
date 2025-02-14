@@ -23,106 +23,59 @@
         'nombreLicencia'
       ]"
     >
-      <ng-template class="divAccionesTabla" #caption>
-        <div class="row">
-          <div class="col inDivDatatableHeader" style="text-align: left">
-            <div>
-              <p-iconfield iconPosition="left" class="ml-auto">
-                <p-inputicon>
-                  <i class="pi pi-search"></i>
-                </p-inputicon>
-                <input
-                  pInputText
-                  type="text"
-                  (input)="onInput($event)"
-                  placeholder="Buscar"
-                />
-              </p-iconfield>
-            </div>
+    <ng-template class="divAccionesTabla" #caption>
+      <div class="row">
+          <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
+              <p-button label="" icon="pi pi-refresh" (click)="reset()"severity="secondary"
+                  [ngStyle]="{'margin-right': '5px'}" />
+              <p-button label="" icon="pi pi-plus" severity="secondary"
+                  (click)="inserta()" />
           </div>
-          <div class="col inDivDatatableHeader">
-            <div class="mb-4">
-              <p-button
-                type="button"
-                icon="pi pi-chevron-left"
-                (click)="prev()"
-                class="Iconos"
-                [disabled]="isFirstPage()"
-                text
-              />
-              <p-button
-                type="button"
-                icon="pi pi-refresh"
-                class="Iconos"
-                (click)="reset()"
-                text
-              />
-              <p-button
-                type="button"
-                icon="pi pi-chevron-right"
-                class="Iconos"
-                (click)="next()"
-                [disabled]="isLastPage()"
-                text
-              />
-            </div>
-          </div>
-          <div
-            class="col inDivDatatableHeader"
-            style="text-align: right; margin-right: 5px"
-          >
-            <p-button
-              label=""
-              icon="pi pi-plus"
-              severity="secondary"
-              (click)="inserta()"
-            />
-          </div>
-        </div>
-      </ng-template>
+      </div>
+  </ng-template>
 
       <ng-template #header>
         <tr class="custom-header">
           <th></th>
           <th pSortableColumn="nombreEmpresa">
-            Empresa <p-sortIcon field="nombreEmpresa" />
+            Empresa
           </th>
-          <th pSortableColumn="alias">Alias <p-sortIcon field="alias" /></th>
+          <th pSortableColumn="alias">Alias</th>
           <th pSortableColumn="urlSitio">
-            Url Sitio <p-sortIcon field="urlSitio" />
+            Url Sitio
           </th>
           <th pSortableColumn="administrador" class="custom-width4">
-            Administrador <p-sortIcon field="administrador" />
+            Administrador
           </th>
           <th pSortableColumn="usuarioAdministrador">
-            User Admin <p-sortIcon field="usuarioAdministrador" />
+            User Admin
           </th>
           <th pSortableColumn="vInicio">
-            Inicio <p-sortIcon field="vInicio" />
+            Inicio
           </th>
           <th pSortableColumn="vTerminacion">
-            Terminación <p-sortIcon field="vTerminacion" />
+            Terminación
           </th>
           <th pSortableColumn="nombreLicencia">
-            Licencia <p-sortIcon field="nombreLicencia" />
+            Licencia
           </th>
           <th pSortableColumn="cantidadUsuarios">
-            User L <p-sortIcon field="cantidadUsuarios" />
+            User L
           </th>
           <th pSortableColumn="userReal">
-            User A <p-sortIcon field="userReal" />
+            User A
           </th>
           <th pSortableColumn="cantidadOportunidades">
-            Oport L <p-sortIcon field="cantidadOportunidades" />
+            Oport L
           </th>
           <th pSortableColumn="oportAct">
-            Oport A <p-sortIcon field="oportAct" />
+            Oport A
           </th>
           <th pSortableColumn="oportEmp">
-            Oport R <p-sortIcon field="oportEmp" />
+            Oport R
           </th>
           <th pSortableColumn="activo">
-            Estatus <p-sortIcon field="activo" />
+            Estatus
           </th>
         </tr>
         <tr class="custom-header2">
@@ -188,7 +141,7 @@
       </ng-template>
 
       <ng-template #body let-empresa>
-        <tr class="custom-header3 custom-row">
+        <tr class="custom-header3 custom-row filas">
           <td>
             <p-button
               type="button"
@@ -197,7 +150,7 @@
               text
             />
           </td>
-          <td>{{ empresa.nombreEmpresa }}</td>
+          <td style="font-weight: bold;">{{ empresa.nombreEmpresa }}</td>
           <td>{{ empresa.alias }}</td>
           <td>{{ empresa.urlSitio }}</td>
           <td>{{ empresa.administrador }}</td>

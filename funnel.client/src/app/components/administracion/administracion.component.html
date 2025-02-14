@@ -34,11 +34,11 @@
                     </ng-template>
 
                     <ng-template #body let-administrador>
-                        <tr>
+                        <tr class="custom-header3 custom-row filas">
                             <td>
                                 <p-button type="button" icon="pi pi-pencil" (click)="editar(administrador)" text />
                             </td>
-                            <td>{{ administrador.nombre }}</td>
+                            <td style="font-weight: bold;">{{ administrador.nombre }}</td>
                             <td>{{ administrador.usuario }}</td>
                             <td>{{ administrador.correoElectronico }}</td>
                             <td>{{ administrador.descActivo }}</td>
