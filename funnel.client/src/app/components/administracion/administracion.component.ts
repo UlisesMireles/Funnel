@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { Administrador } from '../../interfaces/Administrador';
 import { LazyLoadEvent, MessageService } from 'primeng/api';
 import { AdministradoresService } from '../../services/administradores.service';
 import { baseOut } from '../../interfaces/utils/baseOut';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-administracion',
@@ -20,16 +21,30 @@ export class AdministracionComponent {
   modalVisible: boolean = false;
   dataModal: {} = {};
 
+  EstatusDropdown = [
+    { label: 'Todo', value: null },
+    { label: 'Activo', value: true },
+    { label: 'Inactivo', value: false },
+  ];
+  selectedEstatus: any = true;
+  @ViewChild('dt') dt!: Table;
+
   constructor(private adminService: AdministradoresService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.getAdministradores();
+    this.getAdministradores();    
   }
 
   getAdministradores(): void {
     this.adminService.getAdministradores().subscribe({
       next: (data) => {
         this.administradores = data;
+        setTimeout(() => {
+          if (this.dt) {
+            this.dt.filter(true, 'activo', 'equals');
+            this.selectedEstatus = true;
+          }
+        }, 100);
         this.loading = false;
       },
       error: (error) => {
@@ -99,13 +114,22 @@ export class AdministracionComponent {
   }
 
   insertarAdministrador() : void {
-    this.dataModal = { isEdicion: false, administrador: {} as Administrador };
+    this.dataModal = { isEdicion: false, administrador: {} as Administrador, admins: this.administradores };
     this.modalVisible = true;
   }
 
   editar(admin: Administrador) : void {
     this.dataModal = { isEdicion: true, administrador: admin };
     this.modalVisible = true;
+  }
+
+  filtrarPorEstatus() {
+    if (this.selectedEstatus == null) {
+      this.dt.filter('', 'activo', 'equals');
+      this.dt.filterGlobal('', 'contains');
+    } else {
+      this.dt.filter(this.selectedEstatus, 'activo', 'equals');
+    }
   }
 }
 
@@ -126,13 +150,15 @@ export class AdministradorAgregarDialog {
   isEdicion: boolean = false;
   administrador: Administrador = {} as Administrador;
   form!: FormGroup;
+  emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$";
+  admins: Administrador[] = [];
 
-  constructor(private fb: FormBuilder, private adminService: AdministradoresService) {
+  constructor(private fb: FormBuilder, private adminService: AdministradoresService, private messageService: MessageService) { 
     this.form = this.fb.group({
       idAdministrador: [0],
       nombre: ['', Validators.required],
       usuario: ['', Validators.required],
-      correo: ['', Validators.required],
+      correo: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       activo: [true]
     })
   }
@@ -153,9 +179,10 @@ export class AdministradorAgregarDialog {
         idAdministrador: [0],
         nombre: ['', Validators.required],
         usuario: ['', Validators.required],
-        correo: ['', Validators.required],
+        correo: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
         activo: [true]
-      })
+      });
+      this.admins = this.data.admins;
     }
   }
 
@@ -178,6 +205,40 @@ export class AdministradorAgregarDialog {
       });
       return;
     }
+
+    if(this.validaNombreExistente()){
+      this.messageService.clear();
+      this.messageService.add({
+        severity: 'error',
+        summary: 'El Usuario con el nombre ' +  this.form.get('nombre')?.value + ' ya existe',
+        detail: '',
+        life: 2000
+      });
+      return;
+    }
+
+    if(this.validaUsuarioExistente()){
+      this.messageService.clear();
+      this.messageService.add({
+        severity: 'error',
+        summary: 'El Usuario ' +  this.form.get('usuario')?.value + ' ya existe',
+        detail: '',
+        life: 2000
+      });
+      return;
+    }
+
+    if(this.validaCorreoExistente()){
+      this.messageService.clear();
+      this.messageService.add({
+        severity: 'error',
+        summary: 'El correo ' +  this.form.get('correo')?.value + ' ya existe',
+        detail: '',
+        life: 2000
+      });
+      return;
+    }
+
     const param = this.form.value;
     param.activo = 1;
     param.correoElectronico = param.correo;
@@ -218,5 +279,20 @@ export class AdministradorAgregarDialog {
         console.error(error);
       }
     });
+  }
+
+  validaUsuarioExistente(): boolean {
+    const usuario = this.form.get('usuario')?.value;
+    return this.admins.some((admin) => admin.usuario.toLowerCase() === usuario.toLowerCase());
+  }
+
+  validaNombreExistente(): boolean {
+    const nombre = this.form.get('nombre')?.value;
+    return this.admins.some((admin) => admin.nombre.toLowerCase().trim() === nombre.toLowerCase().trim());
+  }
+
+  validaCorreoExistente(): boolean {
+    const correo = this.form.get('correo')?.value;
+    return this.admins.some((admin) => admin.correoElectronico.toLowerCase().trim() === correo.toLowerCase().trim());
   }
 }

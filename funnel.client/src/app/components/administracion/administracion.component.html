@@ -31,6 +31,24 @@
                             <th>Correo Electrónico</th>
                             <th>Estatus</th>
                         </tr>
+                        <tr class="custom-header2">
+                            <th></th>
+                          <th></th>
+                          <th></th>
+                          <th></th>                
+                          <th>
+                            <p-select
+                              [options]="EstatusDropdown"
+                              [(ngModel)]="selectedEstatus"
+                              (onChange)="filtrarPorEstatus()"
+                              placeholder="Seleccionar Estatus"
+                              optionLabel="label"
+                              optionValue="value"
+                              [appendTo]="'body'"
+                            >
+                            </p-select>
+                          </th>
+                        </tr>
                     </ng-template>
 
                     <ng-template #body let-administrador>

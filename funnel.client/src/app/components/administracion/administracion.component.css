@@ -18,6 +18,7 @@
   padding: 0 !important;
   height: 35px;
 }
+
 /*
 ::ng-deep .Iconos .pi {
   color: red;
@@ -157,22 +158,42 @@
   padding-left: 2px;
 }
 
-::ng-deep div.inDivDatatableHeader > p-button > button.p-button {
+::ng-deep div.inDivDatatableHeader>p-button>button.p-button {
   width: 25px;
   height: 25px;
 }
+
 ::ng-deep .hide-filter-icon p-button {
   display: none;
 }
 
-::ng-deep .filas{
+::ng-deep .filas {
   font-size: 12.5px !important;
 }
-::ng-deep .filas td{
-  height: 20px;}
-  ::ng-deep .custom-footer td{
-    padding: 0px !important;
-    font-weight: bold;
-    font-size: 12.5px !important;
-    background: #E1DAC7 !important;
-  }
+
+::ng-deep .filas td {
+  height: 20px;
+}
+
+::ng-deep .custom-footer td {
+  padding: 0px !important;
+  font-weight: bold;
+  font-size: 12.5px !important;
+  background: #E1DAC7 !important;
+}
+
+:host ::ng-deep .custom-header2 p-columnFilter input,
+:host ::ng-deep .custom-header2 .p-select {
+  height: 30px !important;
+  min-height: 30px !important;
+  line-height: 30px !important;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  width: auto;
+  margin:3px
+}
+
+::ng-deep .custom-header2 .p-select li{
+  padding:0px;
+}
