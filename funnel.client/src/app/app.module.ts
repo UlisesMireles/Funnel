@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { FooterComponent } from './components/footer/footer.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
@@ -94,7 +95,8 @@ import { StatsComponent } from './components/stats/stats.component';
     ButtonModule,
     OverlayPanelModule,
     InputNumberModule,
-    TextareaModule
+    TextareaModule,
+    PaginatorModule
   ],
   providers: [
     { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },

@@ -25,7 +25,13 @@ export class LicenciasComponent implements OnInit {
 
   licencias: SEL_Licencia []  =[];
   licenciaSeleccionada!: SEL_Licencia;
+  EstatusDropdown = [
+    { label: 'Todo', value: null },
+    { label: 'Activo', value: true },
+    { label: 'Inactivo', value: false },
+  ];
 
+  selectedEstatus: any = true;
   first:number=0;
   rows:number=10;
   loading: boolean = true;
@@ -58,7 +64,8 @@ export class LicenciasComponent implements OnInit {
         idLicencia: 0,
         nombreLicencia: '',
         cantidadUsuarios: 0,
-        cantidadOportunidades: 0
+        cantidadOportunidades: 0,
+        activo: 0
       }
       this.insertar = true;
       this.modalVisible = true;
@@ -83,7 +90,14 @@ export class LicenciasComponent implements OnInit {
         this.dt.filterGlobal(input.value, 'contains');
       }
     }
-
+    FiltrarPorEstatus() {
+      if (this.selectedEstatus == null) {
+        this.dt.filter('', 'activo', 'equals');
+        this.dt.filterGlobal('', 'contains');
+      } else {
+        this.dt.filter(this.selectedEstatus, 'activo', 'equals');
+      }
+    }
     prev() {
       this.first = this.first - this.rows;
     }

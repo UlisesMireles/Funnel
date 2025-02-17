@@ -12,7 +12,7 @@
       [rowsPerPageOptions]="[10, 20, 50]"
       (onPage)="pageChange($event)"
       [first]="first"
-      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros" >
       <ng-template class="divAccionesTabla" #caption>
         <div class="row">
             <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
@@ -33,6 +33,21 @@
           <th pSortableColumn="cantidadOportunidades">
             Cantidad Oortunidades en Proceso <p-sortIcon field="cantidadOportunidades" />
           </th>
+          <th pSortableColumn="Activo">
+            Estatus<p-sortIcon field="Activo" />
+          </th>
+        </tr>
+        <tr class="custom-header2">
+          <th colspan="4"></th>
+          <th>            <p-select
+            [options]="EstatusDropdown"
+            [(ngModel)]="selectedEstatus"
+            (onChange)="FiltrarPorEstatus()"
+            placeholder="Seleccionar Estatus"
+            optionLabel="label"
+            optionValue="value"
+          >
+          </p-select></th>
         </tr>
       </ng-template>
       <ng-template #body let-licencia>
@@ -48,12 +63,13 @@
           <td style="font-weight: bold;">{{ licencia.nombreLicencia }}</td>
           <td>{{ licencia.cantidadUsuarios}}</td>
           <td>{{ licencia.cantidadOportunidades }}</td>
+          <td>{{ licencia.activo === 1 ? "Activo" : "Inactivo" }}</td>
         </tr>
       </ng-template>
       <ng-template #footer>
         <tr class="custom-footer ">
           <td></td>
-          <td colspan="3">Total: {{ getVisibleTotal('nombreLicencia',dt) }}</td>
+          <td colspan="4">Total: {{ getVisibleTotal('nombreLicencia',dt) }}</td>
         </tr>
       </ng-template>
     </p-table>
@@ -68,6 +84,7 @@
   (result)="manejarResultado($event)"
   [insertar]="insertar"
   [licencia]="licenciaSeleccionada"
+  [licencias]="licencias"
 >
 </app-modal-licencias>
 

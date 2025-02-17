@@ -8,5 +8,7 @@
         public int CantidadUsuarios { get; set; }
         public int CantidadOportunidades { get; set; }
         public int IdUsuarioCreador { get; set; }
+        public int Activo{ get; set; }
+
     }
 }

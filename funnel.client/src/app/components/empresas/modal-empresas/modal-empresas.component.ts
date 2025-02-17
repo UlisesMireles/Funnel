@@ -22,6 +22,7 @@ export class ModalEmpresasComponent {
   @Input() visible: boolean = false;
   @Input() insertar: boolean = false;
   @Input() empresa!: dataEmpresa;
+  @Input() empresas: dataEmpresa[] = [];
   request!: requestEmpresa;
 
   empresaActiva: boolean = false;
@@ -173,7 +174,8 @@ export class ModalEmpresasComponent {
       this.esCampoInvalido(this.empresa.nombre) ||
       this.esCampoInvalido(this.empresa.vInicio) ||
       this.esCampoInvalido(this.empresa.vTerminacion) ||
-      !this.validarFechas()
+      !this.validarFechas()||
+      !this.validarNombreEmpresa()
     );
   }
 
@@ -186,6 +188,18 @@ export class ModalEmpresasComponent {
     }
     return new Date(this.empresa.vInicio) < new Date(this.empresa.vTerminacion);
   }
+  validarNombreEmpresa(): boolean {
+    if (this.empresas.some(empresa => empresa.nombreEmpresa === this.empresa.nombreEmpresa)) {
+      return false;
+    }
+    return true;
+  }
+  validarAlias(): boolean {
+    if (this.empresas.some(empresa => empresa.alias === this.empresa.alias)) {
+      return false;
+    }
+    return true;
+  }
 
   /**
    * Método para mostrar un toast de error cuando hay campos vacíos o fechas incorrectas.
@@ -197,7 +211,12 @@ export class ModalEmpresasComponent {
     if (!this.validarFechas()) {
       mensaje = 'La fecha de inicio debe ser menor a la fecha de terminación.';
     }
-
+    if (!this.validarNombreEmpresa()) {
+      mensaje = 'El nombre de la empresa ya existe.';
+    }
+    if (!this.validarAlias()) {
+      mensaje = 'El alias de la empresa ya existe.';
+    }
     this.messageService.add({
       severity: 'error',
       summary: 'Error',

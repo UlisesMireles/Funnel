@@ -38,6 +38,10 @@ export class EmpresasComponent implements OnInit {
   first: number = 0;
   rows: number = 10;
   searchValue: string = '';
+  filterEmpresas = '';
+  filterAlias = '';
+  filterUrl= '';
+  filterLicencia = '';
 
   constructor(
     private empresasService: EmpresasService,
@@ -82,7 +86,9 @@ export class EmpresasComponent implements OnInit {
   applyFilter(value: any, field: string) {
     this.dt.filter(value, field, 'equals');
   }
-
+  updateFilter(event: any, field: string) {
+    this.dt.filter(event, field, 'contains');
+  }
   next() {
     this.first = this.first + this.rows;
   }
@@ -92,7 +98,13 @@ export class EmpresasComponent implements OnInit {
   }
 
   reset() {
+    this.filterAlias = '';
+    this.filterEmpresas='';
+    this.filterLicencia='';
+    this.filterUrl='';
     this.first = 0;
+    this.getEmpresas();
+    this.dt.reset();
   }
   getVisibleTotal(campo: string, dt: any): number {
     const registrosVisibles = dt.filteredValue ? dt.filteredValue : this.empresas;

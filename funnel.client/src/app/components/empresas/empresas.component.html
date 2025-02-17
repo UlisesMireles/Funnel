@@ -15,7 +15,8 @@
       (onPage)="pageChange($event)"
       [showCurrentPageReport]="true"
       [first]="first"
-      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
+      class="ui-table-scrollable" [scrollable]="true" [scrollHeight]="'500px'" >
     <ng-template class="divAccionesTabla" #caption>
       <div class="row">
           <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
@@ -53,19 +54,19 @@
             Licencia
           </th>
           <th pSortableColumn="cantidadUsuarios">
-            User L
+            User Lic
           </th>
           <th pSortableColumn="userReal">
-            User A
+            User Act
           </th>
           <th pSortableColumn="cantidadOportunidades">
-            Oport L
+            Oport Lic
           </th>
           <th pSortableColumn="oportAct">
-            Oport A
+            Oport Act
           </th>
           <th pSortableColumn="oportEmp">
-            Oport R
+            Oport Reg
           </th>
           <th pSortableColumn="activo">
             Estatus
@@ -74,44 +75,20 @@
         <tr class="custom-header2">
           <th></th>
           <th>
-            <p-columnFilter
-              type="text"
-              field="nombreEmpresa"
-              placeholder=""
-              ariaLabel="Empresa"
-              class="hide-filter-icon"
-            ></p-columnFilter>
+            <input pInputText  type="text" [(ngModel)]="filterEmpresas" (ngModelChange)="updateFilter($event, 'nombreEmpresa')">
           </th>
           <th>
-            <p-columnFilter
-              type="text"
-              field="alias"
-              ariaLabel="Alias"
-              class="hide-filter-icon custom-width"
-              style="width: 50px !important"
-            ></p-columnFilter>
+            <input pInputText  type="text" [(ngModel)]="filterAlias" (ngModelChange)="updateFilter($event, 'alias')">
           </th>
           <th>
-            <p-columnFilter
-              type="text"
-              field="urlSitio"
-              placeholder=""
-              ariaLabel="URL"
-              class="hide-filter-icon custom-width2"
-            ></p-columnFilter>
+            <input pInputText  type="text" [(ngModel)]="filterUrl" (ngModelChange)="updateFilter($event, 'urlSitio')">
           </th>
           <th></th>
           <th></th>
           <th></th>
           <th></th>
           <th>
-            <p-columnFilter
-              type="text"
-              field="nombreLicencia"
-              placeholder=""
-              ariaLabel="Licencia"
-              class="hide-filter-icon custom-width3"
-            ></p-columnFilter>
+            <input pInputText   type="text" [(ngModel)]="filterLicencia" (ngModelChange)="updateFilter($event, 'nombreLicencia')">
           </th>
           <th></th>
           <th></th>
@@ -170,9 +147,9 @@
           <td></td>
           <td></td>
           <td></td>
-          <td>{{ getVisibleTotal('cantidadUsuarios', dt) }}</td>
+          <td></td>
           <td>{{ getVisibleTotal('userReal', dt) }}</td>
-          <td>{{ getVisibleTotal('cantidadOportunidades', dt) }}</td>
+          <td></td>
           <td>{{ getVisibleTotal('oportAct', dt) }}</td>
           <td>{{ getVisibleTotal('oportEmp', dt) }}</td>
           <td></td>
@@ -189,5 +166,6 @@
   (result)="manejarResultado($event)"
   [insertar]="insertar"
   [empresa]="empresaSeleccionada"
+  [empresas]="empresas"
 >
 </app-modal-empresas>

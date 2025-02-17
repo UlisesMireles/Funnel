@@ -17,7 +17,7 @@
 
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
-        <label for="nombreEmpresa">Nombre de Empresa: </label>
+        <label for="nombreEmpresa">Nombre de Licencia: </label>
       </div>
       <div class="col-sm-8 inptSpace">
         <input
@@ -32,7 +32,7 @@
 
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
-        <label for="alias">Alias: </label>
+        <label for="alias">Número Usuarios:</label>
       </div>
       <div class="col-sm-8 inptSpace">
         <p-inputnumber class="inptSize" inputId="integeronly" [(ngModel)]="licencia.cantidadUsuarios"></p-inputnumber>
@@ -42,14 +42,21 @@
 
     <div class="row inptSpace">
       <div class="col-sm-4 lbl">
-        <label for="url">Url De Sitio: </label>
+        <label for="url">Número Oportunidades: </label>
       </div>
       <div class="col-sm-8 inptSpace">
         <p-inputnumber class="inptSize" inputId="integeronly" [(ngModel)]="licencia.cantidadOportunidades"></p-inputnumber>
         <label *ngIf="esCampoInvalido(licencia.cantidadOportunidades)" class="text-danger">*</label>
       </div>
     </div>
-
+    <div class="row inptSpace" *ngIf="!insertar">
+      <div class="col-sm-4 lbl">
+        <label for="Estatus"> Estatus: </label>
+      </div>
+      <div class="col-sm-8 inptSpace">
+        <p-checkbox [(ngModel)]="licenciaActiva" [binary]="true" />
+      </div>
+    </div>
 
 
 

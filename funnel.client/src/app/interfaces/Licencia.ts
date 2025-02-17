@@ -11,10 +11,12 @@ export interface requestLicencia{
     cantidadUsuarios: number;
     cantidadOportunidades: number;
     idUsuario:number;
+    activo:number;
 }
 export interface SEL_Licencia{
     idLicencia: number;
     nombreLicencia:string| undefined;
     cantidadUsuarios: number;
     cantidadOportunidades:number;
+    activo: number;
 }
