@@ -40,7 +40,6 @@ export class LicenciasComponent implements OnInit {
     this.licenciasService.getLicencias().subscribe({
       next: (result: SEL_Licencia[]) => {
         this.licencias = result;
-        console.log(this.licencias); // if you want to add the result to the licencias array
         this.loading = false;
       },
       error: (error) => {
@@ -84,6 +83,7 @@ export class LicenciasComponent implements OnInit {
         this.dt.filterGlobal(input.value, 'contains');
       }
     }
+
     prev() {
       this.first = this.first - this.rows;
     }
@@ -100,6 +100,13 @@ export class LicenciasComponent implements OnInit {
       return this.licencias
         ? this.first + this.rows >= this.licencias.length
         : true;
+    }
+    getVisibleTotal(campo: string, dt: any): number {
+      const registrosVisibles = dt.filteredValue ? dt.filteredValue : this.licencias;
+      if (campo === 'nombreLicencia') {
+        return registrosVisibles.length; // Retorna el número de registros visibles
+      }
+      return registrosVisibles.reduce((acc: number, licencia: SEL_Licencia) => acc + Number(licencia[campo as keyof SEL_Licencia] || 0), 0);
     }
     // metodos moda
     onModalClose() {

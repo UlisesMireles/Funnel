@@ -7,6 +7,7 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { EmpresasComponent } from './components/empresas/empresas.component';
 import { LicenciasComponent } from './components/licencias/licencias.component';
 import { SectoresComponent } from './components/catalogos/sectores/sectores.component';
+import { StatsComponent } from './components/stats/stats.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'empresas', component: EmpresasComponent, title: 'Empresas', canActivate: [AuthGuard]  },
   { path: 'licencias', component: LicenciasComponent, title: 'Licencias', canActivate: [AuthGuard]  },
   { path: 'sectores', component: SectoresComponent, title: 'Sectores', canActivate: [AuthGuard]  },
+  { path: 'stats', component: StatsComponent, title: 'Stats', canActivate: [AuthGuard]  },
   { path: 'recuperar-contrasena', component: ResetPasswordComponent, title: 'Recuperar contraseña' },
   { path: 'administracion', component: AdministracionComponent, title: 'Administración', canActivate: [AuthGuard]  },
   { path: '**', component: EmpresasComponent, title: 'Empresas', canActivate: [AuthGuard]  }

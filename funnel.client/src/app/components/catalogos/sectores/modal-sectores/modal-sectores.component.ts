@@ -15,8 +15,7 @@ import { SectoresService } from '../../../../services/sectores.service';
   selector: 'app-modal-sectores',
   standalone: false,
 
-  templateUrl: './modal-sectores.component.html',
-  styleUrl: './modal-sectores.component.css'
+  templateUrl: './modal-sectores.component.html'
 })
 export class ModalSectoresComponent {
 
@@ -56,7 +55,7 @@ export class ModalSectoresComponent {
         this.request.descripcionSector= this.sector.descripcionSector;
         this.request.idUsuarioCreador = parseInt(localStorage.getItem('currentUser') || '0', 10);
         this.request.activo = this.sectorActivo ? 1 : 0;
-        console.log(this.request);
+
         this.sectoresService.postINSUPDSector(this.request).subscribe(
           {
             next: (result: baseOut) => {

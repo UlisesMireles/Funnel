@@ -137,6 +137,13 @@
           <td>{{ sector.desEstatusActivo }}</td>
         </tr>
       </ng-template>
+      <ng-template #footer>
+        <tr class="custom-footer " >
+          <td></td>
+          <td colspan="7">Total: {{ getVisibleTotal('nombreSector',dt) }}</td>
+
+        </tr>
+      </ng-template>
     </p-table>
   </div>
 

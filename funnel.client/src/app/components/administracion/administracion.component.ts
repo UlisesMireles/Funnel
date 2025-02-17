@@ -64,7 +64,13 @@ export class AdministracionComponent {
     this.getAdministradores();
     this.first = 0;
   }
-
+    getVisibleTotal(campo: string, dt: any): number {
+      const registrosVisibles = dt.filteredValue ? dt.filteredValue : this.administradores;
+      if (campo === 'nombre') {
+        return registrosVisibles.length; // Retorna el número de registros visibles
+      }
+      return registrosVisibles.reduce((acc: number, licencia: Administrador) => acc + Number(licencia[campo as keyof Administrador] || 0), 0);
+    }
   isLastPage(): boolean {
     return this.administradores ? this.first + this.rows >= this.administradores.length : true;
   }
@@ -74,7 +80,7 @@ export class AdministracionComponent {
   }
 
   onModalClose() {
-    this.modalVisible = false;   
+    this.modalVisible = false;
   }
 
   resultadoModal(result: baseOut) {
@@ -82,23 +88,23 @@ export class AdministracionComponent {
     const summary = result.result
       ? `Administrador ${isInsert ? 'registrado' : 'actualizado'} correctamente`
       : 'Se ha producido un error.';
-  
+
     this.messageService.add({
       severity: result.result ? 'success' : 'error',
       summary,
       detail: result.result ? '' : result.errorMessage
     });
-  
+
     this.getAdministradores();
   }
 
   insertarAdministrador() : void {
-    this.dataModal = { isEdicion: false, administrador: {} as Administrador }; 
+    this.dataModal = { isEdicion: false, administrador: {} as Administrador };
     this.modalVisible = true;
   }
 
   editar(admin: Administrador) : void {
-    this.dataModal = { isEdicion: true, administrador: admin }; 
+    this.dataModal = { isEdicion: true, administrador: admin };
     this.modalVisible = true;
   }
 }

@@ -170,3 +170,9 @@
 }
 ::ng-deep .filas td{
   height: 20px;}
+  ::ng-deep .custom-footer td{
+    padding: 0px !important;
+    font-weight: bold;
+    font-size: 12.5px !important;
+    background: #E1DAC7 !important;
+  }

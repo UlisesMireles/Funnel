@@ -15,8 +15,7 @@ import { dropdownLicencia } from '../../../interfaces/Licencia';
 @Component({
   selector: 'app-modal-empresas',
   standalone: false,
-  templateUrl: './modal-empresas.component.html',
-  styleUrl: './modal-empresas.component.css'
+  templateUrl: './modal-empresas.component.html'
 })
 export class ModalEmpresasComponent {
   @Input() title: string = 'Modal';
@@ -46,7 +45,7 @@ export class ModalEmpresasComponent {
   close() {
     this.visible = false;
     this.visibleChange.emit(this.visible);
-    this.closeModal.emit();  
+    this.closeModal.emit();
   }
 
   getLicencias() {
@@ -177,7 +176,7 @@ export class ModalEmpresasComponent {
       !this.validarFechas()
     );
   }
-  
+
   /**
    * Método para validar que vInicio sea menor a vTerminacion.
    */
@@ -187,25 +186,25 @@ export class ModalEmpresasComponent {
     }
     return new Date(this.empresa.vInicio) < new Date(this.empresa.vTerminacion);
   }
-  
+
   /**
    * Método para mostrar un toast de error cuando hay campos vacíos o fechas incorrectas.
    */
   mostrarToastError() {
     this.messageService.clear();
     let mensaje = 'Es necesario llenar los campos indicados.';
-    
+
     if (!this.validarFechas()) {
       mensaje = 'La fecha de inicio debe ser menor a la fecha de terminación.';
     }
-  
+
     this.messageService.add({
       severity: 'error',
       summary: 'Error',
       detail: mensaje,
     });
   }
-  
-  
+
+
 
 }

@@ -15,7 +15,7 @@ export class LoginComponent {
   errorLogin: string = '';
 
   constructor(private fb:FormBuilder, private route: ActivatedRoute, private router: Router, private authService: AuthenticationService) {
-    
+
   }
 
   ngOnInit(): void {
@@ -46,7 +46,6 @@ export class LoginComponent {
       error: (err: Error) => {
         this.showErrors = true;
         this.errorLogin = "Ocurrio un error, intentalo más tarde."
-        console.log(err);
       }
     });
 

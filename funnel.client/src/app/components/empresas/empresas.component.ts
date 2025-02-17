@@ -31,7 +31,7 @@ export class EmpresasComponent implements OnInit {
     { label: 'Inactivo', value: false },
   ];
 
-  selectedEstatus: any = null;
+  selectedEstatus: any = true;
   loading: boolean = true;
   modalVisible: boolean = false;
   insertar: boolean = false;
@@ -52,6 +52,12 @@ export class EmpresasComponent implements OnInit {
       next: (result: dataEmpresa[]) => {
         this.empresas = result;
 
+
+        setTimeout(() => {
+          if (this.dt) {
+            this.dt.filter(true, 'activo', 'equals');
+          }
+        }, 300);
         this.loading = false;
       },
       error: (error) => {
@@ -88,7 +94,13 @@ export class EmpresasComponent implements OnInit {
   reset() {
     this.first = 0;
   }
-
+  getVisibleTotal(campo: string, dt: any): number {
+    const registrosVisibles = dt.filteredValue ? dt.filteredValue : this.empresas;
+    if (campo === 'nombreEmpresa') {
+      return registrosVisibles.length; // Retorna el número de registros visibles
+    }
+    return registrosVisibles.reduce((acc: number, empresa: dataEmpresa) => acc + Number(empresa[campo as keyof dataEmpresa] || 0), 0);
+  }
   pageChange(event: LazyLoadEvent) {
     if (event.first !== undefined) {
       this.first = event.first;

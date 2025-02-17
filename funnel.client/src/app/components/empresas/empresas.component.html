@@ -15,14 +15,7 @@
       (onPage)="pageChange($event)"
       [showCurrentPageReport]="true"
       [first]="first"
-      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
-      [globalFilterFields]="[
-        'nombreEmpresa',
-        'alias',
-        'administrador',
-        'nombreLicencia'
-      ]"
-    >
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
     <ng-template class="divAccionesTabla" #caption>
       <div class="row">
           <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
@@ -141,7 +134,7 @@
       </ng-template>
 
       <ng-template #body let-empresa>
-        <tr class="custom-header3 custom-row filas">
+        <tr class="custom-header3 filas">
           <td>
             <p-button
               type="button"
@@ -164,6 +157,25 @@
           <td>{{ empresa.oportAct }}</td>
           <td>{{ empresa.oportEmp }}</td>
           <td>{{ empresa.activo === 1 ? "Activo" : "Inactivo" }}</td>
+        </tr>
+      </ng-template>
+      <ng-template #footer>
+        <tr class="custom-footer ">
+          <td></td>
+          <td>Total: {{ getVisibleTotal('nombreEmpresa',dt) }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>{{ getVisibleTotal('cantidadUsuarios', dt) }}</td>
+          <td>{{ getVisibleTotal('userReal', dt) }}</td>
+          <td>{{ getVisibleTotal('cantidadOportunidades', dt) }}</td>
+          <td>{{ getVisibleTotal('oportAct', dt) }}</td>
+          <td>{{ getVisibleTotal('oportEmp', dt) }}</td>
+          <td></td>
         </tr>
       </ng-template>
     </p-table>

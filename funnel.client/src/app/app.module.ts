@@ -52,6 +52,7 @@ import { LicenciasComponent } from './components/licencias/licencias.component';
 import { ModalLicenciasComponent } from './components/licencias/modal-licencias/modal-licencias.component';
 import { SectoresComponent } from './components/catalogos/sectores/sectores.component';
 import { ModalSectoresComponent } from './components/catalogos/sectores/modal-sectores/modal-sectores.component';
+import { StatsComponent } from './components/stats/stats.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +67,8 @@ import { ModalSectoresComponent } from './components/catalogos/sectores/modal-se
     ModalLicenciasComponent,
     AdministradorAgregarDialog,
     SectoresComponent,
-    ModalSectoresComponent
+    ModalSectoresComponent,
+    StatsComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

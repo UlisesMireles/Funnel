@@ -12,8 +12,7 @@
       [rowsPerPageOptions]="[10, 20, 50]"
       (onPage)="pageChange($event)"
       [first]="first"
-      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
-      [globalFilterFields]="['nombreLicencia']">
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
       <ng-template class="divAccionesTabla" #caption>
         <div class="row">
             <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
@@ -49,6 +48,12 @@
           <td style="font-weight: bold;">{{ licencia.nombreLicencia }}</td>
           <td>{{ licencia.cantidadUsuarios}}</td>
           <td>{{ licencia.cantidadOportunidades }}</td>
+        </tr>
+      </ng-template>
+      <ng-template #footer>
+        <tr class="custom-footer ">
+          <td></td>
+          <td colspan="3">Total: {{ getVisibleTotal('nombreLicencia',dt) }}</td>
         </tr>
       </ng-template>
     </p-table>
