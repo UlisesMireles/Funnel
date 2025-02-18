@@ -10,7 +10,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class MenuComponent implements OnInit {
   isUserPanelVisible = false;
-  rutaImgen: string = '../assets/img/persona_icono_principal.png';
+  rutaImgen: string = '/assets/img/persona_icono_principal.png';
   nombreUsuario: string = '';
   rol: string = '';
   tipoUsuario: string = '';
