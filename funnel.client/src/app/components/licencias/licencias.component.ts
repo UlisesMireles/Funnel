@@ -25,7 +25,17 @@ export class LicenciasComponent implements OnInit {
 
   licencias: SEL_Licencia []  =[];
   licenciaSeleccionada!: SEL_Licencia;
-
+  EstatusDropdown = [
+    { label: 'Todo', value: null },
+    { label: 'Activo', value: true },
+    { label: 'Inactivo', value: false },
+  ];
+  rowsOptions = [
+    { label: '10', value: 10 },
+    { label: '20', value: 20 },
+    { label: '50', value: 50 }
+  ];
+  selectedEstatus: any = true;
   first:number=0;
   rows:number=10;
   loading: boolean = true;
@@ -40,8 +50,13 @@ export class LicenciasComponent implements OnInit {
     this.licenciasService.getLicencias().subscribe({
       next: (result: SEL_Licencia[]) => {
         this.licencias = result;
-        console.log(this.licencias); // if you want to add the result to the licencias array
         this.loading = false;
+        this.selectedEstatus = true;
+        setTimeout(() => {
+          if (this.dt) {
+            this.dt.filter(true, 'activo', 'equals');
+          }
+        }, 300);
       },
       error: (error) => {
         this.messageService.add({
@@ -59,7 +74,8 @@ export class LicenciasComponent implements OnInit {
         idLicencia: 0,
         nombreLicencia: '',
         cantidadUsuarios: 0,
-        cantidadOportunidades: 0
+        cantidadOportunidades: 0,
+        activo: 0
       }
       this.insertar = true;
       this.modalVisible = true;
@@ -84,11 +100,21 @@ export class LicenciasComponent implements OnInit {
         this.dt.filterGlobal(input.value, 'contains');
       }
     }
+    FiltrarPorEstatus() {
+      if (this.selectedEstatus == null) {
+        this.dt.filter('', 'activo', 'equals');
+        this.dt.filterGlobal('', 'contains');
+      } else {
+        this.dt.filter(this.selectedEstatus, 'activo', 'equals');
+      }
+    }
     prev() {
       this.first = this.first - this.rows;
     }
     reset() {
       this.first = 0;
+      this.getLicencias();
+      this.dt.reset();
     }
     next() {
       this.first = this.first + this.rows;
@@ -100,6 +126,19 @@ export class LicenciasComponent implements OnInit {
       return this.licencias
         ? this.first + this.rows >= this.licencias.length
         : true;
+    }
+    changeRows(event: any, dt: any) {
+      this.rows = event.value; // Actualiza el valor seleccionado
+      dt.rows = this.rows; // Asigna el nuevo valor a la tabla
+      dt.first = 0; // Reinicia la paginación
+      dt.reset(); // Aplica los cambios
+    }
+    getVisibleTotal(campo: string, dt: any): number {
+      const registrosVisibles = dt.filteredValue ? dt.filteredValue : this.licencias;
+      if (campo === 'nombreLicencia') {
+        return registrosVisibles.length; // Retorna el número de registros visibles
+      }
+      return registrosVisibles.reduce((acc: number, licencia: SEL_Licencia) => acc + Number(licencia[campo as keyof SEL_Licencia] || 0), 0);
     }
     // metodos moda
     onModalClose() {

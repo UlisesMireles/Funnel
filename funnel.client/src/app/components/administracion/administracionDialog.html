@@ -33,7 +33,7 @@
                     <span *ngIf="esCampoInvalido('correo')" class="text-danger">*</span>
                 </div>
             </div>
-            <div *ngIf="isEdicion" class="row d-flex">
+            <div *ngIf="isEdicion && administrador.usuario != 'isanchez'" class="row d-flex">
                 <div class="col-3 lbl">
                     <label for="activo">Estatus: </label>
                 </div>

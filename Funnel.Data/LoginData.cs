@@ -103,12 +103,7 @@ namespace Funnel.Data
         public async Task<BaseOut> ObtenerVersion()
         {
             BaseOut version = new BaseOut();
-            IList<ParameterSQl> list = new List<ParameterSQl>
-            {
-                DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, "SEL-VERSION"),
-                DataBase.CreateParameterSql("@pIdEmpresa", SqlDbType.Int, 5, ParameterDirection.Input, false, null, DataRowVersion.Default, 0)
-            };
-            using (IDataReader reader = await DataBase.GetReaderSql("F_Catalogos", CommandType.StoredProcedure, list, _connectionString))
+            using (IDataReader reader = await DataBase.GetReader("F_VersionTenant", CommandType.StoredProcedure,  _connectionString))
             {
                 while (reader.Read())
                 {

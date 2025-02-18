@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { FooterComponent } from './components/footer/footer.component';
+import { PaginatorModule } from 'primeng/paginator';
 
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
@@ -52,6 +53,7 @@ import { LicenciasComponent } from './components/licencias/licencias.component';
 import { ModalLicenciasComponent } from './components/licencias/modal-licencias/modal-licencias.component';
 import { SectoresComponent } from './components/catalogos/sectores/sectores.component';
 import { ModalSectoresComponent } from './components/catalogos/sectores/modal-sectores/modal-sectores.component';
+import { StatsComponent } from './components/stats/stats.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,7 +68,8 @@ import { ModalSectoresComponent } from './components/catalogos/sectores/modal-se
     ModalLicenciasComponent,
     AdministradorAgregarDialog,
     SectoresComponent,
-    ModalSectoresComponent
+    ModalSectoresComponent,
+    StatsComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
@@ -92,7 +95,8 @@ import { ModalSectoresComponent } from './components/catalogos/sectores/modal-se
     ButtonModule,
     OverlayPanelModule,
     InputNumberModule,
-    TextareaModule
+    TextareaModule,
+    PaginatorModule
   ],
   providers: [
     { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },

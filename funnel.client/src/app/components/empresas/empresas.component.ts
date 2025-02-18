@@ -30,14 +30,22 @@ export class EmpresasComponent implements OnInit {
     { label: 'Activo', value: true },
     { label: 'Inactivo', value: false },
   ];
-
-  selectedEstatus: any = null;
+  rowsOptions = [
+    { label: '10', value: 10 },
+    { label: '20', value: 20 },
+    { label: '50', value: 50 }
+  ];
+  selectedEstatus: any = true;
   loading: boolean = true;
   modalVisible: boolean = false;
   insertar: boolean = false;
   first: number = 0;
   rows: number = 10;
   searchValue: string = '';
+  filterEmpresas = '';
+  filterAlias = '';
+  filterUrl= '';
+  filterLicencia = '';
 
   constructor(
     private empresasService: EmpresasService,
@@ -52,6 +60,12 @@ export class EmpresasComponent implements OnInit {
       next: (result: dataEmpresa[]) => {
         this.empresas = result;
 
+        this.selectedEstatus = true;
+        setTimeout(() => {
+          if (this.dt) {
+            this.dt.filter(true, 'activo', 'equals');
+          }
+        }, 300);
         this.loading = false;
       },
       error: (error) => {
@@ -72,11 +86,18 @@ export class EmpresasComponent implements OnInit {
       this.dt.filter(this.selectedEstatus, 'activo', 'equals');
     }
   }
-
+  changeRows(event: any, dt: any) {
+    this.rows = event.value;
+    dt.rows = this.rows;
+    dt.first = 0;
+    dt.reset();
+  }
   applyFilter(value: any, field: string) {
     this.dt.filter(value, field, 'equals');
   }
-
+  updateFilter(event: any, field: string) {
+    this.dt.filter(event, field, 'contains');
+  }
   next() {
     this.first = this.first + this.rows;
   }
@@ -86,9 +107,21 @@ export class EmpresasComponent implements OnInit {
   }
 
   reset() {
+    this.filterAlias = '';
+    this.filterEmpresas='';
+    this.filterLicencia='';
+    this.filterUrl='';
     this.first = 0;
+    this.getEmpresas();
+    this.dt.reset();
   }
-
+  getVisibleTotal(campo: string, dt: any): number {
+    const registrosVisibles = dt.filteredValue ? dt.filteredValue : this.empresas;
+    if (campo === 'nombreEmpresa') {
+      return registrosVisibles.length; // Retorna el número de registros visibles
+    }
+    return registrosVisibles.reduce((acc: number, empresa: dataEmpresa) => acc + Number(empresa[campo as keyof dataEmpresa] || 0), 0);
+  }
   pageChange(event: LazyLoadEvent) {
     if (event.first !== undefined) {
       this.first = event.first;

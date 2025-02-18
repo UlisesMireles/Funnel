@@ -22,12 +22,13 @@ export class ModalLicenciasComponent {
 
     constructor(private licenciaService : LicenciasService, private messageService: MessageService) { }
   @Input() licencia!: SEL_Licencia;
+  @Input() licencias: SEL_Licencia[]=[];
   @Input() title: string = 'Modal';
   @Input() visible: boolean = false;
   @Input() insertar: boolean = false;
   request!: requestLicencia;
 
-  empresaActiva: boolean = false;
+  licenciaActiva: boolean = false;
   selectedLicencia: number | undefined;
 
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -35,7 +36,7 @@ export class ModalLicenciasComponent {
   @Output() result: EventEmitter<baseOut> = new EventEmitter();
 
   onDialogShow() {
-
+    this.licenciaActiva = this.licencia?.activo === 1;
   }
   close() {
     this.visible = false;
@@ -46,7 +47,7 @@ export class ModalLicenciasComponent {
       if (!this.request) {
         this.request = {} as requestLicencia;
       }
-      if (this.camposInvalidos()) {
+      if (this.camposInvalidosEditar()) {
         this.mostrarToastError();
         return;
       }
@@ -56,6 +57,7 @@ export class ModalLicenciasComponent {
       this.request.cantidadOportunidades = this.licencia.cantidadOportunidades;
       this.request.idUsuario = localStorage.getItem('currentUser') as unknown as number;
       this.request.nombreLicencia = this.licencia.nombreLicencia;
+      this.request.activo = this.licenciaActiva ? 1 : 0;
       this.licenciaService.postINSUPDLicencia(this.request).subscribe(
         {
           next: (result: baseOut) => {
@@ -77,7 +79,7 @@ export class ModalLicenciasComponent {
       if (!this.request) {
         this.request = {} as requestLicencia;
       }
-      if (this.camposInvalidos()) {
+      if (this.camposInvalidosInsertar()) {
         this.mostrarToastError();
         return;
       }
@@ -87,6 +89,7 @@ export class ModalLicenciasComponent {
       this.request.cantidadOportunidades = this.licencia.cantidadOportunidades;
       this.request.idUsuario = localStorage.getItem('currentUser') as unknown as number;
       this.request.nombreLicencia = this.licencia.nombreLicencia;
+      this.request.activo =1;
       this.licenciaService.postINSUPDLicencia(this.request).subscribe(
         {
           next: (result: baseOut) => {
@@ -107,23 +110,41 @@ export class ModalLicenciasComponent {
     esCampoInvalido(valor: any): boolean {
       return valor === null || valor === undefined || valor === '' || valor <= 0;
     }
-    camposInvalidos(): boolean {
+    validarNombreLicencia(): boolean {
+      if (this.licencias.some(licencia => licencia.nombreLicencia === this.licencia.nombreLicencia)) {
+        return false;
+      }
+      return true;
+    }
+    camposInvalidosInsertar(): boolean {
+      return (
+        this.esCampoInvalido(this.licencia.nombreLicencia) ||
+        this.esCampoInvalido(this.licencia.cantidadUsuarios) ||
+        this.esCampoInvalido(this.licencia.cantidadOportunidades)||
+        !this.validarNombreLicencia()
+      );
+    }
+    camposInvalidosEditar(): boolean {
       return (
         this.esCampoInvalido(this.licencia.nombreLicencia) ||
         this.esCampoInvalido(this.licencia.cantidadUsuarios) ||
         this.esCampoInvalido(this.licencia.cantidadOportunidades)
       );
     }
-    
+
     /**
      * Método para mostrar un toast de error cuando hay campos vacíos.
      */
     mostrarToastError() {
       this.messageService.clear();
+      let mensaje = 'Es necesario llenar los campos indicados.';
+      if (!this.validarNombreLicencia() && this.insertar) {
+        mensaje = 'El alias de la empresa ya existe.';
+      }
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
-        detail: 'Es Necesario llenar los campos indicados.',
+        detail: mensaje,
       });
     }
 }

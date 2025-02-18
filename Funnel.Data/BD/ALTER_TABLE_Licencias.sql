@@ -1,0 +1,2 @@
+ALTER TABLE Licencias
+ADD Activo BIT DEFAULT 1;
