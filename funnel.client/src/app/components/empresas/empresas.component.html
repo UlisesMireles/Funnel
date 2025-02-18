@@ -15,9 +15,12 @@
       (onPage)="pageChange($event)"
       [showCurrentPageReport]="true"
       paginatorPosition="both"
+      [columnResizeMode]="'fit'"
+      [resizableColumns]="true"
+      [scrollable]="true"
       [first]="first"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
-      class="ui-table-scrollable" [scrollable]="true" [scrollHeight]="'500px'" >
+      [columnResizeMode]="'fit'" >
     <ng-template class="divAccionesTabla" #caption>
       <div class="row">
           <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">

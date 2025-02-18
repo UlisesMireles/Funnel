@@ -13,6 +13,8 @@
       (onPage)="pageChange($event)"
       [first]="first"
       [showCurrentPageReport]="true"
+      [columnResizeMode]="'fit'"
+      [resizableColumns]="true" [scrollable]="true"
       paginatorPosition="both"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros" >
       <ng-template class="divAccionesTabla" #caption>
