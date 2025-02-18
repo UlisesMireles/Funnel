@@ -34,6 +34,12 @@ export class SectoresComponent {
   sectores: SEL_Sectores[] = [];
   sectorSeleccionado!: SEL_Sectores;
 
+  filtroSector='';
+  filtrODescSector='';
+  filtroFechaCreacion='';
+  filtroUsuarioCreador='';
+  filtroFechaModificacion='';
+  filtroUsuarioModifico='';
   first: number = 0;
   rows: number = 10;
   loading: boolean = true;
@@ -50,7 +56,7 @@ export class SectoresComponent {
     this.sectoresService.getSectores().subscribe({
       next: (result: SEL_Sectores[]) => {
         this.sectores = result;
-
+        this.selectedEstatus = 'Activo';
         setTimeout(() => {
           if (this.dt) {
             this.dt.filter('Activo', 'desEstatusActivo', 'equals');
@@ -96,6 +102,9 @@ export class SectoresComponent {
     this.insertar = false;
     this.modalVisible = true;
   }
+  updateFilter(event: any, field: string) {
+    this.dt.filter(event, field, 'contains');
+  }
   // eventosTabla
   pageChange(event: LazyLoadEvent) {
     if (event.first !== undefined) {
@@ -116,6 +125,8 @@ export class SectoresComponent {
   }
   reset() {
     this.first = 0;
+    this.getSectores();
+    this.dt.reset();
   }
   next() {
     this.first = this.first + this.rows;

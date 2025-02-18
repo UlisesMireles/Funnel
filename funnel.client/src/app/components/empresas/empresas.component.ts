@@ -56,7 +56,7 @@ export class EmpresasComponent implements OnInit {
       next: (result: dataEmpresa[]) => {
         this.empresas = result;
 
-
+        this.selectedEstatus = true;
         setTimeout(() => {
           if (this.dt) {
             this.dt.filter(true, 'activo', 'equals');

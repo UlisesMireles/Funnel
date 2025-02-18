@@ -30,7 +30,11 @@ export class LicenciasComponent implements OnInit {
     { label: 'Activo', value: true },
     { label: 'Inactivo', value: false },
   ];
-
+  rowsOptions = [
+    { label: '10', value: 10 },
+    { label: '20', value: 20 },
+    { label: '50', value: 50 }
+  ];
   selectedEstatus: any = true;
   first:number=0;
   rows:number=10;
@@ -47,6 +51,12 @@ export class LicenciasComponent implements OnInit {
       next: (result: SEL_Licencia[]) => {
         this.licencias = result;
         this.loading = false;
+        this.selectedEstatus = true;
+        setTimeout(() => {
+          if (this.dt) {
+            this.dt.filter(true, 'activo', 'equals');
+          }
+        }, 300);
       },
       error: (error) => {
         this.messageService.add({
@@ -103,6 +113,8 @@ export class LicenciasComponent implements OnInit {
     }
     reset() {
       this.first = 0;
+      this.getLicencias();
+      this.dt.reset();
     }
     next() {
       this.first = this.first + this.rows;
@@ -114,6 +126,12 @@ export class LicenciasComponent implements OnInit {
       return this.licencias
         ? this.first + this.rows >= this.licencias.length
         : true;
+    }
+    changeRows(event: any, dt: any) {
+      this.rows = event.value; // Actualiza el valor seleccionado
+      dt.rows = this.rows; // Asigna el nuevo valor a la tabla
+      dt.first = 0; // Reinicia la paginación
+      dt.reset(); // Aplica los cambios
     }
     getVisibleTotal(campo: string, dt: any): number {
       const registrosVisibles = dt.filteredValue ? dt.filteredValue : this.licencias;

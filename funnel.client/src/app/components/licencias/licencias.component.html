@@ -15,7 +15,17 @@
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros" >
       <ng-template class="divAccionesTabla" #caption>
         <div class="row">
+
             <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
+                  <!-- <p-select
+                  [options]="rowsOptions"
+                  [(ngModel)]="rows"
+                  (onChange)="changeRows($event, dt)"
+                  placeholder="Registros por página"
+                  optionLabel="label"
+                  optionValue="value"
+                  class="custom-dropdown">
+                </p-select> -->
                 <p-button label="" icon="pi pi-refresh" (click)="reset()"severity="secondary"
                     [ngStyle]="{'margin-right': '5px'}" />
                 <p-button label="" icon="pi pi-plus" severity="secondary"
@@ -27,14 +37,14 @@
         <tr class="custom-header">
           <th></th>
           <th pSortableColumn="nombreLicencia">
-            Tipo de Licencia <p-sortIcon field="nombreLicencia" />
+            Tipo de Licencia
           </th>
-          <th pSortableColumn="cantidadUsuarios"> Cantidad Usuarios Activos <p-sortIcon field="cantidadUsuarios" /></th>
+          <th pSortableColumn="cantidadUsuarios"> Cantidad Usuarios Activos</th>
           <th pSortableColumn="cantidadOportunidades">
-            Cantidad Oortunidades en Proceso <p-sortIcon field="cantidadOportunidades" />
+            Cantidad Oortunidades en Proceso
           </th>
           <th pSortableColumn="Activo">
-            Estatus<p-sortIcon field="Activo" />
+            Estatus
           </th>
         </tr>
         <tr class="custom-header2">
@@ -45,6 +55,7 @@
             (onChange)="FiltrarPorEstatus()"
             placeholder="Seleccionar Estatus"
             optionLabel="label"
+            [appendTo]="'body'"
             optionValue="value"
           >
           </p-select></th>

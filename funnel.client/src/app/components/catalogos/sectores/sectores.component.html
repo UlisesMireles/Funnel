@@ -17,7 +17,7 @@
       (onPage)="pageChange($event)"
       [first]="first"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
-      [globalFilterFields]="['nombreLicencia']">
+>
       <ng-template class="divAccionesTabla" #caption>
         <div class="row">
             <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
@@ -43,77 +43,29 @@
         <tr class="custom-header2">
           <th></th>
           <th>
-            <p-columnFilter
-              type="text"
-              field="nombreSector"
-              placeholder=""
-              showClear="false"
-              showMenu="false"
-              ariaLabel="nombreSector"
-              class="hide-filter-icon"
-            ></p-columnFilter>
+            <input pInputText  type="text" [(ngModel)]="filtroSector" (ngModelChange)="updateFilter($event, 'nombreSector')">
           </th>
           <th>
-            <p-columnFilter
-              type="text"
-              field="descripcionSector"
-              ariaLabel="descripcionSector"
-              showClear="false"
-              showMenu="false"
-              class="hide-filter-icon custom-width"
-              style="width: 50px !important"
-            ></p-columnFilter>
+            <input pInputText  type="text" [(ngModel)]="filtrODescSector" (ngModelChange)="updateFilter($event, 'descripcionSector')">
           </th>
           <th>
-            <p-columnFilter
-              type="text"
-              field="fechaCreacion"
-              placeholder=""
-              ariaLabel="fechaCreacion"
-              showClear="false"
-              showMenu="false"
-              class="hide-filter-icon custom-width2"
-            ></p-columnFilter>
+            <input pInputText  type="text" [(ngModel)]="filtroFechaCreacion" (ngModelChange)="updateFilter($event, 'fechaCreacion')">
           </th>
           <th>
-            <p-columnFilter
-            type="text"
-            field="usuarioCreador"
-            placeholder=""
-            showClear="false"
-            showMenu="false"
-            ariaLabel="usuarioCreador"
-            class="hide-filter-icon custom-width2"
-          ></p-columnFilter>
+            <input pInputText  type="text" [(ngModel)]="filtroUsuarioCreador" (ngModelChange)="updateFilter($event, 'usuarioCreador')">
           </th>
           <th>
-            <p-columnFilter
-            type="text"
-            field="fechaModificacion"
-            placeholder=""
-            showClear="false"
-            showMenu="false"
-            ariaLabel="fechaModificacion"
-            class="hide-filter-icon custom-width2"
-          ></p-columnFilter>
+          <input pInputText  type="text" [(ngModel)]="filtroFechaModificacion" (ngModelChange)="updateFilter($event, 'fechaModificacion')">
           </th>
           <th>
-            <p-columnFilter
-              type="text"
-              field="usuarioModifico"
-              placeholder=""
-              showClear="false"
-              showMenu="false"
-              ariaLabel="usuarioModifico"
-              class="hide-filter-icon custom-width3"
-            ></p-columnFilter>
+            <input pInputText  type="text" [(ngModel)]="filtroUsuarioModifico" (ngModelChange)="updateFilter($event, 'usuarioModifico')">
           </th>
 
           <th>
             <p-select
               [options]="EstatusDropdown"
               [(ngModel)]="selectedEstatus"
-
+              [appendTo]="'body'"
               (onChange)="FiltrarPorEstatus()"
               optionLabel="label"
               optionValue="value"
