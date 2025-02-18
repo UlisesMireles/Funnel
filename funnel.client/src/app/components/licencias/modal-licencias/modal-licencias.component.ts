@@ -111,7 +111,7 @@ export class ModalLicenciasComponent {
       return valor === null || valor === undefined || valor === '' || valor <= 0;
     }
     validarNombreLicencia(): boolean {
-      if (this.licencias.some(licencia => licencia.nombreLicencia === this.licencia.nombreLicencia)) {
+      if (this.licencias.some(licencia => licencia.nombreLicencia?.toUpperCase() === this.licencia.nombreLicencia?.toUpperCase())) {
         return false;
       }
       return true;
@@ -139,7 +139,7 @@ export class ModalLicenciasComponent {
       this.messageService.clear();
       let mensaje = 'Es necesario llenar los campos indicados.';
       if (!this.validarNombreLicencia() && this.insertar) {
-        mensaje = 'El alias de la empresa ya existe.';
+        mensaje = 'La licencia ya existe.';
       }
       this.messageService.add({
         severity: 'error',

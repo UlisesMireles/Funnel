@@ -107,7 +107,7 @@ export class ModalSectoresComponent {
 
       }
       validarSector(): boolean {
-        if (this.sectores.some(sector => sector.nombreSector === this.sector.nombreSector)) {
+        if (this.sectores.some(sector => sector.nombreSector?.toUpperCase() === this.sector.nombreSector?.toUpperCase())) {
           return false;
         }
         return true;

@@ -204,14 +204,14 @@ export class ModalEmpresasComponent {
     return new Date(this.empresa.vInicio) < new Date(this.empresa.vTerminacion);
   }
   validarNombreEmpresa(): boolean {
-    if (this.empresas.some(empresa => empresa.nombreEmpresa === this.empresa.nombreEmpresa)) {
+    if (this.empresas.some(empresa => empresa.nombreEmpresa?.toUpperCase() === this.empresa.nombreEmpresa?.toUpperCase())) {
       return false;
     }
     return true;
   }
 
   validarAlias(): boolean {
-    if (this.empresas.some(empresa => empresa.alias === this.empresa.alias)) {
+    if (this.empresas.some(empresa => empresa.alias?.toUpperCase() === this.empresa.alias?.toUpperCase())) {
       return false;
     }
     return true;
