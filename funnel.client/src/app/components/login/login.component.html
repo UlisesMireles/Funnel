@@ -15,18 +15,18 @@
                             <div class="logo-veriq">
                                 <h3 style="color:#fff;font-weight:bold;padding-top:20px;">Administración</h3>
                             </div>
-                            <form [formGroup]="loginForm" class="text-center border border-light formLogin">
+                            <form [formGroup]="loginForm"  class="text-center border border-light formLogin">
                                 <h5 class="tituloLogin">Acceso al Sistema</h5>
                                 <div class="form-group" style="padding-top: 20px; padding-bottom: 6px;">
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
                                         <input type="text" placeholder="usuario" id="usuario" formControlName="usuario" class="form-control"
-                                            autocomplete="off">
+                                            autocomplete="off" (keyup.enter)="iniciarSesion()">
                                     </div>
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-lock"></i></span>
                                         <input type="password" placeholder="contraseña" id="password" formControlName="password" class="form-control"
-                                            autocomplete="current-password">
+                                            autocomplete="current-password" (keyup.enter)="iniciarSesion()">
                                     </div>
                                     <div class="form-group checkbox-group" style="visibility: hidden;">
                                         <label class="checkbox-label">
