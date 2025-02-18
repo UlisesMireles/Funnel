@@ -30,7 +30,11 @@ export class EmpresasComponent implements OnInit {
     { label: 'Activo', value: true },
     { label: 'Inactivo', value: false },
   ];
-
+  rowsOptions = [
+    { label: '10', value: 10 },
+    { label: '20', value: 20 },
+    { label: '50', value: 50 }
+  ];
   selectedEstatus: any = true;
   loading: boolean = true;
   modalVisible: boolean = false;
@@ -82,7 +86,12 @@ export class EmpresasComponent implements OnInit {
       this.dt.filter(this.selectedEstatus, 'activo', 'equals');
     }
   }
-
+  changeRows(event: any, dt: any) {
+    this.rows = event.value;
+    dt.rows = this.rows;
+    dt.first = 0;
+    dt.reset();
+  }
   applyFilter(value: any, field: string) {
     this.dt.filter(value, field, 'equals');
   }

@@ -52,6 +52,11 @@ export class SectoresComponent {
     { label: 'Activo', value: 'Activo' },
     { label: 'Inactivo', value: 'Inactivo' },
   ];
+  rowsOptions = [
+    { label: '10', value: 10 },
+    { label: '20', value: 20 },
+    { label: '50', value: 50 }
+  ];
   getSectores() {
     this.sectoresService.getSectores().subscribe({
       next: (result: SEL_Sectores[]) => {
@@ -113,6 +118,12 @@ export class SectoresComponent {
     if (event.rows !== undefined) {
       this.rows = event.rows;
     }
+  }
+  changeRows(event: any, dt: any) {
+    this.rows = event.value;
+    dt.rows = this.rows;
+    dt.first = 0;
+    dt.reset();
   }
   onInput(event: Event): void {
     const input = event.target as HTMLInputElement; // Casting de tipo

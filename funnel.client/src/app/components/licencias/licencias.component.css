@@ -14,7 +14,7 @@
 }
 
 ::ng-deep .p-datatable-header {
-  background-color: #665F50 !important;
+  background-color: #DAD7CF !important;
   padding: 0 !important;
   height: 35px;
 }
@@ -202,13 +202,3 @@
 ::ng-deep .custom-header2 .p-select li{
   padding:0px;
 }
-::ng-deep .custom-dropdown {
-  margin-right: 10px;
-  width: 70px;
-  height: 25px;
-}
-::ng-deep .custom-dropdown span {
-padding:0px;
-font-size: 12px;
-}
-

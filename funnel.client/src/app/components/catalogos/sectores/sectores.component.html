@@ -16,8 +16,9 @@
       [rowsPerPageOptions]="[10, 20, 50]"
       (onPage)="pageChange($event)"
       [first]="first"
-      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
->
+      [showCurrentPageReport]="true"
+      paginatorPosition="both"
+      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
       <ng-template class="divAccionesTabla" #caption>
         <div class="row">
             <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
@@ -108,5 +109,6 @@
   (closeModal)="onModalClose()"
   (result)="manejarResultado($event)"
   [insertar]="insertar"
-  [sector]="sectorSeleccionado">
+  [sector]="sectorSeleccionado"
+  [sectores]="sectores">
 </app-modal-sectores>

@@ -12,20 +12,14 @@
       [rowsPerPageOptions]="[10, 20, 50]"
       (onPage)="pageChange($event)"
       [first]="first"
+      [showCurrentPageReport]="true"
+      paginatorPosition="both"
       currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros" >
       <ng-template class="divAccionesTabla" #caption>
         <div class="row">
 
             <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
-                  <!-- <p-select
-                  [options]="rowsOptions"
-                  [(ngModel)]="rows"
-                  (onChange)="changeRows($event, dt)"
-                  placeholder="Registros por página"
-                  optionLabel="label"
-                  optionValue="value"
-                  class="custom-dropdown">
-                </p-select> -->
+
                 <p-button label="" icon="pi pi-refresh" (click)="reset()"severity="secondary"
                     [ngStyle]="{'margin-right': '5px'}" />
                 <p-button label="" icon="pi pi-plus" severity="secondary"

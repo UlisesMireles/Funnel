@@ -47,7 +47,7 @@ export class ModalLicenciasComponent {
       if (!this.request) {
         this.request = {} as requestLicencia;
       }
-      if (this.camposInvalidos()) {
+      if (this.camposInvalidosEditar()) {
         this.mostrarToastError();
         return;
       }
@@ -79,7 +79,7 @@ export class ModalLicenciasComponent {
       if (!this.request) {
         this.request = {} as requestLicencia;
       }
-      if (this.camposInvalidos()) {
+      if (this.camposInvalidosInsertar()) {
         this.mostrarToastError();
         return;
       }
@@ -116,12 +116,19 @@ export class ModalLicenciasComponent {
       }
       return true;
     }
-    camposInvalidos(): boolean {
+    camposInvalidosInsertar(): boolean {
       return (
         this.esCampoInvalido(this.licencia.nombreLicencia) ||
         this.esCampoInvalido(this.licencia.cantidadUsuarios) ||
         this.esCampoInvalido(this.licencia.cantidadOportunidades)||
         !this.validarNombreLicencia()
+      );
+    }
+    camposInvalidosEditar(): boolean {
+      return (
+        this.esCampoInvalido(this.licencia.nombreLicencia) ||
+        this.esCampoInvalido(this.licencia.cantidadUsuarios) ||
+        this.esCampoInvalido(this.licencia.cantidadOportunidades)
       );
     }
 
@@ -131,7 +138,7 @@ export class ModalLicenciasComponent {
     mostrarToastError() {
       this.messageService.clear();
       let mensaje = 'Es necesario llenar los campos indicados.';
-      if (!this.validarNombreLicencia()) {
+      if (!this.validarNombreLicencia() && this.insertar) {
         mensaje = 'El alias de la empresa ya existe.';
       }
       this.messageService.add({

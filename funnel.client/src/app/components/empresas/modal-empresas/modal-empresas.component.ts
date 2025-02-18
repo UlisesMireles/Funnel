@@ -63,7 +63,7 @@ export class ModalEmpresasComponent {
     if (!this.request) {
       this.request = {} as requestEmpresa;
     }
-    if (this.camposInvalidos()) {
+    if (this.camposInvalidosInsertar()) {
       this.mostrarToastError();
       return;
     }
@@ -106,7 +106,7 @@ export class ModalEmpresasComponent {
     if (!this.request) {
       this.request = {} as requestEmpresa;
     }
-    if (this.camposInvalidos()) {
+    if (this.camposInvalidosEditar()) {
       this.mostrarToastError();
       return;
     }
@@ -164,7 +164,7 @@ export class ModalEmpresasComponent {
   esCampoInvalido(valor: any): boolean {
     return valor === null || valor === undefined || valor === '' || valor <= 0;
   }
-  camposInvalidos(): boolean {
+  camposInvalidosInsertar(): boolean {
     return (
       this.esCampoInvalido(this.empresa.nombreEmpresa) ||
       this.esCampoInvalido(this.empresa.alias) ||
@@ -175,7 +175,22 @@ export class ModalEmpresasComponent {
       this.esCampoInvalido(this.empresa.vInicio) ||
       this.esCampoInvalido(this.empresa.vTerminacion) ||
       !this.validarFechas()||
-      !this.validarNombreEmpresa()
+      !this.validarNombreEmpresa()||
+      (this.empresa.rfc !== undefined && !this.validarRFC(this.empresa.rfc))||
+      (this.empresa.correoAdministrador !== undefined && !this.validarCorreo(this.empresa.correoAdministrador))
+    );
+  }
+  camposInvalidosEditar(): boolean {
+    return (
+      this.esCampoInvalido(this.empresa.nombreEmpresa) ||
+      this.esCampoInvalido(this.empresa.alias) ||
+      this.esCampoInvalido(this.empresa.urlSitio) ||
+      this.esCampoInvalido(this.empresa.rfc) ||
+      this.esCampoInvalido(this.empresa.idLicencia) ||
+      this.esCampoInvalido(this.empresa.nombre) ||
+      this.esCampoInvalido(this.empresa.vInicio) ||
+      this.esCampoInvalido(this.empresa.vTerminacion)||
+      (this.empresa.rfc !== undefined && !this.validarRFC(this.empresa.rfc))
     );
   }
 
@@ -194,13 +209,22 @@ export class ModalEmpresasComponent {
     }
     return true;
   }
+
   validarAlias(): boolean {
     if (this.empresas.some(empresa => empresa.alias === this.empresa.alias)) {
       return false;
     }
     return true;
   }
-
+  validarRFC(rfc: string): boolean {
+    const regexRFC = /^[A-ZÑ&]{3,4}\d{6}[A-Z\d]{3}$/;
+    return regexRFC.test(rfc);
+  }
+  validarCorreo(correo: string): boolean {
+    // Expresión regular para validar un correo electrónico
+    const regexCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regexCorreo.test(correo);
+  }
   /**
    * Método para mostrar un toast de error cuando hay campos vacíos o fechas incorrectas.
    */
@@ -211,11 +235,17 @@ export class ModalEmpresasComponent {
     if (!this.validarFechas()) {
       mensaje = 'La fecha de inicio debe ser menor a la fecha de terminación.';
     }
-    if (!this.validarNombreEmpresa()) {
+    if (!this.validarNombreEmpresa() && this.insertar) {
       mensaje = 'El nombre de la empresa ya existe.';
     }
-    if (!this.validarAlias()) {
+    if (!this.validarAlias() && this.insertar) {
       mensaje = 'El alias de la empresa ya existe.';
+    }
+    if (this.empresa.rfc !== undefined && !this.validarRFC(this.empresa.rfc)) {
+      mensaje = 'Se necesita revisar el RFC.';
+    }
+    if (this.empresa.correoAdministrador !== undefined && !this.validarRFC(this.empresa.correoAdministrador)) {
+      mensaje = 'El correo electronico no es valido.';
     }
     this.messageService.add({
       severity: 'error',
