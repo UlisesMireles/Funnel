@@ -1,12 +1,12 @@
 <div class="loginComponent">
     <div id="menuDiv">
         <div class="header-login">
-            <img src="/assets/img/SFS blanco.png" style="cursor: pointer;width:120px;" />    
+            <img [src]="baseUrl + '/assets/img/SFS blanco.png'" style="cursor: pointer;width:120px;" />    
         </div>
     </div>
     
     <div class="container-fluid container-all" style="padding:0px; overflow-x: hidden;">
-        <div class="imagenFondo" style="width: 100%; height: 100%;">
+        <div class="imagenFondo" [attr.style]="backgroundImg" >
             <div class="container-fluid logincard" style="width: 100%;">
                 <div class="row justify-content-center">
                     <div class="col-lg-4 col-md-3"></div>
@@ -51,7 +51,7 @@
                             </form>
                         </section>
                         <div style="text-align: center">
-                            <h6 class="iconCr">Para un mejor rendimiento usa: <img src="/assets/img/chromeB.png" title="Google Chrome" alt="chrome" width="30px"></h6>
+                            <h6 class="iconCr">Para un mejor rendimiento usa: <img [src]="baseUrl + '/assets/img/chromeB.png'" title="Google Chrome" alt="chrome" width="30px"></h6>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-3"></div>

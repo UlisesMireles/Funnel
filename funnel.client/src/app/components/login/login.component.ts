@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
+import { environment } from '../../../enviroment/enviroment';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +15,15 @@ export class LoginComponent {
   loginForm: FormGroup = new FormGroup({});
   showErrors: boolean = false;
   errorLogin: string = '';
-
-  constructor(private fb:FormBuilder, private route: ActivatedRoute, private router: Router, private authService: AuthenticationService) {
+  baseUrl: string = environment.baseURLAssets;
+  public backgroundImg: SafeStyle | undefined;
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router, private authService: AuthenticationService) {
+    
 
   }
 
   ngOnInit(): void {
+    this.backgroundImg = 'background-image: url(' + this.baseUrl + '/assets/img/PMA_GRISES.png' + ')';
     this.loginForm = this.fb.group({
       usuario: ['', [Validators.required]],
       password: ['', [Validators.required]],

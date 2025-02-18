@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
+import { environment } from '../../../enviroment/enviroment';
 
 @Component({
   selector: 'app-menu',
@@ -10,7 +11,8 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 export class MenuComponent implements OnInit {
   isUserPanelVisible = false;
-  rutaImgen: string = '/assets/img/persona_icono_principal.png';
+  baseUrl: string = environment.baseURLAssets;
+  rutaImgen: string = this.baseUrl + '/assets/img/persona_icono_principal.png';
   nombreUsuario: string = '';
   rol: string = '';
   tipoUsuario: string = '';
