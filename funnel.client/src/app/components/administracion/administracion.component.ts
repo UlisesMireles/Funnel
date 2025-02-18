@@ -44,7 +44,7 @@ export class AdministracionComponent {
             this.dt.filter(true, 'activo', 'equals');
             this.selectedEstatus = true;
           }
-        }, 100);
+        }, 10);
         this.loading = false;
       },
       error: (error) => {
@@ -53,6 +53,13 @@ export class AdministracionComponent {
           summary: 'Se ha producido un error.',
           detail: error.errorMessage,
         });
+        this.loading = false;
+      },
+      complete: () => {
+        if (this.dt) {
+          this.dt.filter(true, 'activo', 'equals');
+          this.selectedEstatus = true;
+        }
         this.loading = false;
       }
     });

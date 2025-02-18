@@ -10,7 +10,8 @@
                 <p-table *ngIf="!loading && administradores.length > 0" #dt [stripedRows]="true" [value]="administradores" [paginator]="true" [rows]="10"
                     [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)" [showCurrentPageReport]="true"
                     [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
-                    [globalFilterFields]="['nombreEmpresa', 'alias', 'administrador', 'nombreLicencia']">
+                    [globalFilterFields]="['nombreEmpresa', 'alias', 'administrador', 'nombreLicencia']" [columnResizeMode]="'fit'"
+                    [resizableColumns]="true" [scrollable]="true">
 
                     <ng-template class="divAccionesTabla" #caption>
                         <div class="row">
@@ -25,11 +26,11 @@
 
                     <ng-template #header>
                         <tr class="custom-header">
-                            <th></th>
-                            <th>Nombre</th>
-                            <th>Usuario</th>
-                            <th>Correo Electrónico</th>
-                            <th>Estatus</th>
+                            <th style="width: 5%"></th>
+                            <th style="width: 25%">Nombre</th>
+                            <th style="width: 20%">Usuario</th>
+                            <th style="width: 30%">Correo Electrónico</th>
+                            <th style="width: 20%">Estatus</th>
                         </tr>
                         <tr class="custom-header2">
                             <th></th>
