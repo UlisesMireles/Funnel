@@ -55,7 +55,7 @@
         <label for="rfc">RFC: </label>
       </div>
       <div class="col-sm-8 inptSpace">
-        <input pInputText class="inptSize" id="rfc" [(ngModel)]="empresa.rfc" />&nbsp;
+        <input pInputText class="inptSize" id="rfc" [(ngModel)]="empresa.rfc"  maxlength="13"  />&nbsp;
         <span *ngIf="esCampoInvalido(empresa.rfc)" class="text-danger">*</span>
       </div>
     </div>

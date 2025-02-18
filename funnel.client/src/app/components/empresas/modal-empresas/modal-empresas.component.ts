@@ -244,7 +244,7 @@ export class ModalEmpresasComponent {
     if (this.empresa.rfc !== undefined && !this.validarRFC(this.empresa.rfc)) {
       mensaje = 'Se necesita revisar el RFC.';
     }
-    if (this.empresa.correoAdministrador !== undefined && !this.validarRFC(this.empresa.correoAdministrador)) {
+    if (this.empresa.correoAdministrador !== undefined && !this.validarCorreo(this.empresa.correoAdministrador)) {
       mensaje = 'El correo electronico no es valido.';
     }
     this.messageService.add({
