@@ -1,9 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 
 /*PrimeNG*/
+import { LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
-import {LazyLoadEvent} from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
+/*Services*/
+import { StatsService } from '../../services/stats.service';
 // Interfaces
 import { Stats } from '../../interfaces/stats';
 @Component({
@@ -14,7 +17,12 @@ import { Stats } from '../../interfaces/stats';
   styleUrl: './stats.component.css'
 })
 export class StatsComponent {
-  constructor() {
+
+  ngOnInit(): void {
+    this.getStats();
+  }
+  constructor(private statsService: StatsService,
+      private messageService: MessageService) {
   }
   @ViewChild('dt') dt!: Table; // Referencia a la tabla
 
@@ -25,7 +33,9 @@ export class StatsComponent {
   ];
 
   stats: Stats[] = [];
+  statsOriginal: Stats[] = [];
 
+  filterStatus = '';
   selectedEstatus: any = null;
   loading: boolean = true;
   modalVisible: boolean = false;
@@ -33,13 +43,33 @@ export class StatsComponent {
   first: number = 0;
   rows: number = 10;
   searchValue: string = '';
-
+  getStats() {
+    this.statsService.getStats().subscribe({
+      next: (result: Stats[]) => {
+        this.stats = result;
+        this.statsOriginal=result;
+        this.selectedEstatus = true;
+        this.FiltrarPorEstatus();
+        this.loading = false;
+      },
+      error: (error) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Se ha producido un error.',
+          detail: error.errorMessage,
+        });
+        this.loading = false;
+      },
+    });
+  }
   FiltrarPorEstatus() {
-    if (this.selectedEstatus == null) {
-      this.dt.filter('', 'activo', 'equals');
-      this.dt.filterGlobal('', 'contains');
-    } else {
-      this.dt.filter(this.selectedEstatus, 'activo', 'equals');
+    this.stats = this.selectedEstatus === null
+      ? [...this.statsOriginal]
+      : [...this.statsOriginal.filter(stat =>
+        stat.estatus === (this.selectedEstatus ? true : false)
+      )];
+    if (this.dt) {
+      this.dt.first = 0;
     }
   }
   next() {
@@ -52,6 +82,9 @@ export class StatsComponent {
 
   reset() {
     this.first = 0;
+    this.filterStatus='';
+    this.dt.reset();
+    this.getStats();
   }
     pageChange(event: LazyLoadEvent) {
       if (event.first !== undefined) {
@@ -61,11 +94,14 @@ export class StatsComponent {
         this.rows = event.rows;
       }
     }
+    updateFilter(event: any, field: string) {
+      this.dt.filter(event, field, 'contains');
+    }
   getVisibleTotal(campo: string, dt: any): number {
     const registrosVisibles = dt.filteredValue ? dt.filteredValue : this.stats;
-    if (campo === 'nombreEmpresa') {
+    if (campo === 'empresa') {
       return registrosVisibles.length; // Retorna el número de registros visibles
     }
-    return registrosVisibles.reduce((acc: number, empresa: Stats) => acc + Number(empresa[campo as keyof Stats] || 0), 0);
+    return registrosVisibles.reduce((acc: number, stat: Stats) => acc + Number(stat[campo as keyof Stats] || 0), 0);
   }
 }
