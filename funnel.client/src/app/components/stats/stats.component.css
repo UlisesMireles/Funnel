@@ -169,11 +169,9 @@
 
 ::ng-deep .filas {
   font-size: 12.5px !important;
+  height: 40px;
 }
 
-::ng-deep .filas td {
-  height: 20px;
-}
 
 ::ng-deep .custom-footer td {
   padding: 0px !important;

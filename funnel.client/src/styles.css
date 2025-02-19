@@ -1,6 +1,10 @@
+html {
+  translate: no;
+}
 html,
 body {
     height: 100%;
+
 }
 
 body {
