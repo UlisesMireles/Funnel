@@ -1,18 +1,15 @@
 <nav class="navbar navbar-expand-lg custom-menubar">
   <div class="container-fluid">
-    <!-- Logo y título siempre visibles -->
     <div class="menu-start">
       <img [src]="baseUrl + '/assets/img/SFS blanco.png'" class="imagenLogo" alt="SFS Logo" />
       <span class="menu-title">ADMINISTRACIÓN</span>
     </div>
 
-    <!-- Botón hamburguesa -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
             aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Contenido colapsable -->
     <div class="collapse navbar-collapse" id="navbarContent">
       <div class="menu-center">
         <ul class="navbar-nav mx-auto menu-items">
@@ -42,7 +39,6 @@
         </ul>
       </div>
 
-      <!-- Panel de usuario -->
       <div class="menu-end d-flex align-items-center" (document:click)="onDocumentClick($event)">
         <span class="user-name" (click)="toggleUserPanel($event)" style="cursor: pointer;">
           <i class="fa fa-user-circle"></i> {{nombreUsuario}}

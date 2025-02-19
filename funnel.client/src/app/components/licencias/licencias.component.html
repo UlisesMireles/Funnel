@@ -1,97 +1,72 @@
-<div class="row" style="text-align: left; font-weight: bold;"><h3>Administración General de Licencias</h3></div>
-<div class="row">
-  <div class="row contrenedorTabla">
-    <div *ngIf="loading">Cargando...</div>
-    <p-table
-      *ngIf="!loading && licencias.length > 0"
-      #dt
-      [stripedRows]="true"
-      [value]="licencias"
-      [paginator]="true"
-      [rows]="10"
-      [rowsPerPageOptions]="[10, 20, 50]"
-      (onPage)="pageChange($event)"
-      [first]="first"
-      [showCurrentPageReport]="true"
-      [columnResizeMode]="'fit'"
-      [resizableColumns]="true" [scrollable]="true"
-      paginatorPosition="both"
-      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros" >
-      <ng-template class="divAccionesTabla" #caption>
-        <div class="row">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12" style="text-align: left; font-weight: bold;">
+      <h3>Administración General de Licencias</h3>
+    </div>
+    <div class="col-12">
+      <div class="row contrenedorTabla">
+        <div *ngIf="loading">Cargando...</div>
+        <p-table *ngIf="!loading && licencias.length > 0" #dt [stripedRows]="true" [value]="licencias"
+          [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)"
+          [first]="first" [showCurrentPageReport]="true" [columnResizeMode]="'fit'" [resizableColumns]="true"
+          [scrollable]="true" paginatorPosition="both"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
+          <ng-template class="divAccionesTabla" #caption>
+            <div class="row">
 
-            <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
+              <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
 
-                <p-button label="" icon="pi pi-refresh" (click)="reset()"severity="secondary"
-                    [ngStyle]="{'margin-right': '5px'}" />
-                <p-button label="" icon="pi pi-plus" severity="secondary"
-                    (click)="inserta()" />
+                <p-button label="" icon="pi pi-refresh" (click)="reset()" severity="secondary"
+                  [ngStyle]="{'margin-right': '5px'}" />
+                <p-button label="" icon="pi pi-plus" severity="secondary" (click)="inserta()" />
+              </div>
             </div>
-        </div>
-    </ng-template>
-      <ng-template #header>
-        <tr class="custom-header">
-          <th></th>
-          <th pSortableColumn="nombreLicencia">
-            Tipo de Licencia
-          </th>
-          <th pSortableColumn="cantidadUsuarios"> Cantidad Usuarios Activos</th>
-          <th pSortableColumn="cantidadOportunidades">
-            Cantidad Oortunidades en Proceso
-          </th>
-          <th pSortableColumn="Activo">
-            Estatus
-          </th>
-        </tr>
-        <tr class="custom-header2">
-          <th colspan="4"></th>
-          <th>            <p-select
-            [options]="EstatusDropdown"
-            [(ngModel)]="selectedEstatus"
-            (onChange)="FiltrarPorEstatus()"
-            placeholder="Seleccionar Estatus"
-            optionLabel="label"
-            [appendTo]="'body'"
-            optionValue="value"
-          >
-          </p-select></th>
-        </tr>
-      </ng-template>
-      <ng-template #body let-licencia>
-        <tr class="custom-header3 custom-row filas">
-          <td>
-            <p-button
-              type="button"
-              icon="pi pi-pencil"
-              (click)="actualiza(licencia)"
-              text
-            />
-          </td>
-          <td style="font-weight: bold;">{{ licencia.nombreLicencia }}</td>
-          <td>{{ licencia.cantidadUsuarios}}</td>
-          <td>{{ licencia.cantidadOportunidades }}</td>
-          <td>{{ licencia.activo === 1 ? "Activo" : "Inactivo" }}</td>
-        </tr>
-      </ng-template>
-      <ng-template #footer>
-        <tr class="custom-footer ">
-          <td></td>
-          <td colspan="4">Total: {{ getVisibleTotal('nombreLicencia',dt) }}</td>
-        </tr>
-      </ng-template>
-    </p-table>
+          </ng-template>
+          <ng-template #header>
+            <tr class="custom-header">
+              <th></th>
+              <th pSortableColumn="nombreLicencia">
+                Tipo de Licencia
+              </th>
+              <th pSortableColumn="cantidadUsuarios"> Cantidad Usuarios Activos</th>
+              <th pSortableColumn="cantidadOportunidades">
+                Cantidad Oortunidades en Proceso
+              </th>
+              <th pSortableColumn="Activo">
+                Estatus
+              </th>
+            </tr>
+            <tr class="custom-header2">
+              <th colspan="4"></th>
+              <th> <p-select [options]="EstatusDropdown" [(ngModel)]="selectedEstatus" (onChange)="FiltrarPorEstatus()"
+                  placeholder="Seleccionar Estatus" optionLabel="label" [appendTo]="'body'" optionValue="value">
+                </p-select></th>
+            </tr>
+          </ng-template>
+          <ng-template #body let-licencia>
+            <tr class="custom-header3 custom-row filas">
+              <td>
+                <p-button type="button" icon="pi pi-pencil" (click)="actualiza(licencia)" text />
+              </td>
+              <td style="font-weight: bold;">{{ licencia.nombreLicencia }}</td>
+              <td>{{ licencia.cantidadUsuarios}}</td>
+              <td>{{ licencia.cantidadOportunidades }}</td>
+              <td>{{ licencia.activo === 1 ? "Activo" : "Inactivo" }}</td>
+            </tr>
+          </ng-template>
+          <ng-template #footer>
+            <tr class="custom-footer ">
+              <td></td>
+              <td colspan="4">Total: {{ getVisibleTotal('nombreLicencia',dt) }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+      <p-toast position="center"></p-toast>
+    </div>
   </div>
-  <p-toast position="center"></p-toast>
 </div>
 
-<app-modal-licencias
-  [(visible)]="modalVisible"
-  [title]="'Editar Datos de '"
-  (closeModal)="onModalClose()"
-  (result)="manejarResultado($event)"
-  [insertar]="insertar"
-  [licencia]="licenciaSeleccionada"
-  [licencias]="licencias"
->
+<app-modal-licencias [(visible)]="modalVisible" [title]="'Editar Datos de '" (closeModal)="onModalClose()"
+  (result)="manejarResultado($event)" [insertar]="insertar" [licencia]="licenciaSeleccionada" [licencias]="licencias">
 </app-modal-licencias>
-

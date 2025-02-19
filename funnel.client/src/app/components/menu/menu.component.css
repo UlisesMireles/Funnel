@@ -1,4 +1,3 @@
-/* Estilos base del menú */
 .custom-menubar {
     display: flex;
     align-items: center;
@@ -55,7 +54,7 @@
 }
 
 .menu-items li.menuI a:hover {
-    background-color: white;    
+    background-color: white;
     color: #103D70;
     border-bottom: 4px solid #31A3F4;
 }
@@ -74,14 +73,14 @@
     border-radius: 0;
 }
 
-.menu-items .menuI.nav-item.dropdown > a {
+.menu-items .menuI.nav-item.dropdown>a {
     padding: 5px;
     border-bottom: 4px solid transparent;
 }
 
-.menu-items .menuI.nav-item.dropdown:hover > a,
+.menu-items .menuI.nav-item.dropdown:hover>a,
 .menu-items .menuI.nav-item.dropdown .dropdown-menu:hover {
-    background-color: white;    
+    background-color: white;
     color: #103D70;
     border-bottom: 4px solid #31A3F4;
 }
@@ -102,7 +101,6 @@
     margin-top: 0;
 }
 
-/* Estilos base de submenús */
 .subm {
     background-color: white;
     border-radius: 0 !important;
@@ -121,7 +119,7 @@ ul.subm:hover {
     border-bottom: none !important;
 }
 
-ul.subm > li > a {
+ul.subm>li>a {
     padding: 5px !important;
 }
 
@@ -143,7 +141,6 @@ ul.subm > li > a {
     margin-right: 15px;
 }
 
-/* Estilos base del panel de usuario */
 .user-panel {
     display: none;
     position: absolute;
@@ -186,7 +183,7 @@ ul.subm > li > a {
     border-radius: 0;
 }
 
-/* Media query para móviles */
+
 @media (max-width: 991.98px) {
     .navbar-collapse {
         position: absolute;
@@ -237,7 +234,6 @@ ul.subm > li > a {
         justify-content: center;
     }
 
-    /* Estilos específicos del user-panel para móviles */
     .user-panel {
         position: absolute;
         top: calc(95% + 1rem);

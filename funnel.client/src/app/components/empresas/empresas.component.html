@@ -1,177 +1,154 @@
-<div class="row" style="text-align: left;"><h3>Administración General de Empresas</h3></div>
-<div class="row">
-  <div class="row contenedorTabla">
-    <!-- Mostrar un indicador de carga si la variable loading es true -->
-    <div *ngIf="loading">Cargando...</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12" style="text-align: left;">
+      <h3>Administración General de Empresas</h3>
+    </div>
+    <div class="col-12">
+      <div class="row contenedorTabla">
+        <!-- Mostrar un indicador de carga si la variable loading es true -->
+        <div *ngIf="loading">Cargando...</div>
 
-    <p-table
-      *ngIf="!loading && empresas.length > 0"
-      #dt
-      [stripedRows]="true"
-      [value]="empresas"
-      [paginator]="true"
-      [rows]="10"
-      [rowsPerPageOptions]="[10, 20, 50]"
-      (onPage)="pageChange($event)"
-      [showCurrentPageReport]="true"
-      paginatorPosition="both"
-      [columnResizeMode]="'fit'"
-      [resizableColumns]="true"
-      [scrollable]="true"
-      [first]="first"
-      currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
-      [columnResizeMode]="'fit'" >
-    <ng-template class="divAccionesTabla" #caption>
-      <div class="row">
-          <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
+        <p-table *ngIf="!loading && empresas.length > 0" #dt [stripedRows]="true" [value]="empresas" [paginator]="true"
+          [rows]="10" [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)" [showCurrentPageReport]="true"
+          paginatorPosition="both" [columnResizeMode]="'fit'" [resizableColumns]="true" [scrollable]="true"
+          [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
+          [columnResizeMode]="'fit'">
+          <ng-template class="divAccionesTabla" #caption>
+            <div class="row">
+              <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
 
-              <p-button label="" icon="pi pi-refresh" (click)="reset()"severity="secondary"
+                <p-button label="" icon="pi pi-refresh" (click)="reset()" severity="secondary"
                   [ngStyle]="{'margin-right': '5px'}" />
-              <p-button label="" icon="pi pi-plus" severity="secondary"
-                  (click)="inserta()" />
-          </div>
+                <p-button label="" icon="pi pi-plus" severity="secondary" (click)="inserta()" />
+              </div>
+            </div>
+          </ng-template>
+
+          <ng-template #header>
+            <tr class="custom-header">
+              <th></th>
+              <th pSortableColumn="nombreEmpresa">
+                Empresa
+              </th>
+              <th pSortableColumn="alias">Alias</th>
+              <th pSortableColumn="urlSitio">
+                Url Sitio
+              </th>
+              <th pSortableColumn="administrador" class="custom-width4">
+                Administrador
+              </th>
+              <th pSortableColumn="usuarioAdministrador">
+                User Admin
+              </th>
+              <th pSortableColumn="vInicio">
+                Inicio
+              </th>
+              <th pSortableColumn="vTerminacion">
+                Terminación
+              </th>
+              <th pSortableColumn="nombreLicencia">
+                Licencia
+              </th>
+              <th pSortableColumn="cantidadUsuarios">
+                User Lic
+              </th>
+              <th pSortableColumn="userReal">
+                User Act
+              </th>
+              <th pSortableColumn="cantidadOportunidades">
+                Oport Lic
+              </th>
+              <th pSortableColumn="oportAct">
+                Oport Act
+              </th>
+              <th pSortableColumn="oportEmp">
+                Oport Reg
+              </th>
+              <th pSortableColumn="activo">
+                Estatus
+              </th>
+            </tr>
+            <tr class="custom-header2">
+              <th></th>
+              <th>
+                <input pInputText type="text" [(ngModel)]="filterEmpresas"
+                  (ngModelChange)="updateFilter($event, 'nombreEmpresa')">
+              </th>
+              <th>
+                <input pInputText type="text" [(ngModel)]="filterAlias" (ngModelChange)="updateFilter($event, 'alias')">
+              </th>
+              <th>
+                <input pInputText type="text" [(ngModel)]="filterUrl"
+                  (ngModelChange)="updateFilter($event, 'urlSitio')">
+              </th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th>
+                <input pInputText type="text" [(ngModel)]="filterLicencia"
+                  (ngModelChange)="updateFilter($event, 'nombreLicencia')">
+              </th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th></th>
+
+              <th>
+                <p-select [options]="EstatusDropdown" [(ngModel)]="selectedEstatus" (onChange)="FiltrarPorEstatus()"
+                  placeholder="Seleccionar Estatus" [appendTo]="'body'" optionLabel="label" optionValue="value">
+                </p-select>
+              </th>
+            </tr>
+          </ng-template>
+
+          <ng-template #body let-empresa>
+            <tr class="custom-header3 filas">
+              <td>
+                <p-button type="button" icon="pi pi-pencil" (click)="actualiza(empresa)" text />
+              </td>
+              <td style="font-weight: bold;">{{ empresa.nombreEmpresa }}</td>
+              <td>{{ empresa.alias }}</td>
+              <td>{{ empresa.urlSitio }}</td>
+              <td>{{ empresa.administrador }}</td>
+              <td>{{ empresa.usuarioAdministrador }}</td>
+              <td>{{ empresa.vInicio | date : "shortDate" }}</td>
+              <td>{{ empresa.vTerminacion | date : "shortDate" }}</td>
+              <td>{{ empresa.nombreLicencia }}</td>
+              <td>{{ empresa.cantidadUsuarios }}</td>
+              <td>{{ empresa.userReal }}</td>
+              <td>{{ empresa.cantidadOportunidades }}</td>
+              <td>{{ empresa.oportAct }}</td>
+              <td>{{ empresa.oportEmp }}</td>
+              <td>{{ empresa.activo === 1 ? "Activo" : "Inactivo" }}</td>
+            </tr>
+          </ng-template>
+          <ng-template #footer>
+            <tr class="custom-footer ">
+              <td></td>
+              <td>Total: {{ getVisibleTotal('nombreEmpresa',dt) }}</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>{{ getVisibleTotal('userReal', dt) }}</td>
+              <td></td>
+              <td>{{ getVisibleTotal('oportAct', dt) }}</td>
+              <td>{{ getVisibleTotal('oportEmp', dt) }}</td>
+              <td></td>
+            </tr>
+          </ng-template>
+        </p-table>
       </div>
-  </ng-template>
-
-      <ng-template #header>
-        <tr class="custom-header">
-          <th></th>
-          <th pSortableColumn="nombreEmpresa">
-            Empresa
-          </th>
-          <th pSortableColumn="alias">Alias</th>
-          <th pSortableColumn="urlSitio">
-            Url Sitio
-          </th>
-          <th pSortableColumn="administrador" class="custom-width4">
-            Administrador
-          </th>
-          <th pSortableColumn="usuarioAdministrador">
-            User Admin
-          </th>
-          <th pSortableColumn="vInicio">
-            Inicio
-          </th>
-          <th pSortableColumn="vTerminacion">
-            Terminación
-          </th>
-          <th pSortableColumn="nombreLicencia">
-            Licencia
-          </th>
-          <th pSortableColumn="cantidadUsuarios">
-            User Lic
-          </th>
-          <th pSortableColumn="userReal">
-            User Act
-          </th>
-          <th pSortableColumn="cantidadOportunidades">
-            Oport Lic
-          </th>
-          <th pSortableColumn="oportAct">
-            Oport Act
-          </th>
-          <th pSortableColumn="oportEmp">
-            Oport Reg
-          </th>
-          <th pSortableColumn="activo">
-            Estatus
-          </th>
-        </tr>
-        <tr class="custom-header2">
-          <th></th>
-          <th>
-            <input pInputText  type="text" [(ngModel)]="filterEmpresas" (ngModelChange)="updateFilter($event, 'nombreEmpresa')">
-          </th>
-          <th>
-            <input pInputText  type="text" [(ngModel)]="filterAlias" (ngModelChange)="updateFilter($event, 'alias')">
-          </th>
-          <th>
-            <input pInputText  type="text" [(ngModel)]="filterUrl" (ngModelChange)="updateFilter($event, 'urlSitio')">
-          </th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th>
-            <input pInputText   type="text" [(ngModel)]="filterLicencia" (ngModelChange)="updateFilter($event, 'nombreLicencia')">
-          </th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-          <th></th>
-
-          <th>
-            <p-select
-              [options]="EstatusDropdown"
-              [(ngModel)]="selectedEstatus"
-              (onChange)="FiltrarPorEstatus()"
-              placeholder="Seleccionar Estatus"
-              [appendTo]="'body'"
-              optionLabel="label"
-              optionValue="value"
-            >
-            </p-select>
-          </th>
-        </tr>
-      </ng-template>
-
-      <ng-template #body let-empresa>
-        <tr class="custom-header3 filas">
-          <td>
-            <p-button
-              type="button"
-              icon="pi pi-pencil"
-              (click)="actualiza(empresa)"
-              text
-            />
-          </td>
-          <td style="font-weight: bold;">{{ empresa.nombreEmpresa }}</td>
-          <td>{{ empresa.alias }}</td>
-          <td>{{ empresa.urlSitio }}</td>
-          <td>{{ empresa.administrador }}</td>
-          <td>{{ empresa.usuarioAdministrador }}</td>
-          <td>{{ empresa.vInicio | date : "shortDate" }}</td>
-          <td>{{ empresa.vTerminacion | date : "shortDate" }}</td>
-          <td>{{ empresa.nombreLicencia }}</td>
-          <td>{{ empresa.cantidadUsuarios }}</td>
-          <td>{{ empresa.userReal }}</td>
-          <td>{{ empresa.cantidadOportunidades }}</td>
-          <td>{{ empresa.oportAct }}</td>
-          <td>{{ empresa.oportEmp }}</td>
-          <td>{{ empresa.activo === 1 ? "Activo" : "Inactivo" }}</td>
-        </tr>
-      </ng-template>
-      <ng-template #footer>
-        <tr class="custom-footer ">
-          <td></td>
-          <td>Total: {{ getVisibleTotal('nombreEmpresa',dt) }}</td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>{{ getVisibleTotal('userReal', dt) }}</td>
-          <td></td>
-          <td>{{ getVisibleTotal('oportAct', dt) }}</td>
-          <td>{{ getVisibleTotal('oportEmp', dt) }}</td>
-          <td></td>
-        </tr>
-      </ng-template>
-    </p-table>
+      <p-toast position="center"></p-toast>
+    </div>
   </div>
-  <p-toast position="center"></p-toast>
 </div>
-<app-modal-empresas
-  [(visible)]="modalVisible"
-  [title]="'Editar Datos de '"
-  (closeModal)="onModalClose()"
-  (result)="manejarResultado($event)"
-  [insertar]="insertar"
-  [empresa]="empresaSeleccionada"
-  [empresas]="empresas"
->
+<app-modal-empresas [(visible)]="modalVisible" [title]="'Editar Datos de '" (closeModal)="onModalClose()"
+  (result)="manejarResultado($event)" [insertar]="insertar" [empresa]="empresaSeleccionada" [empresas]="empresas">
 </app-modal-empresas>
