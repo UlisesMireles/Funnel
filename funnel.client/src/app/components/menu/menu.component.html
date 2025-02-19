@@ -14,13 +14,16 @@
       <div class="menu-center">
         <ul class="navbar-nav mx-auto menu-items">
           <li class="menuI nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" [routerLink]="['/empresas']">EMPRESAS</a>
+            <a class="nav-link" [attr.data-bs-toggle]="isMobile ? 'collapse' : null"
+              [attr.data-bs-target]="isMobile ? '.navbar-collapse' : null" [routerLink]="['/empresas']">EMPRESAS</a>
           </li>
           <li class="menuI nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" [routerLink]="['/licencias']">LICENCIAS</a>
+            <a class="nav-link" [attr.data-bs-toggle]="isMobile ? 'collapse' : null"
+            [attr.data-bs-target]="isMobile ? '.navbar-collapse' : null" [routerLink]="['/licencias']">LICENCIAS</a>
           </li>
           <li class="menuI nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" [routerLink]="['/administracion']">ADMINISTRACIÓN</a>
+            <a class="nav-link" [attr.data-bs-toggle]="isMobile ? 'collapse' : null"
+            [attr.data-bs-target]="isMobile ? '.navbar-collapse' : null" [routerLink]="['/administracion']">ADMINISTRACIÓN</a>
           </li>
           <li class="menuI nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="catalogosDropdown" role="button" 
@@ -29,12 +32,14 @@
             </a>
             <ul class="dropdown-menu subm" aria-labelledby="catalogosDropdown">
               <li class="submenu">
-                <a class="subm dropdown-item" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" [routerLink]="['/sectores']">SECTORES</a>
+                <a class="subm dropdown-item" [attr.data-bs-toggle]="isMobile ? 'collapse' : null"
+                [attr.data-bs-target]="isMobile ? '.navbar-collapse' : null" [routerLink]="['/sectores']">SECTORES</a>
               </li>
             </ul>
           </li>
           <li class="menuI nav-item">
-            <a class="nav-link" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" [routerLink]="['/stats']">STATS</a>
+            <a class="nav-link" [attr.data-bs-toggle]="isMobile ? 'collapse' : null"
+            [attr.data-bs-target]="isMobile ? '.navbar-collapse' : null" [routerLink]="['/stats']">STATS</a>
           </li>
         </ul>
       </div>

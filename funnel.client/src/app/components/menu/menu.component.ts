@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
 import { environment } from '../../../enviroment/enviroment';
@@ -16,9 +17,15 @@ export class MenuComponent implements OnInit {
   nombreUsuario: string = '';
   rol: string = '';
   tipoUsuario: string = '';
-  constructor(private authService: AuthenticationService, private router: Router) { }
+  isMobile: boolean = false;
+  constructor(private authService: AuthenticationService, private router: Router, private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
+    this.breakpointObserver
+      .observe(['(max-width: 991.98px)'])
+      .subscribe((result:any) => {
+        this.isMobile = result.matches;
+      });
     if (this.authService.currentUser) {
       this.nombreUsuario = localStorage.getItem('username')!;
       this.rol = localStorage.getItem('tipoUsuario')!;
