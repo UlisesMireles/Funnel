@@ -9,7 +9,7 @@ GO
 -- Create date: 2025-02-19
 -- Description:	Obtiene toda la informacion de Stats relacionadas a Usuarios y Oportunidades por empresa
 -- =======================================================================================================
-CREATE PROCEDURE F_ObtenerStats
+ALTER PROCEDURE F_ObtenerStats
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -27,9 +27,9 @@ BEGIN
 	),
 	OportunidadesInfo AS (
 		SELECT 
-			SUM(CASE WHEN o.Estatus = 1 THEN 1 ELSE 0 END) AS OportunidadesActivas,
-			SUM(CASE WHEN o.Estatus = 0 THEN 1 ELSE 0 END) AS OportunidadesInactivas,
-			SUM(CASE WHEN o.Estatus IN (0,1) THEN 1 ELSE 0 END) AS TotalOportunidades,
+			SUM(CASE WHEN o.IdEstatusOportunidad = 1 THEN 1 ELSE 0 END) AS OportunidadesActivas,
+			SUM(CASE WHEN o.IdEstatusOportunidad <> 1 THEN 1 ELSE 0 END) AS OportunidadesInactivas,
+			COUNT(o.IdEstatusOportunidad) AS TotalOportunidades,
 			e.IdEmpresa
 		FROM Oportunidades AS o
 		LEFT JOIN Empresas AS e ON e.IdEmpresa = o.IdEmpresa
