@@ -1,3 +1,4 @@
+/* Estilos base del menú */
 .custom-menubar {
     display: flex;
     align-items: center;
@@ -28,7 +29,6 @@
     margin-left: 10px;
 }
 
-
 .menu-center {
     flex: 1;
     display: flex;
@@ -44,7 +44,7 @@
     margin: 0;
 }
 
- .menu-items li.menuI a {
+.menu-items li.menuI a {
     color: white;
     font-weight: bold;
     text-decoration: none;
@@ -58,7 +58,8 @@
     background-color: white;    
     color: #103D70;
     border-bottom: 4px solid #31A3F4;
-} 
+}
+
 .menu-items .menuI.nav-item.dropdown {
     position: relative;
 }
@@ -101,6 +102,7 @@
     margin-top: 0;
 }
 
+/* Estilos base de submenús */
 .subm {
     background-color: white;
     border-radius: 0 !important;
@@ -109,22 +111,6 @@
     padding-bottom: 0 !important;
     margin-bottom: 0 !important;
     font-size: 14px !important;
-}
-
-.dropdown-menu {
-    background-color: white;
-    border-radius: 0;
-    color: #103D70;
-}
-
-.dropdown-item {
-    color: #103D70;
-    padding: 10px 20px;
-}
-
-.dropdown-item:hover {
-    background-color: white;
-    color: #103D70;
 }
 
 ul.subm {
@@ -139,9 +125,14 @@ ul.subm > li > a {
     padding: 5px !important;
 }
 
+.submenu a {
+    color: #103D70 !important;
+    padding: 10px 20px;
+}
 
-.navbar-nav {
-    align-items: center;
+.submenu a:hover {
+    background-color: white;
+    color: #103D70;
 }
 
 .imagenLogo {
@@ -152,24 +143,17 @@ ul.subm > li > a {
     margin-right: 15px;
 }
 
-.user-menu {
-    position: relative;
-}
-
+/* Estilos base del panel de usuario */
 .user-panel {
     display: none;
     position: absolute;
-    top: 50px;
-    right: 0;
     background-color: #D2D6DE;
     color: black;
-    padding: 0;
-    border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 1000;
-    width: 280px;
     text-align: center;
-    margin: 12px 3px;
+    width: 280px;
+    border-radius: 5px;
 }
 
 .user-panel.show {
@@ -179,16 +163,12 @@ ul.subm > li > a {
 .user-header {
     background-color: #3C8DBC;
     color: white;
-    padding: 15px;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
 
 .user-image {
-    width: 100px;
-    height: 100px;
     border-radius: 50%;
-    margin-bottom: 10px;
 }
 
 .user-header h5 {
@@ -197,24 +177,140 @@ ul.subm > li > a {
     font-weight: bold;
 }
 
-.user-actions {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-}
-
 .btnmenuuser {
     text-align: center;
     vertical-align: middle;
-    min-width: 80px !important;
-    width: 100% !important;
-    height: 32px !important;
-    font-size: 12px !important;
     text-transform: capitalize !important;
     color: rgb(255, 255, 255) !important;
     background-color: rgb(0, 166, 90) !important;
-    margin: 10px 5px;
     border-radius: 0;
-    font-size: 14px !important;
-    padding: 0 !important;
+}
+
+/* Media query para móviles */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: #103D70;
+        padding: 1rem;
+        z-index: 1000;
+    }
+
+    .menu-center {
+        width: 100%;
+    }
+
+    .menu-items {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .menu-items li.menuI {
+        width: 100%;
+    }
+
+    .menu-items li.menuI a {
+        width: 100%;
+        padding: 10px;
+        display: block;
+    }
+
+    .dropdown-menu.subm {
+        width: 100%;
+        position: static !important;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none !important;
+    }
+
+    .submenu a {
+        color: #103D70 !important;
+        text-align: center !important;
+    }
+
+    .menu-end {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 1rem;
+        margin-top: 1rem;
+        justify-content: center;
+    }
+
+    /* Estilos específicos del user-panel para móviles */
+    .user-panel {
+        position: absolute;
+        top: calc(95% + 1rem);
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .user-header {
+        padding: 20px 15px;
+    }
+
+    .user-image {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 10px;
+    }
+
+    .user-actions {
+        padding: 15px;
+    }
+
+    .btnmenuuser {
+        width: 100% !important;
+        min-width: 80px !important;
+        height: 32px !important;
+        font-size: 12px !important;
+        margin: 5px 0;
+        padding: 0 !important;
+    }
+
+    .navbar-toggler {
+        border-color: white;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+}
+
+@media (min-width: 992px) {
+    .user-panel {
+        top: 50px;
+        right: 0;
+        width: 280px;
+        margin: 12px 3px;
+        border-radius: 5px;
+        padding: 0;
+    }
+
+    .user-header {
+        padding: 15px;
+    }
+
+    .user-image {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 10px;
+    }
+
+    .user-actions {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .btnmenuuser {
+        min-width: 80px !important;
+        width: 100% !important;
+        height: 32px !important;
+        font-size: 12px !important;
+        margin: 10px 5px;
+        padding: 0 !important;
+    }
 }

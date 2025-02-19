@@ -1,41 +1,65 @@
-<div class="custom-menubar d-flex align-items-center justify-content-between">
-    <div class="d-flex align-items-center">
+<nav class="navbar navbar-expand-lg custom-menubar">
+  <div class="container-fluid">
+    <!-- Logo y título siempre visibles -->
+    <div class="menu-start">
       <img [src]="baseUrl + '/assets/img/SFS blanco.png'" class="imagenLogo" alt="SFS Logo" />
       <span class="menu-title">ADMINISTRACIÓN</span>
     </div>
 
-    <div class="menu-center">
-      <ul class="menu-items">
-        <li class="menuI"><a [routerLink]="['/empresas']">EMPRESAS</a></li>
-        <li class="menuI"><a [routerLink]="['/licencias']">LICENCIAS</a></li>
-        <li class="menuI"><a [routerLink]="['/administracion']">ADMINISTRACIÓN</a></li>
-        <li class="menuI nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="catalogosDropdown" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            CATÁLOGOS
-          </a>
-          <ul class="dropdown-menu subm" aria-labelledby="catalogosDropdown">
-            <li class="submenu"><a class="subm dropdown-item" [routerLink]="['/sectores']">SECTORES</a></li>
-          </ul>
-        </li>
-        <li  class="menuI"><a [routerLink]="['/stats']">STATS</a></li>
-      </ul>
-    </div>
+    <!-- Botón hamburguesa -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
+            aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    <div class="menu-end d-flex align-items-center" style="margin-right: 15px;" (document:click)="onDocumentClick($event)">
-      <span class="user-name" (click)="toggleUserPanel($event)" style="cursor: pointer;">
-        <i class="fa fa-user-circle"></i> {{nombreUsuario}}
-      </span>
+    <!-- Contenido colapsable -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <div class="menu-center">
+        <ul class="navbar-nav mx-auto menu-items">
+          <li class="menuI nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" [routerLink]="['/empresas']">EMPRESAS</a>
+          </li>
+          <li class="menuI nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" [routerLink]="['/licencias']">LICENCIAS</a>
+          </li>
+          <li class="menuI nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" [routerLink]="['/administracion']">ADMINISTRACIÓN</a>
+          </li>
+          <li class="menuI nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="catalogosDropdown" role="button" 
+               data-bs-toggle="dropdown" aria-expanded="false">
+              CATÁLOGOS
+            </a>
+            <ul class="dropdown-menu subm" aria-labelledby="catalogosDropdown">
+              <li class="submenu">
+                <a class="subm dropdown-item" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" [routerLink]="['/sectores']">SECTORES</a>
+              </li>
+            </ul>
+          </li>
+          <li class="menuI nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" [routerLink]="['/stats']">STATS</a>
+          </li>
+        </ul>
+      </div>
 
       <!-- Panel de usuario -->
-      <div class="user-panel" [class.show]="isUserPanelVisible">
-        <div class="user-header">
-          <img src="{{rutaImgen}}" alt="Usuario" class="user-image" />
-          <h5>{{tipoUsuario}}</h5>
-        </div>
-        <div class="user-actions">
-          <button (click)="logout()" type="button" class="btn btn-cancel btnmenuuser">Cerrar Sesión</button>
+      <div class="menu-end d-flex align-items-center" (document:click)="onDocumentClick($event)">
+        <span class="user-name" (click)="toggleUserPanel($event)" style="cursor: pointer;">
+          <i class="fa fa-user-circle"></i> {{nombreUsuario}}
+        </span>
+
+        <div class="user-panel" [class.show]="isUserPanelVisible">
+          <div class="user-header">
+            <img src="{{rutaImgen}}" alt="Usuario" class="user-image" />
+            <h5>{{tipoUsuario}}</h5>
+          </div>
+          <div class="user-actions">
+            <button (click)="logout()" type="button" class="btn btn-cancel btnmenuuser">
+              Cerrar Sesión
+            </button>
+          </div>
         </div>
       </div>
     </div>
   </div>
+</nav>
