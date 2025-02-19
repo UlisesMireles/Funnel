@@ -15,6 +15,7 @@ import { Table } from 'primeng/table';
 export class AdministracionComponent {
   loading: boolean = true;
   administradores: Administrador[] = [];
+  administradoresOriginal: Administrador[] = [];
   first: number = 0;
   rows: number = 10;
 
@@ -38,14 +39,11 @@ export class AdministracionComponent {
   getAdministradores(): void {
     this.adminService.getAdministradores().subscribe({
       next: (data) => {
-        this.administradores = data;
+        this.administradoresOriginal = data;
         this.loading = false;
         this.cdr.detectChanges();
-        if (this.dt) {
-          this.dt.filter(true, 'activo', 'equals');
-          this.selectedEstatus = true;
-        }
-        
+        this.selectedEstatus = true;
+        this.filtrarPorEstatus();        
       },
       error: (error) => {
         this.messageService.add({
@@ -126,11 +124,13 @@ export class AdministracionComponent {
   }
 
   filtrarPorEstatus() {
-    if (this.selectedEstatus == null) {
-      this.dt.filter('', 'activo', 'equals');
-      this.dt.filterGlobal('', 'contains');
-    } else {
-      this.dt.filter(this.selectedEstatus, 'activo', 'equals');
+    this.administradores = this.selectedEstatus === null
+      ? [...this.administradoresOriginal]
+      : [...this.administradoresOriginal.filter(admin =>
+        admin.activo === (this.selectedEstatus ? 1 : 0)
+      )];
+    if (this.dt) {
+      this.dt.first = 0;
     }
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 
 /*PrimeNG*/
 import { LazyLoadEvent } from 'primeng/api';
@@ -22,6 +22,7 @@ export class EmpresasComponent implements OnInit {
   @ViewChild('dt') dt!: Table; // Referencia a la tabla
 
   empresas: dataEmpresa[] = [];
+  empresasOriginal: dataEmpresa[] = [];
   empresaSeleccionada!: dataEmpresa;
 
   licenciasDropdown: { label: string; value: number }[] = [];
@@ -49,7 +50,8 @@ export class EmpresasComponent implements OnInit {
 
   constructor(
     private empresasService: EmpresasService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cdr: ChangeDetectorRef
   ) {}
   ngOnInit() {
     this.getEmpresas();
@@ -58,15 +60,11 @@ export class EmpresasComponent implements OnInit {
   getEmpresas() {
     this.empresasService.getEmpresas().subscribe({
       next: (result: dataEmpresa[]) => {
-        this.empresas = result;
-
-        this.selectedEstatus = true;
-        setTimeout(() => {
-          if (this.dt) {
-            this.dt.filter(true, 'activo', 'equals');
-          }
-        }, 300);
+        this.empresasOriginal = result;
         this.loading = false;
+        this.cdr.detectChanges();
+        this.selectedEstatus = true;
+        this.FiltrarPorEstatus();       
       },
       error: (error) => {
         this.messageService.add({
@@ -79,11 +77,13 @@ export class EmpresasComponent implements OnInit {
     });
   }
   FiltrarPorEstatus() {
-    if (this.selectedEstatus == null) {
-      this.dt.filter('', 'activo', 'equals');
-      this.dt.filterGlobal('', 'contains');
-    } else {
-      this.dt.filter(this.selectedEstatus, 'activo', 'equals');
+    this.empresas = this.selectedEstatus === null
+      ? [...this.empresasOriginal]
+      : [...this.empresasOriginal.filter(empresa =>
+        empresa.activo === (this.selectedEstatus ? 1 : 0)
+      )];
+    if (this.dt) {
+      this.dt.first = 0;
     }
   }
   changeRows(event: any, dt: any) {
