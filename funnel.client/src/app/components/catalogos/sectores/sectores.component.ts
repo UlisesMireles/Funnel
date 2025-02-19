@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 
 //PrimeNG
 import { LazyLoadEvent } from 'primeng/api';
@@ -23,7 +23,8 @@ import { SEL_Sectores } from '../../../interfaces/Sector';
 export class SectoresComponent {
   constructor(
     private sectoresService: SectoresService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +33,7 @@ export class SectoresComponent {
   @ViewChild('dt') dt!: Table; // Referencia a la tabla
 
   sectores: SEL_Sectores[] = [];
+  sectoresOriginal: SEL_Sectores[] = [];
   sectorSeleccionado!: SEL_Sectores;
 
   filtroSector='';
@@ -60,14 +62,11 @@ export class SectoresComponent {
   getSectores() {
     this.sectoresService.getSectores().subscribe({
       next: (result: SEL_Sectores[]) => {
-        this.sectores = result;
+        this.sectoresOriginal = result;
         this.selectedEstatus = 'Activo';
-        setTimeout(() => {
-          if (this.dt) {
-            this.dt.filter('Activo', 'desEstatusActivo', 'equals');
-          }
-        }, 300);
+        this.cdr.detectChanges();
         this.loading = false;
+        this.FiltrarPorEstatus();
       },
       error: (error) => {
         this.messageService.add({
@@ -80,11 +79,11 @@ export class SectoresComponent {
     });
   }
   FiltrarPorEstatus() {
-    if (this.selectedEstatus == null) {
-      this.dt.filter('', 'desEstatusActivo', 'equals');
-      this.dt.filterGlobal('', 'contains');
-    } else {
-      this.dt.filter(this.selectedEstatus, 'desEstatusActivo', 'equals');
+    this.sectores = this.selectedEstatus === null
+      ? [...this.sectoresOriginal]
+      : [...this.sectoresOriginal.filter((x) => x.desEstatusActivo === this.selectedEstatus)];
+    if (this.dt) {
+      this.dt.first = 0;
     }
   }
   // eventosBotones
