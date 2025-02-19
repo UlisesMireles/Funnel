@@ -28,12 +28,11 @@ builder.Services.AddScoped<ILicenciaService, LicenciaService>();
 builder.Services.AddScoped<ILicenciaData, LicenciaData>();  
 builder.Services.AddScoped<ISectorService, SectorService>();
 builder.Services.AddScoped<ISectorData, SectorData>();  
-
-
 builder.Services.AddScoped<IEmail, Email>();
 builder.Services.AddScoped<IAdministracionData, AdministracionData>();
 builder.Services.AddScoped<IAdministracionService, AdministracionService>();
-
+builder.Services.AddScoped<IStatsData, StatsData>();
+builder.Services.AddScoped<IStatsService, StatsService>();
 
 
 
