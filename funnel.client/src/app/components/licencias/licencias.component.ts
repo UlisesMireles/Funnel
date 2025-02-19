@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 
 //PrimeNG
 import { LazyLoadEvent } from 'primeng/api';
@@ -20,10 +20,11 @@ import { SEL_Licencia } from '../../interfaces/Licencia';
   styleUrl: './licencias.component.css',
 })
 export class LicenciasComponent implements OnInit {
-  constructor(private licenciasService: LicenciasService, private messageService: MessageService) {}
+  constructor(private licenciasService: LicenciasService, private messageService: MessageService, private cdr: ChangeDetectorRef) {}
     @ViewChild('dt') dt!: Table; // Referencia a la tabla
 
   licencias: SEL_Licencia []  =[];
+  licenciasOriginal: SEL_Licencia [] = [];
   licenciaSeleccionada!: SEL_Licencia;
   EstatusDropdown = [
     { label: 'Todo', value: null },
@@ -49,14 +50,11 @@ export class LicenciasComponent implements OnInit {
   getLicencias() {
     this.licenciasService.getLicencias().subscribe({
       next: (result: SEL_Licencia[]) => {
-        this.licencias = result;
+        this.licenciasOriginal = result;
         this.loading = false;
+        this.cdr.detectChanges();
         this.selectedEstatus = true;
-        setTimeout(() => {
-          if (this.dt) {
-            this.dt.filter(true, 'activo', 'equals');
-          }
-        }, 300);
+        this.FiltrarPorEstatus();
       },
       error: (error) => {
         this.messageService.add({
@@ -101,12 +99,14 @@ export class LicenciasComponent implements OnInit {
       }
     }
     FiltrarPorEstatus() {
-      if (this.selectedEstatus == null) {
-        this.dt.filter('', 'activo', 'equals');
-        this.dt.filterGlobal('', 'contains');
-      } else {
-        this.dt.filter(this.selectedEstatus, 'activo', 'equals');
-      }
+      this.licencias = this.selectedEstatus === null
+        ? [...this.licenciasOriginal]
+        : [...this.licenciasOriginal.filter((licencia) => 
+          licencia.activo === (this.selectedEstatus ? 1 : 0)
+        )];
+        if (this.dt) {
+          this.dt.first = 0;
+        }
     }
     prev() {
       this.first = this.first - this.rows;
