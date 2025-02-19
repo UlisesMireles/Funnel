@@ -34,7 +34,7 @@
                 Oportunidades Activas
               </th>
               <th pSortableColumn="oportunidadesRegistradas">
-                Oportunidades Regristradas
+                Oportunidades Registradas
               </th>
               <th pSortableColumn="estatus">
                 Estatus
@@ -58,20 +58,22 @@
           <ng-template #body let-stat>
             <tr class="custom-header3 custom-row filas">
               <td style="font-weight: bold;">{{ stat.empresa }}</td>
-              <td>{{ stat.oportunidadesActivas }}</td>
-              <td>{{ stat.oportunidadesRegistradas }}</td>
               <td>{{ stat.usuariosActivos }}</td>
               <td>{{ stat.usuariosRegistrados }}</td>
+              <td>{{ stat.oportunidadesActivas }}</td>
+              <td>{{ stat.oportunidadesRegistradas }}</td>
+
               <td>{{ stat.estatus === true ? "Activo" : "Inactivo" }}</td>
             </tr>
           </ng-template>
           <ng-template #footer>
             <tr class="custom-footer ">
               <td>Total: </td>
-              <td>{{ getVisibleTotal('oportunidadesActivas',dt) }}</td>
-              <td> {{ getVisibleTotal('oportunidadesRegistradas',dt) }}</td>
               <td>{{ getVisibleTotal('usuariosActivos',dt) }}</td>
               <td>{{ getVisibleTotal('usuariosRegistrados',dt) }}</td>
+              <td>{{ getVisibleTotal('oportunidadesActivas',dt) }}</td>
+              <td> {{ getVisibleTotal('oportunidadesRegistradas',dt) }}</td>
+
               <td></td>
             </tr>
           </ng-template>
