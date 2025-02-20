@@ -8,7 +8,7 @@
         <!-- Mostrar un indicador de carga si la variable loading es true -->
         <div *ngIf="loading">Cargando...</div>
 
-        <p-table *ngIf="!loading && empresas.length > 0" #dt [stripedRows]="true" [value]="empresas" [paginator]="true"
+        <p-table *ngIf="!loading" #dt [stripedRows]="true" [value]="empresas" [paginator]="true"
           [rows]="10" [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)" [showCurrentPageReport]="true"
           paginatorPosition="both" [columnResizeMode]="'fit'" [resizableColumns]="true" [scrollable]="true"
           [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"

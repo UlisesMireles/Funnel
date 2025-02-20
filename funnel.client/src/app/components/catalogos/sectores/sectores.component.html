@@ -7,7 +7,7 @@
     <div class="col-12">
       <div class="row contenedorTabla">
         <div *ngIf="loading">Cargando...</div>
-        <p-table *ngIf="!loading && sectores.length > 0" #dt [stripedRows]="true" [value]="sectores" [paginator]="true"
+        <p-table *ngIf="!loading" #dt [stripedRows]="true" [value]="sectores" [paginator]="true"
           [rows]="10" [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)" [first]="first"
           [showCurrentPageReport]="true" paginatorPosition="both" [columnResizeMode]="'fit'" [columnResizeMode]="'fit'"
           [resizableColumns]="true" [scrollable]="true"
