@@ -115,5 +115,59 @@ namespace Funnel.Data
             }
             return result;
         }
+
+        public async Task<BaseOut> CambiarPassTwoFactor(string usuario)
+        {
+            BaseOut result = new BaseOut();
+            try
+            {
+                IList<Parameter> listaParametros = new List<Parameter>
+                {
+                    DataBase.CreateParameter("@pUsuario", DbType.String, 20, ParameterDirection.Input, false, null, DataRowVersion.Default, usuario)
+                };
+                using (IDataReader reader = await DataBase.GetReader("F_CambiarContrasenaDosPasosTenant", CommandType.StoredProcedure, listaParametros, _connectionString))
+                {
+                    while (reader.Read())
+                    {
+                        result.Result = ComprobarNulos.CheckBooleanNull(reader["Result"]);
+                        result.ErrorMessage = ComprobarNulos.CheckStringNull(reader["ErrorMessage"]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
+
+        public async Task<BaseOut> CambiarPass(UsuarioReset user)
+        {
+            BaseOut result = new BaseOut();
+            try
+            {
+                IList<Parameter> listaParametros = new List<Parameter>
+                {
+                    DataBase.CreateParameter("@pUsuario", DbType.String, 20, ParameterDirection.Input, false, null, DataRowVersion.Default, user.Usuario),
+                    DataBase.CreateParameter("@pPass", DbType.String, 200, ParameterDirection.Input, false, null, DataRowVersion.Default, Encrypt.Encriptar(user.Clave)),
+                };
+                using (IDataReader reader = await DataBase.GetReader("F_CambiarContrasenaTenant", CommandType.StoredProcedure, listaParametros, _connectionString))
+                {
+                    while (reader.Read())
+                    {
+                        result.Result = ComprobarNulos.CheckBooleanNull(reader["Result"]);
+                        result.ErrorMessage = ComprobarNulos.CheckStringNull(reader["ErrorMessage"]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+        }
     }
 }

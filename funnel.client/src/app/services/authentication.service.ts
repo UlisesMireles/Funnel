@@ -42,15 +42,16 @@ export class AuthenticationService {
   }
 
   login(user: string, pass: string) {
-    const datos = { usuario: user, password: pass };
-    return this.http.get<any>(this.baseUrl + "api/Login/Autenticacion", { params: datos })
+    const datos = { usuario: user, pass: pass };
+    return this.http.post<any>(this.baseUrl + "api/Login/Autenticacion", datos)
     .pipe(map(usuario => {
       var user = usuario;
-
       if (user.idUsuario > 0) {
             localStorage.setItem('currentUser', JSON.stringify(user.idUsuario));
             localStorage.setItem('tipoUsuario', user.tipoUsuario);
             localStorage.setItem('username', datos.usuario);
+            localStorage.setItem('nombre', user.nombre);
+            localStorage.setItem('correo', user.correo);
             localStorage.setItem('lastActivity', Date.now().toString());
             this.currentUserSubject.next(user);
             this.startSessionTimer();
@@ -84,6 +85,8 @@ export class AuthenticationService {
           localStorage.removeItem('tipoUsuario');
           localStorage.removeItem('username');
           localStorage.removeItem('lastActivity');
+          localStorage.removeItem('nombre');
+          localStorage.removeItem('correo');
           
           if (this.timer) {
             clearTimeout(this.timer);

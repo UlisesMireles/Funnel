@@ -23,18 +23,19 @@ namespace Funnel.Data
             {
                 IList<ParameterSQl> list = new List<ParameterSQl>
                 {
-                    DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, "TENANT"),
-                    DataBase.CreateParameterSql("@Username", SqlDbType.NVarChar, 255, ParameterDirection.Input, false, null, DataRowVersion.Default, user),
-                    DataBase.CreateParameterSql("@Password", SqlDbType.NVarChar, 255, ParameterDirection.Input, false, null, DataRowVersion.Default, contrasena)
+                    DataBase.CreateParameterSql("@pUsuario", SqlDbType.NVarChar, 20, ParameterDirection.Input, false, null, DataRowVersion.Default, user),
+                    DataBase.CreateParameterSql("@pPassword", SqlDbType.NVarChar, 200, ParameterDirection.Input, false, null, DataRowVersion.Default, contrasena)
                 };
-                using (IDataReader reader = await DataBase.GetReaderSql("Authenticate", CommandType.StoredProcedure, list, _connectionString))
+                using (IDataReader reader = await DataBase.GetReaderSql("F_AutentificacionTenantDosPasos", CommandType.StoredProcedure, list, _connectionString))
                 {
                     while (reader.Read())
                     {
-                        usuario.IdUsuario = ComprobarNulos.CheckIntNull(reader["IdUsuario"]);
-                        usuario.TipoUsuario = ComprobarNulos.CheckStringNull(reader["Descripcion"]);
-                        usuario.Result = true;
-                        usuario.ErrorMessage = string.Empty;
+                        usuario.IdUsuario = ComprobarNulos.CheckIntNull(reader["IdAdministrador"]);
+                        usuario.TipoUsuario = "Tenant";
+                        usuario.Nombre = ComprobarNulos.CheckStringNull(reader["Nombre"]);
+                        usuario.Correo = ComprobarNulos.CheckStringNull(reader["Correo"]);
+                        usuario.Result = ComprobarNulos.CheckBooleanNull(reader["Result"]);
+                        usuario.ErrorMessage = ComprobarNulos.CheckStringNull(reader["Error"]);
                     }
                 }                    
             }
@@ -45,6 +46,35 @@ namespace Funnel.Data
             }            
             return usuario;
         }
+
+        public async Task<TwoFactor> TwoFactor(string usuario)
+        {
+            TwoFactor twoFactorDto = new TwoFactor();
+            try
+            {
+                IList<Parameter> listaParametros = new List<Parameter>
+                {
+                    DataBase.CreateParameter("@pUsuario", DbType.String, 20, ParameterDirection.Input, false, null, DataRowVersion.Default, usuario),
+                    DataBase.CreateParameter("@pCodigo", DbType.String, 10, ParameterDirection.Input, false, null, DataRowVersion.Default, twoFactorDto.Codigo),
+                };
+                using (IDataReader reader = await DataBase.GetReader("F_CodigoAutentificacionTenant", CommandType.StoredProcedure, listaParametros, _connectionString))
+                {
+                    while (reader.Read())
+                    {
+                        twoFactorDto.Result = ComprobarNulos.CheckBooleanNull(reader["Result"]);
+                        twoFactorDto.ErrorMessage = ComprobarNulos.CheckStringNull(reader["ErrorMessage"]);
+                        twoFactorDto.TipoMensaje = ComprobarNulos.CheckIntNull(reader["TipoMensaje"]);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                twoFactorDto.Result = false;
+                twoFactorDto.ErrorMessage = ex.Message;
+            }
+
+            return twoFactorDto;
+        }        
 
         public async Task<UsuarioReset> ValidarUsuario(string usuario)
         {
@@ -71,6 +101,8 @@ namespace Funnel.Data
             }
             return user;
         }
+
+
 
         public async Task<string> ObtenerCuerpoCorreoReset(string usuario)
         {

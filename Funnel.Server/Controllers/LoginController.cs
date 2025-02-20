@@ -15,12 +15,12 @@ namespace Funnel.Server.Controllers
             _loginService = loginService;
         }
 
-        [HttpGet("[action]/")]
-        public async Task<ActionResult<UsuarioLogin>> Autenticacion(string usuario, string password)
+        [HttpPost("[action]/")]
+        public async Task<ActionResult<UsuarioLogin>> Autenticacion(UsuarioData usr)
         {
-            var respuesta = await _loginService.Autenticar(usuario, password);
+            var respuesta = await _loginService.Autenticar(usr.Usuario, usr.Pass);
             if (respuesta.IdUsuario > 0)
-                HttpContext.Session.SetString("User", usuario);
+                HttpContext.Session.SetString("User", usr.Usuario);
             return Ok(respuesta);
         }
 
@@ -42,6 +42,13 @@ namespace Funnel.Server.Controllers
         public async Task<ActionResult<BaseOut>> ObtenerVersion()
         {
             var respuesta = await _loginService.ObtenerVersion();
+            return Ok(respuesta);
+        }
+
+        [HttpPost("[action]/")]
+        public async Task<ActionResult<TwoFactor>> TwoFactor(string usuario)
+        {
+            var respuesta = await _loginService.TwoFactor(usuario);
             return Ok(respuesta);
         }
     }

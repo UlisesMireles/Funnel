@@ -42,5 +42,19 @@ namespace Funnel.Server.Controllers
             var respuesta = await _adminService.ModificaAdministrador(admin);
             return Ok(respuesta);
         }
+
+        [HttpPost("[action]/")]
+        public async Task<ActionResult<BaseOut>> CambiarPass(UsuarioReset user)
+        {
+            var respuesta = await _adminService.CambiarPass(user);
+            return Ok(respuesta);
+        }
+
+        [HttpPost("[action]/")]
+        public async Task<ActionResult<BaseOut>> CambiarPassTwoFactor(string usuario)
+        {
+            var respuesta = await _adminService.CambiarPassTwoFactor(usuario);
+            return Ok(respuesta);
+        }
     }
 }
