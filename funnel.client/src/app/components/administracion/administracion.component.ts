@@ -43,7 +43,7 @@ export class AdministracionComponent {
         this.loading = false;
         this.cdr.detectChanges();
         this.selectedEstatus = true;
-        this.filtrarPorEstatus();        
+        this.filtrarPorEstatus();
       },
       error: (error) => {
         this.messageService.add({

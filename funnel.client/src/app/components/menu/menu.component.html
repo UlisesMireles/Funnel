@@ -5,7 +5,7 @@
       <span class="menu-title">ADMINISTRACIÓN</span>
     </div>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
             aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -26,7 +26,7 @@
             [attr.data-bs-target]="isMobile ? '.navbar-collapse' : null" [routerLink]="['/administracion']">ADMINISTRACIÓN</a>
           </li>
           <li class="menuI nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="catalogosDropdown" role="button" 
+            <a class="nav-link dropdown-toggle" href="#" id="catalogosDropdown" role="button"
                data-bs-toggle="dropdown" aria-expanded="false">
               CATÁLOGOS
             </a>
@@ -55,6 +55,9 @@
             <h5>{{nombre}}</h5>
           </div>
           <div class="user-actions">
+            <button type="button" [routerLink]="['/cambiarContraseña']" class="btn btn-cancel btnmenuuser">
+              Contraseña
+             </button>
             <button (click)="logout()" type="button" class="btn btn-cancel btnmenuuser">
               Cerrar Sesión
             </button>

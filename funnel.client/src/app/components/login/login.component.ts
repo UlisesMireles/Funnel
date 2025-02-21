@@ -18,7 +18,7 @@ export class LoginComponent {
   baseUrl: string = environment.baseURLAssets;
   public backgroundImg: SafeStyle | undefined;
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router, private authService: AuthenticationService) {
-    
+
 
   }
 
@@ -42,7 +42,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.get('usuario')?.value, this.loginForm.get('password')?.value).subscribe({
       next: (data: any) => {
         if (data.result && data.idUsuario > 0) {
-          this.router.navigate(['/empresas']);
+          this.router.navigate(['/two-factor']);
         } else {
           this.showErrors = true;
           this.errorLogin = "Usuario y/o Contraseña no validos."

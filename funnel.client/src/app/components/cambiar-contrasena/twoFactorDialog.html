@@ -1,0 +1,32 @@
+<p-dialog
+  header="Doble Autentificación"
+  [modal]="true"
+  [(visible)]="visible"
+  [style]="{ width: '35rem' }"
+  (onHide)="close()"
+  (onShow)="onDialogShow()"
+  class="bodyDialog"
+>
+  <div class="row rowFrm" style="text-align: left;">
+    <span class="p-text-secondary block mb-8">
+      Se te ha enviado un código de autoirización a tu correo electrónico. Para accesar, favor de ingresar el código de 6 dígitos.
+    </span>
+  </div>
+
+  <div class="form-group rowFrm" style="text-align: center; padding:15px;">
+    <p-inputnumber [(ngModel)]="codigo" class="inpt_clave" maxlength="6" mode="decimal" (ngModelChange)="onCodigoChange($event)" inputId="withoutgrouping" [useGrouping]="false"   />
+  </div>
+
+  <div class="form-group rowFrm" style="text-align: center; margin-top: 10px;">
+    <strong style="font-weight: bold; color:gray">Tiempo restante: {{ formattedTime }}</strong>
+  </div>
+
+  <div class="form-group rowFrm" style="text-align: center;">
+    <a href="" (click)="enviarCorreoTwoFactor();" style="color:gray; size: 12px;">Reenviar correo electrónico</a>
+    <button pButton (click)="EnviarCodigo()" type="button" class="p-button-primary ml-custom btnGuardar" label="Enviar" [disabled]="disabled"></button>
+  </div>
+
+  <div class="form-group rowFrm" style="text-align: center;">
+
+  </div>
+</p-dialog>

@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
     Globals.tipoUsuario = localStorage.getItem('tipoUsuario') as string;
 
     this.router.events.subscribe(() => {
-      if(this.router.url === '/' || this.router.url === '/recuperar-contrasena'  || this.router.url === '/login'){
+      if(this.router.url === '/' || this.router.url === '/recuperar-contrasena'  || this.router.url === '/login' || this.router.url ==='/two-factor'){
         this.login = true;
       }else{
         this.login = false;

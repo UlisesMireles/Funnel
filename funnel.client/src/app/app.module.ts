@@ -14,6 +14,7 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { FooterComponent } from './components/footer/footer.component';
 import { PaginatorModule } from 'primeng/paginator';
+import { PanelModule } from 'primeng/panel';
 
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
@@ -43,6 +44,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TextareaModule } from 'primeng/textarea';
+import { PasswordModule } from 'primeng/password';
+
 
 
 import { EmpresasComponent } from './components/empresas/empresas.component';
@@ -54,6 +57,8 @@ import { ModalLicenciasComponent } from './components/licencias/modal-licencias/
 import { SectoresComponent } from './components/catalogos/sectores/sectores.component';
 import { ModalSectoresComponent } from './components/catalogos/sectores/modal-sectores/modal-sectores.component';
 import { StatsComponent } from './components/stats/stats.component';
+import { CambiarContrasenaComponent, TwoFactorDialog } from './components/cambiar-contrasena/cambiar-contrasena.component';
+import { TwoFactorComponent } from './components/two-factor/two-factor.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +74,10 @@ import { StatsComponent } from './components/stats/stats.component';
     AdministradorAgregarDialog,
     SectoresComponent,
     ModalSectoresComponent,
-    StatsComponent
+    StatsComponent,
+    CambiarContrasenaComponent,
+    TwoFactorDialog,
+    TwoFactorComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
@@ -96,7 +104,9 @@ import { StatsComponent } from './components/stats/stats.component';
     OverlayPanelModule,
     InputNumberModule,
     TextareaModule,
-    PaginatorModule
+    PaginatorModule,
+    PanelModule,
+    PasswordModule
   ],
   providers: [
     { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },

@@ -1,21 +1,23 @@
+
 import { Injectable } from '@angular/core';
 import { environment } from '../../enviroment/enviroment';
 import { BehaviorSubject, finalize, map, Observable } from 'rxjs';
 import { UsuarioLogin } from '../interfaces/Usuarios';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { TwoFactor} from '../interfaces/cambiar-contraseña';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService {  
+export class AuthenticationService {
   baseUrl: string = environment.baseURL;
   private currentUserSubject = new BehaviorSubject<any>(null);
   public currentUser: Observable<UsuarioLogin>;
 
   private sessionTimeout = 30 * 60 * 1000;
   private timer: any;
-  
+
   constructor(private http: HttpClient, private router: Router) {
     this.currentUserSubject = new BehaviorSubject<UsuarioLogin>(JSON.parse(localStorage.getItem('currentUser')!));
     this.currentUser = this.currentUserSubject.asObservable();
@@ -25,7 +27,7 @@ export class AuthenticationService {
    private checkInitialSession() {
     const currentUser = localStorage.getItem('currentUser');
     const lastActivity = localStorage.getItem('lastActivity');
-    
+
     if (currentUser && lastActivity) {
       const timeDiff = Date.now() - parseInt(lastActivity);
       if (timeDiff > this.sessionTimeout) {
@@ -87,7 +89,7 @@ export class AuthenticationService {
           localStorage.removeItem('lastActivity');
           localStorage.removeItem('nombre');
           localStorage.removeItem('correo');
-          
+
           if (this.timer) {
             clearTimeout(this.timer);
           }
@@ -120,5 +122,8 @@ export class AuthenticationService {
   recuperarContrasena(user: string) {
     let datos = { usuario: user };
     return this.http.get<any>(this.baseUrl + "api/Login/RecuperarContrasena", { params: datos });
+  }
+  TwoFactor(usuariodosPasos: TwoFactor) {
+    return this.http.post<any>(this.baseUrl + "api/Login/TwoFactor",usuariodosPasos);
   }
 }
