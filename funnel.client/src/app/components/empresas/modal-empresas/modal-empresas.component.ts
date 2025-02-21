@@ -85,6 +85,7 @@ export class ModalEmpresasComponent {
     this.request.usuario = this.empresa.usuarioAdministrador;
     this.request.urlSitio = this.empresa.urlSitio;
     this.request.activo = 1;
+    console.log(this.request);
     this.empresasService.postINSUPDEmpresa(this.request).subscribe(
       {
         next: (result: baseOut) => {
@@ -155,7 +156,11 @@ export class ModalEmpresasComponent {
     };
     const inicialesNombre = obtenerIniciales(this.empresa.nombre);
     const inicialesPaterno = obtenerIniciales(this.empresa.apellidoPaterno);
-    const inicialesMaterno = obtenerIniciales(this.empresa.apellidoMaterno);
+    let inicialesMaterno = '';
+    if (this.empresa.apellidoMaterno != '' && this.empresa.apellidoMaterno != undefined){
+      inicialesMaterno = obtenerIniciales(this.empresa.apellidoMaterno)!;
+    }
+      
     return `${inicialesNombre}${inicialesPaterno}${inicialesMaterno}`;
   }
   onAliasChange(newValue: string) {
@@ -172,6 +177,7 @@ export class ModalEmpresasComponent {
       this.esCampoInvalido(this.empresa.rfc) ||
       this.esCampoInvalido(this.empresa.idLicencia) ||
       this.esCampoInvalido(this.empresa.nombre) ||
+      this.esCampoInvalido(this.empresa.apellidoPaterno) ||
       this.esCampoInvalido(this.empresa.vInicio) ||
       this.esCampoInvalido(this.empresa.vTerminacion) ||
       !this.validarFechas()||
@@ -188,6 +194,7 @@ export class ModalEmpresasComponent {
       this.esCampoInvalido(this.empresa.rfc) ||
       this.esCampoInvalido(this.empresa.idLicencia) ||
       this.esCampoInvalido(this.empresa.nombre) ||
+      this.esCampoInvalido(this.empresa.apellidoPaterno) ||
       this.esCampoInvalido(this.empresa.vInicio) ||
       this.esCampoInvalido(this.empresa.vTerminacion)||
       (this.empresa.rfc !== undefined && !this.validarRFC(this.empresa.rfc))
@@ -217,7 +224,7 @@ export class ModalEmpresasComponent {
     return true;
   }
   validarRFC(rfc: string): boolean {
-    const regexRFC = /^[A-ZÑ&]{3,4}\d{6}[A-Z\d]{3}$/;
+    const regexRFC = /^([A-ZÑ&]{3,4})\d{6}([A-Z\d]{3})?$/;
     return regexRFC.test(rfc);
   }
   validarCorreo(correo: string): boolean {
