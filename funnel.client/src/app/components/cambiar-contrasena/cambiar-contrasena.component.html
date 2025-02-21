@@ -1,7 +1,7 @@
 <div class="container d-flex justify-content-center py-4">
   <div class="row justify-content-center w-100">
     <div class="col-md-8 col-lg-6 mt-5">
-      <p-panel header="Usuario {{usuario}}" styleClass="shadow-sm w-100">
+      <p-panel header="Mi Cuenta" styleClass="shadow-sm w-100">
         <div class="card-body mt-4">
           <form (ngSubmit)="onSubmit($event)">
             <div class="mb-4">
@@ -42,17 +42,29 @@
               </div>
             </div>
 
-            <div class="mb-4">
+            <div class="mb-4" style="text-align: left;">
               <div class="form-group mb-3">
                 <label class="form-label text-start w-100">Cambiar contraseña</label>
                 <p-password 
                   [(ngModel)]="password" 
+                  [maxlength]="16"
                   name="password"
                   [feedback]="false" 
                   [toggleMask]="true" 
                   styleClass="w-100" 
+                  (input)="validacionesPass(); validacionesConfirmPass()"
                   [inputStyle]="{'width': '100%'}"
-                  autocomplete="new-password" />
+                  autocomplete="new-password"/>
+                  <small style="margin-left: 2px;" align="end">{{ password.length || 0 }}/16</small>
+                  <div *ngIf="longitudPass" class="text-danger" style="font-size: small;">
+                    La contraseña no puede tener mas de 16 caracteres.
+                  </div>
+                  <div *ngIf="samePassword" class="text-danger" style="font-size: small;">
+                    Las nueva contraseña no puede ser igual que la anterior.
+                  </div>
+                  <div *ngIf="!patternPass" class="text-danger" style="font-size: small;">
+                    La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un signo especial.
+                </div>
               </div>
 
               <div class="form-group mb-3">
@@ -64,7 +76,12 @@
                   [toggleMask]="true" 
                   styleClass="w-100"
                   [inputStyle]="{'width': '100%'}"
-                  autocomplete="new-password" />
+                  autocomplete="new-password"
+                  (input)="validacionesConfirmPass(); validacionesPass();" />
+                  <small style="margin-left: 2px;" align="end">{{ confirmarPassword.length || 0 }}/16</small>
+                  <div *ngIf="confirmarPass" class="text-danger" style="font-size: small;">
+                    La contraseña nueva y la confirmación no coinciden.
+                  </div>
               </div>
             </div>
 
@@ -81,7 +98,7 @@
                 (click)="cambiarPassword()" 
                 label="Guardar"
                 class="p-button-primary"
-                [attr.disabled]="password.length == 0 || confirmarPassword.length == 0 ? true : null"></button>
+                [attr.disabled]="(password.length == 0 || confirmarPassword.length == 0 || longitudPass || samePassword || !patternPass || confirmarPass) ? true : null"></button>
             </div>
           </form>
         </div>

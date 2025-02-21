@@ -14,6 +14,7 @@ import { TwoFactor } from '../../interfaces/cambiar-contraseña';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CambiarContrasenaService } from '../../services/cambiar-contrasenia.service';
 import { AuthenticationService } from '../../services/authentication.service';
+import { LoginUser } from '../../interfaces/LoginUser';
 
 @Component({
   selector: 'app-cambiar-contrasena',
@@ -29,35 +30,42 @@ export class CambiarContrasenaComponent {
   correo: string = '';
   password: string = '';
   confirmarPassword: string = '';
+  datosUsuario: LoginUser = {} as LoginUser;
+  samePassword: boolean = false;
+  longitudPass: boolean = false;
+  patternPass: boolean = true;
+  confirmarPass: boolean = false;
+  regexPassword: RegExp = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_])[A-Za-z\\d\\W_]{1,16}$');
 
-  constructor(private messageService: MessageService) {}
+  constructor(private messageService: MessageService, private authService:AuthenticationService) {}
   ngOnInit(): void {
     this.usuario = Globals.usuario = localStorage.getItem('username') as string;
     this.nombre = Globals.usuario = localStorage.getItem('nombre') as string;
     this.correo = Globals.usuario = localStorage.getItem('correo') as string;
     this.password = '';
+    this.confirmarPassword = '';
+    this.datosUsuario = this.authService.desencriptaSesion();
   }
   cambiarPassword(): void {
-    if (!this.validarPassword()) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Las contraseñas no coinciden',
-      });
-      return;
-    }
-
-    if (this.password.length < 8) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'La contraseña debe tener al menos 8 caracteres.',
-      });
-      return;
-    }
     this.dataModal = { usuario: this.usuario, pass: this.password };
     this.modalVisible = true;
   }
+
+  validacionesPass(): any{
+    if (this.password.length > 16) {
+      this.longitudPass = true;
+      return;
+    } else {
+      this.longitudPass = false
+    }
+    this.samePassword = this.password == this.datosUsuario.pass ? true: false;  
+    this.patternPass = this.password.length > 0 ? this.regexPassword.test(this.password): true;     
+  }
+
+  validacionesConfirmPass(){
+    this.confirmarPass = this.password != this.confirmarPassword ? true: false;
+  }
+
   onModalClose() {
     this.modalVisible = false;    
   }
