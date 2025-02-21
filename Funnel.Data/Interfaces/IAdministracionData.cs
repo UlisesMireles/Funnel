@@ -10,6 +10,6 @@ namespace Funnel.Data.Interfaces
         public Task<BaseOut> ModificaAdministrador(Administrador admin);
         public Task<Administrador> ObtenerAdministradorPorUsuario(string user);
         public Task<BaseOut> CambiarPassTwoFactor(string usuario);
-        public Task<BaseOut> CambiarPass(UsuarioReset user);
+        public Task<BaseOut> CambiarPass(UsuarioData user);
     }
 }

@@ -44,7 +44,7 @@ namespace Funnel.Server.Controllers
         }
 
         [HttpPost("[action]/")]
-        public async Task<ActionResult<BaseOut>> CambiarPass(UsuarioReset user)
+        public async Task<ActionResult<BaseOut>> CambiarPass(UsuarioData user)
         {
             var respuesta = await _adminService.CambiarPass(user);
             return Ok(respuesta);

@@ -10,6 +10,6 @@ namespace Funnnel.Logic.Interfaces
         public Task<BaseOut> InsertaAdministrador(Administrador admin);
         public Task<BaseOut> ModificaAdministrador(Administrador admin);
         public Task<BaseOut> CambiarPassTwoFactor(string usuario);
-        public Task<BaseOut> CambiarPass(UsuarioReset user);
+        public Task<BaseOut> CambiarPass(UsuarioData user);
     }
 }

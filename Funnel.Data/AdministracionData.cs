@@ -143,7 +143,7 @@ namespace Funnel.Data
             return result;
         }
 
-        public async Task<BaseOut> CambiarPass(UsuarioReset user)
+        public async Task<BaseOut> CambiarPass(UsuarioData user)
         {
             BaseOut result = new BaseOut();
             try
@@ -151,7 +151,7 @@ namespace Funnel.Data
                 IList<Parameter> listaParametros = new List<Parameter>
                 {
                     DataBase.CreateParameter("@pUsuario", DbType.String, 20, ParameterDirection.Input, false, null, DataRowVersion.Default, user.Usuario),
-                    DataBase.CreateParameter("@pPass", DbType.String, 200, ParameterDirection.Input, false, null, DataRowVersion.Default, Encrypt.Encriptar(user.Clave)),
+                    DataBase.CreateParameter("@pPass", DbType.String, 200, ParameterDirection.Input, false, null, DataRowVersion.Default, Encrypt.Encriptar(user.Pass)),
                 };
                 using (IDataReader reader = await DataBase.GetReader("F_CambiarContrasenaTenant", CommandType.StoredProcedure, listaParametros, _connectionString))
                 {
