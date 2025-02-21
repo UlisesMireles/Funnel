@@ -8,11 +8,10 @@
         <!-- Mostrar un indicador de carga si la variable loading es true -->
         <div *ngIf="loading">Cargando...</div>
 
-        <p-table *ngIf="!loading" #dt [stripedRows]="true" [value]="empresas" [paginator]="true"
+        <p-table *ngIf="!loading" #dt [stripedRows]="true" [tableStyle]="{ 'min-width': '50rem' }" [value]="empresas" [paginator]="true"
           [rows]="10" [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)" [showCurrentPageReport]="true"
-          paginatorPosition="both" [columnResizeMode]="'fit'" [resizableColumns]="true" [scrollable]="true"
-          [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
-          [columnResizeMode]="'fit'">
+          paginatorPosition="both" [columnResizeMode]="'fit'" [resizableColumns]="true" [scrollable]="true" 
+          [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
           <ng-template class="divAccionesTabla" #caption>
             <div class="row">
               <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
@@ -30,8 +29,8 @@
               <th pSortableColumn="nombreEmpresa">
                 Empresa
               </th>
-              <th pSortableColumn="alias">Alias</th>
-              <th pSortableColumn="urlSitio">
+              <th pSortableColumn="alias" style="width: 5% !important;">Alias</th>
+              <th pSortableColumn="urlSitio" style="width: 9% !important;">
                 Url Sitio
               </th>
               <th pSortableColumn="administrador" class="custom-width4">
@@ -46,23 +45,23 @@
               <th pSortableColumn="vTerminacion">
                 Terminación
               </th>
-              <th pSortableColumn="nombreLicencia">
+              <th pSortableColumn="nombreLicencia" style="width: 5% !important">
                 Licencia
               </th>
-              <th pSortableColumn="cantidadUsuarios">
-                User Lic
+              <th pSortableColumn="cantidadUsuarios" style="padding: 0px 5px !important">
+                User <br />Lic
               </th>
-              <th pSortableColumn="userReal">
-                User Act
+              <th pSortableColumn="userReal" style="padding: 0px 5px !important">
+                User <br />Act
               </th>
-              <th pSortableColumn="cantidadOportunidades">
-                Oport Lic
+              <th pSortableColumn="cantidadOportunidades" style="padding: 0px 5px !important">
+                Oport <br />Lic
               </th>
-              <th pSortableColumn="oportAct">
-                Oport Act
+              <th pSortableColumn="oportAct" style="padding: 0px 5px !important">
+                Oport <br />Act
               </th>
-              <th pSortableColumn="oportEmp">
-                Oport Reg
+              <th pSortableColumn="oportEmp" style="padding: 0px 5px !important">
+                Oport <br />Reg
               </th>
               <th pSortableColumn="activo">
                 Estatus
@@ -75,10 +74,10 @@
                   (ngModelChange)="updateFilter($event, 'nombreEmpresa')">
               </th>
               <th>
-                <input pInputText type="text" [(ngModel)]="filterAlias" (ngModelChange)="updateFilter($event, 'alias')">
+                <input pInputText type="text" [(ngModel)]="filterAlias" (ngModelChange)="updateFilter($event, 'alias')" style="width:95% !important">
               </th>
               <th>
-                <input pInputText type="text" [(ngModel)]="filterUrl"
+                <input pInputText type="text" [(ngModel)]="filterUrl" style="width:95% !important"
                   (ngModelChange)="updateFilter($event, 'urlSitio')">
               </th>
               <th></th>
@@ -86,7 +85,7 @@
               <th></th>
               <th></th>
               <th>
-                <input pInputText type="text" [(ngModel)]="filterLicencia"
+                <input pInputText type="text" [(ngModel)]="filterLicencia" style="width:95% !important"
                   (ngModelChange)="updateFilter($event, 'nombreLicencia')">
               </th>
               <th></th>
