@@ -86,10 +86,11 @@
 }
 
 .menu-end {
-    display: flex;
-    align-items: center;
-    color: white;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  padding-right: 6%;
 }
 
 .menu-end i {
