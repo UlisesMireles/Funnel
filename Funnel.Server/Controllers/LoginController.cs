@@ -46,7 +46,7 @@ namespace Funnel.Server.Controllers
         }
 
         [HttpPost("[action]/")]
-        public async Task<ActionResult<TwoFactor>> TwoFactor(string usuario)
+        public async Task<ActionResult<TwoFactor>> TwoFactor(UsuarioDosPasos usuario)
         {
             var respuesta = await _loginService.TwoFactor(usuario);
             return Ok(respuesta);

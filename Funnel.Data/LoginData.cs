@@ -47,15 +47,15 @@ namespace Funnel.Data
             return usuario;
         }
 
-        public async Task<TwoFactor> TwoFactor(string usuario)
+        public async Task<TwoFactor> TwoFactor(UsuarioDosPasos usuario)
         {
             TwoFactor twoFactorDto = new TwoFactor();
             try
             {
                 IList<Parameter> listaParametros = new List<Parameter>
                 {
-                    DataBase.CreateParameter("@pUsuario", DbType.String, 20, ParameterDirection.Input, false, null, DataRowVersion.Default, usuario),
-                    DataBase.CreateParameter("@pCodigo", DbType.String, 10, ParameterDirection.Input, false, null, DataRowVersion.Default, twoFactorDto.Codigo),
+                    DataBase.CreateParameter("@pUsuario", DbType.String, 20, ParameterDirection.Input, false, null, DataRowVersion.Default, usuario.Usuario),
+                    DataBase.CreateParameter("@pCodigo", DbType.String, 10, ParameterDirection.Input, false, null, DataRowVersion.Default, usuario.Codigo),
                 };
                 using (IDataReader reader = await DataBase.GetReader("F_CodigoAutentificacionTenant", CommandType.StoredProcedure, listaParametros, _connectionString))
                 {

@@ -24,7 +24,7 @@ namespace Funnnel.Logic
             return respuesta;
         }
 
-        public async Task<TwoFactor> TwoFactor(string usuario)
+        public async Task<TwoFactor> TwoFactor(UsuarioDosPasos usuario)
         {
             return await _loginData.TwoFactor(usuario);
         }
