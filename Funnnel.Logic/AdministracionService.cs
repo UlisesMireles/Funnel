@@ -13,7 +13,7 @@ namespace Funnnel.Logic
             _administracionData = administracionData;
         }
 
-        public async Task<BaseOut> CambiarPass(UsuarioReset user)
+        public async Task<BaseOut> CambiarPass(UsuarioData user)
         {
             return await _administracionData.CambiarPass(user);
         }
