@@ -130,7 +130,7 @@ namespace Funnel.Data
                     while (reader.Read())
                     {
                         result.Result = ComprobarNulos.CheckBooleanNull(reader["Result"]);
-                        result.ErrorMessage = ComprobarNulos.CheckStringNull(reader["ErrorMessage"]);
+                        result.ErrorMessage = ComprobarNulos.CheckStringNull(reader["Error"]);
                     }
                 }
             }
