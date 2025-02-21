@@ -33,26 +33,25 @@ p-password {
   height: 35px;
 }
 
-.inpt{
+.inpt {
   padding-left: 10px;
   width: 100%;
 }
+
 .ml-custom {
   margin-left: 8px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
-/* .panel-center
-{
-  padding-left:16%;
-} */
-.panel-footer
-{
+
+.panel-footer {
   text-align: right;
 }
-.btnGuardar{
+
+.btnGuardar {
   background-color: #103d70;
   border-color: #103d70;
 }
-::ng-deep .p-inputnumber-input{
+
+::ng-deep .p-inputnumber-input {
   text-align: center;
 }

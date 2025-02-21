@@ -38,7 +38,7 @@ export class CambiarContrasenaComponent {
     this.password = '';
   }
   cambiarPassword(): void {
-    if (!this.vaildarPasswor()) {
+    if (!this.validarPassword()) {
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -46,20 +46,37 @@ export class CambiarContrasenaComponent {
       });
       return;
     }
+
+    if (this.password.length < 8) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'La contraseña debe tener al menos 8 caracteres.',
+      });
+      return;
+    }
     this.dataModal = { usuario: this.usuario, pass: this.password };
     this.modalVisible = true;
   }
   onModalClose() {
-    this.modalVisible = false;
-    this.password = '';
-    this.confirmarPassword = '';
+    this.modalVisible = false;    
   }
-  vaildarPasswor(): boolean {
-    if (this.password === this.confirmarPassword) {
-      return true;
-    } else {
-      return false;
+
+  resultadoModal(result: any) {
+    if (result.res) {
+      this.password = '';
+      this.confirmarPassword = '';
     }
+  }
+  validarPassword(): boolean {
+    const password = this.password?.trim();
+    const confirmarPassword = this.confirmarPassword?.trim();
+    
+    return Boolean(password && confirmarPassword && password === confirmarPassword);
+  }
+
+  onSubmit(event: Event): void {
+    event.preventDefault();
   }
 }
 
@@ -175,6 +192,8 @@ export class TwoFactorDialog {
   cambiarPassword() {
     this.cambiarContrasenaService.postCambiarPass(this.data).subscribe({
       next: (data) => {
+        const result: any = {res: true}
+        this.result.emit(result);
         this.close();
         this.messageService.add({
           severity: 'success',
@@ -183,6 +202,8 @@ export class TwoFactorDialog {
         });
       },
       error: (error) => {
+        const result: any = {res: false}
+        this.result.emit(result);
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
