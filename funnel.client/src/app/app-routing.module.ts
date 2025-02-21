@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'licencias', component: LicenciasComponent, title: 'Licencias', canActivate: [AuthGuard]  },
   { path: 'sectores', component: SectoresComponent, title: 'Sectores', canActivate: [AuthGuard]  },
   { path: 'stats', component: StatsComponent, title: 'Stats', canActivate: [AuthGuard]  },
-  { path: 'cambiarContraseña', component: CambiarContrasenaComponent, title: 'Cambiar Contraseña', canActivate: [AuthGuard]  },
+  { path: 'cambiar-contrasena', component: CambiarContrasenaComponent, title: 'Cambiar Contraseña', canActivate: [AuthGuard]  },
   { path: 'two-factor', component: TwoFactorComponent, title: 'Autenticación', canActivate: [AuthGuard]  },
   { path: 'recuperar-contrasena', component: ResetPasswordComponent, title: 'Recuperar contraseña' },
   { path: 'administracion', component: AdministracionComponent, title: 'Administración', canActivate: [AuthGuard]  },

@@ -6,6 +6,7 @@ import { UsuarioLogin } from '../interfaces/Usuarios';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { TwoFactor} from '../interfaces/cambiar-contraseña';
+import { LoginUser } from '../interfaces/LoginUser';
 
 @Injectable({
   providedIn: 'root'
@@ -56,10 +57,16 @@ export class AuthenticationService {
             localStorage.setItem('correo', user.correo);
             localStorage.setItem('lastActivity', Date.now().toString());
             this.currentUserSubject.next(user);
+            sessionStorage.setItem('sesion', window.btoa(JSON.stringify(datos)));
             this.startSessionTimer();
       }
       return user;
     }));
+  }
+
+  reenviarTwoFactor(user: string, pass: string) {
+    const datos = { usuario: user, pass: pass };
+    return this.http.post<any>(this.baseUrl + "api/Login/Autenticacion", datos);
   }
 
 
@@ -90,6 +97,8 @@ export class AuthenticationService {
           localStorage.removeItem('nombre');
           localStorage.removeItem('correo');
 
+          sessionStorage.clear();
+
           if (this.timer) {
             clearTimeout(this.timer);
           }
@@ -118,6 +127,15 @@ export class AuthenticationService {
       this.router.navigate(['/']);
     }
   }
+
+  desencriptaSesion(): LoginUser {
+    const sesion = sessionStorage.getItem("sesion");
+    if (sesion) {
+        return JSON.parse(window.atob(sesion));
+    } else {
+        return {} as LoginUser;
+    }
+}
 
   recuperarContrasena(user: string) {
     let datos = { usuario: user };

@@ -23,6 +23,8 @@ export class LoginComponent {
   }
 
   ngOnInit(): void {
+    localStorage.clear();
+    sessionStorage.clear();
     this.backgroundImg = 'background-image: url(' + this.baseUrl + '/assets/img/PMA_GRISES.png' + ')';
     this.loginForm = this.fb.group({
       usuario: ['', [Validators.required]],
@@ -33,6 +35,7 @@ export class LoginComponent {
 
   iniciarSesion():void{
     localStorage.clear();
+    sessionStorage.clear();
     if (this.loginForm.invalid) {
       this.showErrors = true;
       this.errorLogin = "Por favor ingrese su usuario y contraseña"

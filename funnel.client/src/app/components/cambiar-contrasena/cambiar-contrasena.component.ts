@@ -12,7 +12,7 @@ import { Globals } from '../../services/globals';
 import { UsuarioData } from '../../interfaces/cambiar-contraseña';
 import { TwoFactor } from '../../interfaces/cambiar-contraseña';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CambiarContraseñaService } from '../../services/cambiar-contraseña.service';
+import { CambiarContrasenaService } from '../../services/cambiar-contrasenia.service';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
@@ -51,6 +51,8 @@ export class CambiarContrasenaComponent {
   }
   onModalClose() {
     this.modalVisible = false;
+    this.password = '';
+    this.confirmarPassword = '';
   }
   vaildarPasswor(): boolean {
     if (this.password === this.confirmarPassword) {
@@ -83,7 +85,7 @@ export class TwoFactorDialog {
   codigo: number | null = null;
   constructor(
     private router: Router,
-    private cambiarContraseñaService: CambiarContraseñaService,
+    private cambiarContrasenaService: CambiarContrasenaService,
     private messageService: MessageService,
     private authenticationService: AuthenticationService
   ) {}
@@ -128,12 +130,11 @@ export class TwoFactorDialog {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   }
   enviarCorreoTwoFactor() {
-    this.cambiarContraseñaService
+    this.cambiarContrasenaService
       .postCambiarPassTwoFactor(this.usuario)
       .subscribe({
         next: (data) => {
           this.startTimer();
-          console.log(data);
         },
         error: (error) => {
           this.messageService.add({
@@ -150,7 +151,6 @@ export class TwoFactorDialog {
     let TwoFactor: TwoFactor = { codigo: this.codigo, usuario: this.usuario };
     this.authenticationService.TwoFactor(TwoFactor).subscribe({
       next: (data) => {
-        console.log(data);
         if (data.tipoMensaje == 1) {
           this.cambiarPassword();
         } else {
@@ -173,7 +173,7 @@ export class TwoFactorDialog {
     });
   }
   cambiarPassword() {
-    this.cambiarContraseñaService.postCambiarPass(this.data).subscribe({
+    this.cambiarContrasenaService.postCambiarPass(this.data).subscribe({
       next: (data) => {
         this.close();
         this.messageService.add({

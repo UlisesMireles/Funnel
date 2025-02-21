@@ -85,7 +85,6 @@ export class ModalEmpresasComponent {
     this.request.usuario = this.empresa.usuarioAdministrador;
     this.request.urlSitio = this.empresa.urlSitio;
     this.request.activo = 1;
-    console.log(this.request);
     this.empresasService.postINSUPDEmpresa(this.request).subscribe(
       {
         next: (result: baseOut) => {

@@ -6,7 +6,7 @@ import { UsuarioData} from '../interfaces/cambiar-contraseña';
 @Injectable({
   providedIn: 'root'
 })
-export class CambiarContraseñaService {
+export class CambiarContrasenaService {
   baseUrl: string = environment.baseURL;
   constructor(private http: HttpClient) { }
   postCambiarPass(data: UsuarioData): Observable<any> {
