@@ -55,7 +55,7 @@
         <label for="rfc">RFC: </label>
       </div>
       <div class="col-sm-8 inptSpace">
-        <input pInputText class="inptSize" id="rfc" [(ngModel)]="empresa.rfc"  maxlength="13"  />&nbsp;
+        <input pInputText class="inptSize" id="rfc" [(ngModel)]="empresa.rfc"  maxlength="13" (ngModelChange)="empresa.rfc = $event.toUpperCase()" />&nbsp;
         <span *ngIf="esCampoInvalido(empresa.rfc)" class="text-danger">*</span>
       </div>
     </div>
@@ -105,7 +105,6 @@
           class="inptSize"
           [(ngModel)]="empresa.apellidoMaterno"
         />&nbsp;
-        <span *ngIf="esCampoInvalido(empresa.apellidoMaterno)" class="text-danger">*</span>
       </div>
     </div>
     <div class="row inptSpace">

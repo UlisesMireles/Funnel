@@ -43,7 +43,7 @@ export class AdministracionComponent {
         this.loading = false;
         this.cdr.detectChanges();
         this.selectedEstatus = true;
-        this.filtrarPorEstatus();        
+        this.filtrarPorEstatus();
       },
       error: (error) => {
         this.messageService.add({
@@ -176,6 +176,7 @@ export class AdministradorAgregarDialog {
         correo: this.administrador.correoElectronico,
         activo: this.administrador.activo == 1 ? true : false
       })
+      this.form.controls['usuario'].disable();
     } else {
       this.form = this.fb.group({
         idAdministrador: [0],

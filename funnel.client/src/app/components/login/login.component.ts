@@ -18,11 +18,13 @@ export class LoginComponent {
   baseUrl: string = environment.baseURLAssets;
   public backgroundImg: SafeStyle | undefined;
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private sanitizer: DomSanitizer, private router: Router, private authService: AuthenticationService) {
-    
+
 
   }
 
   ngOnInit(): void {
+    localStorage.clear();
+    sessionStorage.clear();
     this.backgroundImg = 'background-image: url(' + this.baseUrl + '/assets/img/PMA_GRISES.png' + ')';
     this.loginForm = this.fb.group({
       usuario: ['', [Validators.required]],
@@ -33,6 +35,7 @@ export class LoginComponent {
 
   iniciarSesion():void{
     localStorage.clear();
+    sessionStorage.clear();
     if (this.loginForm.invalid) {
       this.showErrors = true;
       this.errorLogin = "Por favor ingrese su usuario y contraseña"
@@ -42,7 +45,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.get('usuario')?.value, this.loginForm.get('password')?.value).subscribe({
       next: (data: any) => {
         if (data.result && data.idUsuario > 0) {
-          this.router.navigate(['/empresas']);
+          this.router.navigate(['/two-factor']);
         } else {
           this.showErrors = true;
           this.errorLogin = "Usuario y/o Contraseña no validos."

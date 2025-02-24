@@ -33,5 +33,6 @@
 ::ng-deep .inptSize{
   height: 35px;
   padding-right: 4px ;
+  text-align: left !important;
 }
 

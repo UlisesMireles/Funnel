@@ -1,0 +1,252 @@
+<div class="container d-flex justify-content-center py-4">
+  <div class="row justify-content-center w-100">
+    <div class="col-md-8 col-lg-6 mt-5">
+      <p-panel header="Mi Cuenta" styleClass="shadow-sm w-100">
+        <div class="card-body mt-4">
+          <form (ngSubmit)="onSubmit($event)">
+            <div class="mb-4">
+              <div class="form-group mb-3">
+                <label class="form-label text-start w-100">Nombre</label>
+                <input
+                  pInputText
+                  [(ngModel)]="nombre"
+                  name="nombre"
+                  type="text"
+                  class="form-control w-100"
+                  [disabled]="true"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-label text-start w-100">Usuario</label>
+                <input
+                  pInputText
+                  [(ngModel)]="usuario"
+                  name="usuario"
+                  type="text"
+                  class="form-control w-100"
+                  [disabled]="true"
+                  autocomplete="off"
+                />
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-label text-start w-100">Correo</label>
+                <input
+                  pInputText
+                  [(ngModel)]="correo"
+                  name="correo"
+                  type="text"
+                  class="form-control w-100"
+                  [disabled]="true"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <div class="mb-4" style="text-align: left">
+              <!-- <div class="form-group mb-3">
+                <label class="form-label text-start w-100"
+                  >Cambiar contraseña</label
+                >
+                <p-password
+                  [(ngModel)]="password"
+                  [maxlength]="16"
+                  name="password"
+                  [feedback]="false"
+                  [toggleMask]="true"
+                  styleClass="w-100"
+                  [maxLength]="16"
+                  (input)="validacionesPass(); validacionesConfirmPass()"
+                  [inputStyle]="{ width: '100%' }"
+                  autocomplete="new-password"
+                />
+                <small style="margin-left: 2px" align="end"
+                  >{{ password.length || 0 }}/16</small
+                >
+                <div
+                  *ngIf="longitudPass"
+                  class="text-danger"
+                  style="font-size: small"
+                >
+                  La contraseña no puede tener mas de 16 caracteres.
+                </div>
+                <div
+                  *ngIf="samePassword"
+                  class="text-danger"
+                  style="font-size: small"
+                >
+                  Las nueva contraseña no puede ser igual que la anterior.
+                </div>
+                <div
+                  *ngIf="!patternPass"
+                  class="text-danger"
+                  style="font-size: small"
+                >
+                  La contraseña debe contener al menos una letra mayúscula, una
+                  letra minúscula, un número y un signo especial.
+                </div>
+              </div> -->
+              <div class="form-group mb-3">
+                <label class="form-label text-start w-100"
+                >Cambiar contraseña</label>
+                <p-password
+                  [(ngModel)]="password"
+                  [maxlength]="16"
+                  name="password"
+                  [feedback]="true"
+                  [toggleMask]="true"
+                  styleClass="w-100"
+                  [maxLength]="16"
+                  (input)="
+                    validacionesPass();
+                    validacionesConfirmPass();
+                    validaPassword()
+                  "
+                  [inputStyle]="{ width: '100%' }"
+                  weakLabel="Debil"
+                  mediumLabel="Aceptable"
+                  strongLabel="Fuerte"
+                  [promptLabel]="'Ingresa la nueva contraseña'"
+                  [strongRegex]="
+                    '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_])[A-Za-z\\d\\W_]{1,16}$'
+                  "
+                  [autocomplete]="'new-password'"
+                >
+                  <ng-template #footer>
+                    <p-divider />
+                    <ul class="pl-2 ml-2 my-0 leading-normal">
+                      <li
+                        [ngClass]="{
+                          fulfilled: passwordRequirements.hasLowercase,
+                          unfulfilled: !passwordRequirements.hasLowercase
+                        }"
+                      >
+                        Debe tener al menos una letra minúscula.
+                      </li>
+                      <li
+                        [ngClass]="{
+                          fulfilled: passwordRequirements.hasUppercase,
+                          unfulfilled: !passwordRequirements.hasUppercase
+                        }"
+                      >
+                        Debe tener al menos una letra mayúscula.
+                      </li>
+                      <li
+                        [ngClass]="{
+                          fulfilled: passwordRequirements.hasNumber,
+                          unfulfilled: !passwordRequirements.hasNumber
+                        }"
+                      >
+                        Debe tener al menos un número.
+                      </li>
+                      <li
+                        [ngClass]="{
+                          fulfilled: passwordRequirements.hasSpecialChar,
+                          unfulfilled: !passwordRequirements.hasSpecialChar
+                        }"
+                      >
+                        Debe tener al menos un carácter especial.
+                      </li>
+                      <li
+                        [ngClass]="{
+                          fulfilled: passwordRequirements.hasNoSpaces,
+                          unfulfilled: !passwordRequirements.hasNoSpaces
+                        }"
+                      >
+                        No debe tener espacios.
+                      </li>
+                      <li
+                        [ngClass]="{
+                          fulfilled: passwordRequirements.maxLength,
+                          unfulfilled: !passwordRequirements.maxLength
+                        }"
+                      >
+                        La contraseña no puede tener mas de16 caracteres.
+                      </li>
+                      <li
+                        [ngClass]="{
+                          fulfilled: !samePassword,
+                          unfulfilled: samePassword
+                        }"
+                      >
+                        La contraseña debe ser diferente a la anterior
+                      </li>
+                    </ul>
+                  </ng-template>
+                </p-password>
+                <small style="margin-left: 2px" align="end"
+                >{{ password.length || 0 }}/16</small
+              >
+              </div>
+
+              <div class="form-group mb-3">
+                <label class="form-label text-start w-100"
+                  >Confirmar contraseña</label
+                >
+                <p-password
+                  [(ngModel)]="confirmarPassword"
+                  name="confirmarPassword"
+                  [feedback]="false"
+                  [toggleMask]="true"
+                  styleClass="w-100"
+                  [maxLength]="16"
+                  [inputStyle]="{ width: '100%' }"
+                  autocomplete="new-password"
+                  (input)="validacionesConfirmPass(); validacionesPass()"
+                />
+                <small style="margin-left: 2px" align="end"
+                  >{{ confirmarPassword.length || 0 }}/16</small
+                >
+                <div
+                  *ngIf="confirmarPass"
+                  class="text-danger"
+                  style="font-size: small"
+                >
+                  La contraseña nueva y la confirmación no coinciden.
+                </div>
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-4">
+              <button
+                pButton
+                type="button"
+                [routerLink]="['/empresas']"
+                label="Cancelar"
+                class="p-button-secondary"
+              ></button>
+              <button
+                pButton
+                type="button"
+                (click)="cambiarPassword()"
+                label="Guardar"
+                class="p-button-primary"
+                [attr.disabled]="
+                  password.length == 0 ||
+                  confirmarPassword.length == 0 ||
+                  longitudPass ||
+                  samePassword ||
+                  !patternPass ||
+                  confirmarPass
+                    ? true
+                    : null
+                "
+              ></button>
+            </div>
+          </form>
+        </div>
+      </p-panel>
+    </div>
+  </div>
+</div>
+
+<p-toast position="center"></p-toast>
+<twoFactorDialog
+  [(visible)]="modalVisible"
+  (closeModal)="onModalClose()"
+  [data]="dataModal"
+  (result)="resultadoModal($event)"
+>
+</twoFactorDialog>

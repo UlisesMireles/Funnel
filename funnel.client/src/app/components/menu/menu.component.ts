@@ -15,6 +15,7 @@ export class MenuComponent implements OnInit {
   baseUrl: string = environment.baseURLAssets;
   rutaImgen: string = this.baseUrl + '/assets/img/persona_icono_principal.png';
   nombreUsuario: string = '';
+  nombre: string = '';  
   rol: string = '';
   tipoUsuario: string = '';
   isMobile: boolean = false;
@@ -28,6 +29,7 @@ export class MenuComponent implements OnInit {
       });
     if (this.authService.currentUser) {
       this.nombreUsuario = localStorage.getItem('username')!;
+      this.nombre = localStorage.getItem('nombre')!;
       this.rol = localStorage.getItem('tipoUsuario')!;
       if(this.rol == "Tenant")
         {

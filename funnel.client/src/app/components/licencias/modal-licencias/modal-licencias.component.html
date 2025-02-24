@@ -24,6 +24,7 @@
           pInputText
           class="inptSize"
           id="nombreLicencia"
+          style="text-align: left;"
           [(ngModel)]="licencia.nombreLicencia"
         />&nbsp;
         <span *ngIf="esCampoInvalido(licencia.nombreLicencia)" class="text-danger">*</span>
@@ -35,7 +36,7 @@
         <label for="alias">Número Usuarios:</label>
       </div>
       <div class="col-sm-8 inptSpace">
-        <p-inputnumber class="inptSize" inputId="integeronly" [(ngModel)]="licencia.cantidadUsuarios"></p-inputnumber>
+        <p-inputnumber class="inptSize" [ngStyle]="{ 'text-align': 'left' }"  inputId="integeronly" [(ngModel)]="licencia.cantidadUsuarios"></p-inputnumber>
         <span *ngIf="esCampoInvalido(licencia.cantidadUsuarios)" class="text-danger">*</span>
       </div>
     </div>
@@ -45,7 +46,7 @@
         <label for="url">Número Oportunidades: </label>
       </div>
       <div class="col-sm-8 inptSpace">
-        <p-inputnumber class="inptSize" inputId="integeronly" [(ngModel)]="licencia.cantidadOportunidades"></p-inputnumber>
+        <p-inputnumber class="inptSize" [ngStyle]="{ 'text-align': 'left' }"  inputId="integeronly" [(ngModel)]="licencia.cantidadOportunidades"></p-inputnumber>
         <label *ngIf="esCampoInvalido(licencia.cantidadOportunidades)" class="text-danger">*</label>
       </div>
     </div>
