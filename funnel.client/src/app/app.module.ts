@@ -15,6 +15,8 @@ import { AuthInterceptor } from './shared/interceptors/auth.interceptor';
 import { FooterComponent } from './components/footer/footer.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { PanelModule } from 'primeng/panel';
+import { DividerModule } from 'primeng/divider';
+
 
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
@@ -106,7 +108,8 @@ import { TwoFactorComponent } from './components/two-factor/two-factor.component
     TextareaModule,
     PaginatorModule,
     PanelModule,
-    PasswordModule
+    PasswordModule,
+    DividerModule
   ],
   providers: [
     { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },

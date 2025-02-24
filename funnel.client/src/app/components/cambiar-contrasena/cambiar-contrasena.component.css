@@ -55,3 +55,15 @@ p-password {
 ::ng-deep .p-inputnumber-input {
   text-align: center;
 }
+.fulfilled {
+  color: green;
+}
+
+.unfulfilled {
+  color: red;
+}
+.password-requirements div {
+  padding: 5px;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}

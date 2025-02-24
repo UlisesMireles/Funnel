@@ -16,6 +16,7 @@ import { CambiarContrasenaService } from '../../services/cambiar-contrasenia.ser
 import { AuthenticationService } from '../../services/authentication.service';
 import { LoginUser } from '../../interfaces/LoginUser';
 
+
 @Component({
   selector: 'app-cambiar-contrasena',
   standalone: false,
@@ -31,11 +32,19 @@ export class CambiarContrasenaComponent {
   password: string = '';
   confirmarPassword: string = '';
   datosUsuario: LoginUser = {} as LoginUser;
-  samePassword: boolean = false;
+  samePassword: boolean = true;
   longitudPass: boolean = false;
   patternPass: boolean = true;
   confirmarPass: boolean = false;
   regexPassword: RegExp = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[\\W_])[A-Za-z\\d\\W_]{1,16}$');
+  passwordRequirements = {
+    hasLowercase: false,
+    hasUppercase: false,
+    hasNumber: false,
+    hasSpecialChar: false,
+    hasNoSpaces: false,
+    maxLength: false
+  };
 
   constructor(private messageService: MessageService, private authService:AuthenticationService) {}
   ngOnInit(): void {
@@ -50,7 +59,16 @@ export class CambiarContrasenaComponent {
     this.dataModal = { usuario: this.usuario, pass: this.password };
     this.modalVisible = true;
   }
-
+  validaPassword() {
+    const pass = this.password || ''; // Evitar errores si es undefined
+    this.passwordRequirements.hasLowercase = /[a-z]/.test(pass);
+    this.passwordRequirements.hasUppercase = /[A-Z]/.test(pass);
+    this.passwordRequirements.hasNumber = /\d/.test(pass);
+    this.passwordRequirements.hasSpecialChar = /[\W_]/.test(pass);
+    this.passwordRequirements.hasNoSpaces = !/\s/.test(pass);
+    this.passwordRequirements.maxLength = pass.length <= 16;
+    this.samePassword = this.password == this.datosUsuario.pass ? true: false;
+  }
   validacionesPass(): any{
     if (this.password.length > 16) {
       this.longitudPass = true;
@@ -58,8 +76,8 @@ export class CambiarContrasenaComponent {
     } else {
       this.longitudPass = false
     }
-    this.samePassword = this.password == this.datosUsuario.pass ? true: false;  
-    this.patternPass = this.password.length > 0 ? this.regexPassword.test(this.password): true;     
+    this.samePassword = this.password == this.datosUsuario.pass ? true: false;
+    this.patternPass = this.password.length > 0 ? this.regexPassword.test(this.password): true;
   }
 
   validacionesConfirmPass(){
@@ -67,7 +85,7 @@ export class CambiarContrasenaComponent {
   }
 
   onModalClose() {
-    this.modalVisible = false;    
+    this.modalVisible = false;
   }
 
   resultadoModal(result: any) {
@@ -79,7 +97,7 @@ export class CambiarContrasenaComponent {
   validarPassword(): boolean {
     const password = this.password?.trim();
     const confirmarPassword = this.confirmarPassword?.trim();
-    
+
     return Boolean(password && confirmarPassword && password === confirmarPassword);
   }
 
