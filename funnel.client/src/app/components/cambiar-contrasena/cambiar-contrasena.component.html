@@ -7,37 +7,37 @@
             <div class="mb-4">
               <div class="form-group mb-3">
                 <label class="form-label text-start w-100">Nombre</label>
-                <input 
-                  pInputText 
-                  [(ngModel)]="nombre" 
+                <input
+                  pInputText
+                  [(ngModel)]="nombre"
                   name="nombre"
-                  type="text" 
-                  class="form-control w-100" 
-                  [disabled]="true" 
+                  type="text"
+                  class="form-control w-100"
+                  [disabled]="true"
                   autocomplete="off"/>
               </div>
 
               <div class="form-group mb-3">
                 <label class="form-label text-start w-100">Usuario</label>
-                <input 
-                  pInputText 
-                  [(ngModel)]="usuario" 
+                <input
+                  pInputText
+                  [(ngModel)]="usuario"
                   name="usuario"
-                  type="text" 
-                  class="form-control w-100" 
+                  type="text"
+                  class="form-control w-100"
                   [disabled]="true"
                   autocomplete="off" />
               </div>
 
               <div class="form-group mb-3">
                 <label class="form-label text-start w-100">Correo</label>
-                <input 
-                  pInputText 
-                  [(ngModel)]="correo" 
+                <input
+                  pInputText
+                  [(ngModel)]="correo"
                   name="correo"
-                  type="text" 
-                  class="form-control w-100" 
-                  [disabled]="true" 
+                  type="text"
+                  class="form-control w-100"
+                  [disabled]="true"
                   autocomplete="off"/>
               </div>
             </div>
@@ -45,13 +45,14 @@
             <div class="mb-4" style="text-align: left;">
               <div class="form-group mb-3">
                 <label class="form-label text-start w-100">Cambiar contraseña</label>
-                <p-password 
-                  [(ngModel)]="password" 
+                <p-password
+                  [(ngModel)]="password"
                   [maxlength]="16"
                   name="password"
-                  [feedback]="false" 
-                  [toggleMask]="true" 
-                  styleClass="w-100" 
+                  [feedback]="false"
+                  [toggleMask]="true"
+                  styleClass="w-100"
+                  [maxLength]="16"
                   (input)="validacionesPass(); validacionesConfirmPass()"
                   [inputStyle]="{'width': '100%'}"
                   autocomplete="new-password"/>
@@ -69,12 +70,13 @@
 
               <div class="form-group mb-3">
                 <label class="form-label text-start w-100">Confirmar contraseña</label>
-                <p-password 
-                  [(ngModel)]="confirmarPassword" 
+                <p-password
+                  [(ngModel)]="confirmarPassword"
                   name="confirmarPassword"
-                  [feedback]="false" 
-                  [toggleMask]="true" 
+                  [feedback]="false"
+                  [toggleMask]="true"
                   styleClass="w-100"
+                  [maxLength]="16"
                   [inputStyle]="{'width': '100%'}"
                   autocomplete="new-password"
                   (input)="validacionesConfirmPass(); validacionesPass();" />
@@ -86,16 +88,16 @@
             </div>
 
             <div class="d-flex justify-content-end gap-2 mt-4">
-              <button 
-                pButton 
-                type="button" 
-                [routerLink]="['/empresas']" 
+              <button
+                pButton
+                type="button"
+                [routerLink]="['/empresas']"
                 label="Cancelar"
                 class="p-button-secondary"></button>
-              <button 
-                pButton 
-                type="button" 
-                (click)="cambiarPassword()" 
+              <button
+                pButton
+                type="button"
+                (click)="cambiarPassword()"
                 label="Guardar"
                 class="p-button-primary"
                 [attr.disabled]="(password.length == 0 || confirmarPassword.length == 0 || longitudPass || samePassword || !patternPass || confirmarPass) ? true : null"></button>
@@ -108,9 +110,9 @@
 </div>
 
 <p-toast position="center"></p-toast>
-<twoFactorDialog 
-  [(visible)]="modalVisible" 
-  (closeModal)="onModalClose()" 
+<twoFactorDialog
+  [(visible)]="modalVisible"
+  (closeModal)="onModalClose()"
   [data]="dataModal"
   (result)="resultadoModal($event)">
 </twoFactorDialog>
