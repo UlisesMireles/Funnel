@@ -176,6 +176,7 @@ export class AdministradorAgregarDialog {
         correo: this.administrador.correoElectronico,
         activo: this.administrador.activo == 1 ? true : false
       })
+      this.form.controls['usuario'].disable();
     } else {
       this.form = this.fb.group({
         idAdministrador: [0],
