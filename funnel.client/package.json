@@ -23,6 +23,7 @@
     "@angular/router": "^19.0.0",
     "@primeng/themes": "^19.0.6",
     "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.11.3",
     "jest-editor-support": "*",
     "primeicons": "^7.0.0",
     "primeng": "^19.0.6",
