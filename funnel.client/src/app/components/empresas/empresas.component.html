@@ -118,8 +118,8 @@
               <td>{{ empresa.urlSitio }}</td>
               <td>{{ empresa.administrador }}</td>
               <td>{{ empresa.usuarioAdministrador }}</td>
-              <td>{{ empresa.vInicio | date : "shortDate" }}</td>
-              <td>{{ empresa.vTerminacion | date : "shortDate" }}</td>
+              <td>{{ empresa.vInicio | date: 'dd/MM/yyyy' }}</td>
+              <td>{{ empresa.vTerminacion | date: 'dd/MM/yyyy' }}</td>
               <td>{{ empresa.nombreLicencia }}</td>
               <td>{{ empresa.cantidadUsuarios }}</td>
               <td>{{ empresa.userReal }}</td>
@@ -155,5 +155,5 @@
   </div>
 </div>
 <app-modal-empresas [(visible)]="modalVisible" [title]="'Editar Datos de '" (closeModal)="onModalClose()"
-  (result)="manejarResultado($event)" [insertar]="insertar" [empresa]="empresaSeleccionada" [empresas]="empresas">
+  (result)="manejarResultado($event)" [insertar]="insertar" [empresa]="empresaSeleccionada" [empresas]="empresasOriginal">
 </app-modal-empresas>

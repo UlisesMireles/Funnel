@@ -11,6 +11,7 @@ import { requestEmpresa } from '../../../interfaces/Empresa';
 import { baseOut } from '../../../interfaces/utils/baseOut'
 import { dataEmpresa } from '../../../interfaces/Empresa';
 import { dropdownLicencia } from '../../../interfaces/Licencia';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-modal-empresas',
@@ -29,18 +30,95 @@ export class ModalEmpresasComponent {
   licenciasDropdown:dropdownLicencia[] = [];
   selectedLicencia: number | undefined;
 
+  formEmpresas!: FormGroup;
+  userId: number = 0; 
+
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() closeModal: EventEmitter<void> = new EventEmitter();
   @Output() result: EventEmitter<baseOut> = new EventEmitter();
 
-  constructor(private empresasService: EmpresasService, private messageService: MessageService) { }
+  constructor(private empresasService: EmpresasService, private messageService: MessageService, private fb: FormBuilder,) { 
+    this.userId = parseInt(localStorage.getItem('currentUser')!);
+    this.formEmpresas = this.fb.group({
+      idEmpresa: [0],
+      bandera: ['INS-EMPRESA'],
+      nombreEmpresa : ['', Validators.required],
+      idAdministrador: [0],
+      idLicencia: [0, Validators.required],
+      alias: ['', Validators.required],
+      rfc: ['', Validators.required],
+      vInicio: ['', Validators.required],
+      vTerminacion: ['', Validators.required],
+      usuarioCreador: [this.userId],
+      nombre: ['', Validators.required],
+      apellidoPaterno: ['', Validators.required],
+      apellidoMaterno: [''],
+      iniciales: [''],
+      correo: ['', Validators.required],
+      usuario:[''],
+      urlSitio:['www.', Validators.required],
+      activo: [1]
+    });    
+  }
+
+  ngOnInit(): void {
+    this.formEmpresas.get('rfc')?.valueChanges.subscribe(value => {
+      if (value) {
+        this.formEmpresas.get('rfc')?.setValue(value.toUpperCase(), {emitEvent: false});
+      }
+    });    
+  }
 
   onDialogShow() {
-    this.getLicencias();
+    this.getLicencias();    
     this.selectedLicencia = this.empresa.idLicencia;
     this.empresaActiva = this.empresa?.activo === 1;
     this.empresa.vInicio = new Date(this.empresa.vInicio);
     this.empresa.vTerminacion = new Date(this.empresa.vTerminacion);
+    if (!this.insertar) {
+      this.formEmpresas = this.fb.group({ 
+        idEmpresa: [this.empresa.idEmpresa],
+        bandera: ['UPD-EMPRESA'],
+        nombreEmpresa : [this.empresa.nombreEmpresa, Validators.required],
+        idAdministrador: [this.empresa.idAdministrador],
+        idLicencia: [this.empresa.idLicencia, Validators.required],
+        alias: [this.empresa.alias, Validators.required],
+        rfc: [this.empresa.rfc, Validators.required],
+        vInicio: [this.empresa.vInicio, Validators.required],
+        vTerminacion: [this.empresa.vTerminacion, Validators.required],
+        usuarioCreador: [this.userId],
+        nombre: [this.empresa.nombre, Validators.required],
+        apellidoPaterno: [this.empresa.apellidoPaterno, Validators.required],
+        apellidoMaterno: [this.empresa.apellidoMaterno],
+        iniciales: [this.getIniciales()],
+        correo: [this.empresa.correoAdministrador, Validators.required],
+        usuario:[this.empresa.usuarioAdministrador],
+        urlSitio:[this.empresa.urlSitio, Validators.required],
+        activo: [this.empresaActiva]
+      }); 
+    } else {
+      this.formEmpresas = this.fb.group({
+        idEmpresa: [0],
+        bandera: ['INS-EMPRESA'],
+        nombreEmpresa : ['', Validators.required],
+        idAdministrador: [0],
+        idLicencia: [0, Validators.required],
+        alias: ['', Validators.required],
+        rfc: ['', Validators.required],
+        vInicio: ['', Validators.required],
+        vTerminacion: ['', Validators.required],
+        usuarioCreador: [this.userId],
+        nombre: ['', Validators.required],
+        apellidoPaterno: ['', Validators.required],
+        apellidoMaterno: [''],
+        iniciales: [''],
+        correo: ['', Validators.required],
+        usuario:[''],
+        urlSitio:['www.', Validators.required],
+        activo: [1]
+      });  
+    }
+    this.formEmpresas.controls['usuario'].disable();
 
   }
   close() {
@@ -60,31 +138,24 @@ export class ModalEmpresasComponent {
     });
   }
   guardarEmpresa() {
-    if (!this.request) {
-      this.request = {} as requestEmpresa;
+    if (this.formEmpresas.invalid) {
+      Object.keys(this.formEmpresas.controls).forEach(key => {
+        const control = this.formEmpresas.get(key);
+        control?.markAsTouched();
+      });
+      return;
     }
     if (this.camposInvalidosInsertar()) {
       this.mostrarToastError();
       return;
     }
-    this.request.idEmpresa = 0;
-    this.request.bandera = 'INS-EMPRESA';
-    this.request.nombreEmpresa = this.empresa.nombreEmpresa;
-    this.request.idAdministrador = 0;
-    this.request.idLicencia = this.empresa.idLicencia;
-    this.request.alias = this.empresa.alias;
-    this.request.rfc = this.empresa.rfc;
-    this.request.vInicio = this.empresa.vInicio;
-    this.request.vTerminacion = this.empresa.vTerminacion;
-    this.request.usuarioCreador = 10;
-    this.request.nombre = this.empresa.nombre;
-    this.request.apellidoPaterno = this.empresa.apellidoPaterno;
-    this.request.apellidoMaterno = this.empresa.apellidoMaterno;
-    this.request.iniciales = this.getIniciales();
-    this.request.correo = this.empresa.correoAdministrador;
-    this.request.usuario = this.empresa.usuarioAdministrador;
-    this.request.urlSitio = this.empresa.urlSitio;
-    this.request.activo = 1;
+    if (!this.request) {
+      this.request = {} as requestEmpresa;
+    }
+    this.request = this.formEmpresas.getRawValue();
+    this.formEmpresas.controls['iniciales'].setValue(this.getIniciales());
+    this.formEmpresas.controls['activo'].setValue(1);
+
     this.empresasService.postINSUPDEmpresa(this.request).subscribe(
       {
         next: (result: baseOut) => {
@@ -106,28 +177,22 @@ export class ModalEmpresasComponent {
     if (!this.request) {
       this.request = {} as requestEmpresa;
     }
+    if (this.formEmpresas.invalid) {
+      Object.keys(this.formEmpresas.controls).forEach(key => {
+        const control = this.formEmpresas.get(key);
+        control?.markAsTouched();
+      });
+      return;
+    }
+
     if (this.camposInvalidosEditar()) {
       this.mostrarToastError();
       return;
     }
-    this.request.idEmpresa = this.empresa.idEmpresa;
-    this.request.bandera = 'UPD-EMPRESA';
-    this.request.nombreEmpresa = this.empresa.nombreEmpresa;
-    this.request.idAdministrador = this.empresa.idAdministrador;
-    this.request.idLicencia = this.empresa.idLicencia;
-    this.request.alias = this.empresa.alias;
-    this.request.rfc = this.empresa.rfc;
-    this.request.vInicio = this.empresa.vInicio;
-    this.request.vTerminacion = this.empresa.vTerminacion;
-    this.request.usuarioCreador = this.empresa.usuarioCreador;
-    this.request.nombre = this.empresa.nombre;
-    this.request.apellidoPaterno = this.empresa.apellidoPaterno;
-    this.request.apellidoMaterno = this.empresa.apellidoMaterno;
-    this.request.iniciales = this.getIniciales();
-    this.request.correo = this.empresa.correoAdministrador;
-    this.request.usuario = this.empresa.usuarioAdministrador;
-    this.request.urlSitio = this.empresa.urlSitio;
-    this.request.activo = this.empresaActiva ? 1 : 0;
+    this.formEmpresas.controls['bandera'].setValue('UPD-EMPRESA');
+    this.formEmpresas.controls['iniciales'].setValue(this.getIniciales());
+    this.request = this.formEmpresas.getRawValue();
+    this.request.activo = this.formEmpresas.controls['activo'].value ? 1 : 0;
     this.empresasService.postINSUPDEmpresa(this.request).subscribe(
       {
         next: (result: baseOut) => {
@@ -153,50 +218,45 @@ export class ModalEmpresasComponent {
         .map(palabra => palabra.charAt(0).toUpperCase())
         .join('');
     };
-    const inicialesNombre = obtenerIniciales(this.empresa.nombre);
-    const inicialesPaterno = obtenerIniciales(this.empresa.apellidoPaterno);
+    const inicialesNombre = obtenerIniciales(this.formEmpresas.controls['nombre'].value);
+    const inicialesPaterno = obtenerIniciales(this.formEmpresas.controls['apellidoPaterno'].value);
     let inicialesMaterno = '';
-    if (this.empresa.apellidoMaterno != '' && this.empresa.apellidoMaterno != undefined){
-      inicialesMaterno = obtenerIniciales(this.empresa.apellidoMaterno)!;
+    if (this.formEmpresas.controls['apellidoMaterno'].value){
+      inicialesMaterno = obtenerIniciales(this.formEmpresas.controls['apellidoMaterno'].value)!;
     }
       
     return `${inicialesNombre}${inicialesPaterno}${inicialesMaterno}`;
   }
-  onAliasChange(newValue: string) {
-    this.empresa.usuarioAdministrador = "admin." + newValue;
+  onAliasChange(event:any) {
+    const newValue = event.target.value;
+    this.formEmpresas.controls['usuario'].setValue("admin." + newValue);
   }
-  esCampoInvalido(valor: any): boolean {
-    return valor === null || valor === undefined || valor === '' || valor <= 0;
+  esCampoInvalido(campo: string): boolean {
+    const control = this.formEmpresas.get(campo);
+    return control ? (control.invalid && (control.dirty || control.touched)) : false;
+  }
+
+  onRFCChange(event:any) {
+    const value = event.target.value;
+    this.formEmpresas.get('rfc')?.setValue(value.toUpperCase());
   }
   camposInvalidosInsertar(): boolean {
     return (
-      this.esCampoInvalido(this.empresa.nombreEmpresa) ||
-      this.esCampoInvalido(this.empresa.alias) ||
-      this.esCampoInvalido(this.empresa.urlSitio) ||
-      this.esCampoInvalido(this.empresa.rfc) ||
-      this.esCampoInvalido(this.empresa.idLicencia) ||
-      this.esCampoInvalido(this.empresa.nombre) ||
-      this.esCampoInvalido(this.empresa.apellidoPaterno) ||
-      this.esCampoInvalido(this.empresa.vInicio) ||
-      this.esCampoInvalido(this.empresa.vTerminacion) ||
       !this.validarFechas()||
-      !this.validarNombreEmpresa()||
-      (this.empresa.rfc !== undefined && !this.validarRFC(this.empresa.rfc))||
-      (this.empresa.correoAdministrador !== undefined && !this.validarCorreo(this.empresa.correoAdministrador))
+      this.validarNombreEmpresa()||
+      !this.validarRFC(this.formEmpresas.get('rfc')?.value)||
+      !this.validarCorreo(this.formEmpresas.get('correo')?.value) ||
+      this.validarAlias() || 
+      !this.validarUrl(this.formEmpresas.get('urlSitio')?.value)
     );
   }
   camposInvalidosEditar(): boolean {
     return (
-      this.esCampoInvalido(this.empresa.nombreEmpresa) ||
-      this.esCampoInvalido(this.empresa.alias) ||
-      this.esCampoInvalido(this.empresa.urlSitio) ||
-      this.esCampoInvalido(this.empresa.rfc) ||
-      this.esCampoInvalido(this.empresa.idLicencia) ||
-      this.esCampoInvalido(this.empresa.nombre) ||
-      this.esCampoInvalido(this.empresa.apellidoPaterno) ||
-      this.esCampoInvalido(this.empresa.vInicio) ||
-      this.esCampoInvalido(this.empresa.vTerminacion)||
-      (this.empresa.rfc !== undefined && !this.validarRFC(this.empresa.rfc))
+      !this.validarFechas()||
+      !this.validarRFC(this.formEmpresas.get('rfc')?.value)||
+      !this.validarCorreo(this.formEmpresas.get('correo')?.value) ||
+      !this.validarUrl(this.formEmpresas.get('urlSitio')?.value)
+      
     );
   }
 
@@ -204,23 +264,19 @@ export class ModalEmpresasComponent {
    * Método para validar que vInicio sea menor a vTerminacion.
    */
   validarFechas(): boolean {
-    if (!this.empresa.vInicio || !this.empresa.vTerminacion) {
+    if (!this.formEmpresas.controls['vInicio'].value || !this.formEmpresas.controls['vTerminacion'].value) {
       return true; // No validar si las fechas están vacías
     }
-    return new Date(this.empresa.vInicio) < new Date(this.empresa.vTerminacion);
+    return new Date(this.formEmpresas.controls['vInicio'].value) < new Date(this.formEmpresas.controls['vTerminacion'].value);
   }
   validarNombreEmpresa(): boolean {
-    if (this.empresas.some(empresa => empresa.nombreEmpresa?.toUpperCase() === this.empresa.nombreEmpresa?.toUpperCase())) {
-      return false;
-    }
-    return true;
+    const nombre = this.formEmpresas.get('nombreEmpresa')?.value;
+    return this.empresas.some((empresa) => empresa.nombreEmpresa?.toLowerCase().trim()=== nombre.toLowerCase().trim());
   }
 
   validarAlias(): boolean {
-    if (this.empresas.some(empresa => empresa.alias?.toUpperCase() === this.empresa.alias?.toUpperCase())) {
-      return false;
-    }
-    return true;
+    const alias = this.formEmpresas.get('alias')?.value;
+    return this.empresas.some((empresa) => empresa.alias?.toLowerCase().trim() === alias.toLowerCase().trim());
   }
   validarRFC(rfc: string): boolean {
     const regexRFC = /^([A-ZÑ&]{3,4})\d{6}([A-Z\d]{3})?$/;
@@ -230,6 +286,11 @@ export class ModalEmpresasComponent {
     // Expresión regular para validar un correo electrónico
     const regexCorreo = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return regexCorreo.test(correo);
+  }
+
+  validarUrl(url: string): boolean {
+    const regexCorreo = /^www\.([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/;
+    return regexCorreo.test(url);
   }
   /**
    * Método para mostrar un toast de error cuando hay campos vacíos o fechas incorrectas.
@@ -241,17 +302,20 @@ export class ModalEmpresasComponent {
     if (!this.validarFechas()) {
       mensaje = 'La fecha de inicio debe ser menor a la fecha de terminación.';
     }
-    if (!this.validarNombreEmpresa() && this.insertar) {
+    if (this.validarNombreEmpresa() && this.insertar) {
       mensaje = 'El nombre de la empresa ya existe.';
     }
-    if (!this.validarAlias() && this.insertar) {
+    if (this.validarAlias() && this.insertar) {
       mensaje = 'El alias de la empresa ya existe.';
     }
-    if (this.empresa.rfc !== undefined && !this.validarRFC(this.empresa.rfc)) {
+    if (!this.validarRFC(this.formEmpresas.get('rfc')?.value)) {
       mensaje = 'Se necesita revisar el RFC.';
     }
-    if (this.empresa.correoAdministrador !== undefined && !this.validarCorreo(this.empresa.correoAdministrador)) {
-      mensaje = 'El correo electronico no es valido.';
+    if (!this.validarCorreo(this.formEmpresas.get('correo')?.value)) {
+      mensaje = 'Se necesita revisar el RFC.';
+    }
+    if (!this.validarUrl(this.formEmpresas.get('urlSitio')?.value)) {
+      mensaje = 'Se necesita revisar la URL.';
     }
     this.messageService.add({
       severity: 'error',

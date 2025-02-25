@@ -20,153 +20,154 @@
       }
     </style>
 
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="nombreEmpresa">Nombre de Empresa: </label>
+    <form [formGroup]="formEmpresas">
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="nombreEmpresa">Nombre de Empresa: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <input pInputText class="inptSize" id="nombreEmpresa" formControlName="nombreEmpresa" />&nbsp;
+          <span *ngIf="esCampoInvalido('nombreEmpresa')" class="text-danger">*</span>
+        </div>
       </div>
-      <div class="col-sm-8 inptSpace">
-        <input pInputText class="inptSize" id="nombreEmpresa" [(ngModel)]="empresa.nombreEmpresa" />&nbsp;
-        <span *ngIf="esCampoInvalido(empresa.nombreEmpresa)" class="text-danger">*</span>
+  
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="alias">Alias: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <input pInputText class="inptSize" id="alias" formControlName="alias" (change)="onAliasChange($event)" />&nbsp;
+          <span *ngIf="esCampoInvalido('alias')" class="text-danger">*</span>
+        </div>
       </div>
-    </div>
-
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="alias">Alias: </label>
+  
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="url">Url de sitio: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <input pInputText class="inptSize" id="urlSitio" formControlName="urlSitio" />&nbsp;
+          <span *ngIf="esCampoInvalido('urlSitio')" class="text-danger">*</span><span *ngIf="esCampoInvalido('usuario')" class="text-danger">*</span>
+        </div>
       </div>
-      <div class="col-sm-8 inptSpace">
-        <input pInputText class="inptSize" id="alias" [(ngModel)]="empresa.alias" (ngModelChange)="onAliasChange($event)" />&nbsp;
-        <span *ngIf="esCampoInvalido(empresa.alias)" class="text-danger">*</span>
+  
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="rfc">RFC: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <input pInputText class="inptSize" id="rfc" formControlName="rfc"  maxlength="13" />&nbsp;
+          <span *ngIf="esCampoInvalido('rfc')" class="text-danger">*</span>
+        </div>
       </div>
-    </div>
-
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="url">Url de sitio: </label>
+  
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="Licencia">Licencia: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <p-select [options]="licenciasDropdown" formControlName="idLicencia" optionValue="idLicencia"
+            optionLabel="nombreLicencia" class="inptSize w-full md:w-70" placeholder="Selecciona una licencia" />&nbsp;
+          <span *ngIf="esCampoInvalido('idLicencia')" class="text-danger">*</span>
+        </div>
       </div>
-      <div class="col-sm-8 inptSpace">
-        <input pInputText class="inptSize" id="url" [(ngModel)]="empresa.urlSitio" />&nbsp;
-        <span *ngIf="esCampoInvalido(empresa.urlSitio)" class="text-danger">*</span><span *ngIf="esCampoInvalido(empresa.usuarioAdministrador)" class="text-danger">*</span>
+  
+      <div class="row inptSpace">
+        <div class="col-sm-4">
+          <label for="NombreAdmin">Nombre (del administrador): </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <input pInputText class="inptSize" id="nombre" formControlName="nombre"/>&nbsp;
+          <span *ngIf="esCampoInvalido('nombre')" class="text-danger">*</span>
+        </div>
       </div>
-    </div>
-
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="rfc">RFC: </label>
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="APaterno">Apellido Paterno: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <input
+            pInputText
+            id="ApellidoPaterno"
+            class="inptSize"
+            formControlName="apellidoPaterno"
+          />&nbsp;
+          <span *ngIf="esCampoInvalido('apellidoPaterno')" class="text-danger">*</span>
+        </div>
       </div>
-      <div class="col-sm-8 inptSpace">
-        <input pInputText class="inptSize" id="rfc" [(ngModel)]="empresa.rfc"  maxlength="13" (ngModelChange)="empresa.rfc = $event.toUpperCase()" />&nbsp;
-        <span *ngIf="esCampoInvalido(empresa.rfc)" class="text-danger">*</span>
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="AMaterno"> Apellido Materno: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <input
+            pInputText
+            id="ApellidoMaterno"
+            class="inptSize"
+            formControlName="apellidoMaterno"
+          />&nbsp;
+        </div>
       </div>
-    </div>
-
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="Licencia">Licencia: </label>
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="Usuario"> Usuario: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <input
+            pInputText
+            id="Usuario"
+            class="inptSize"
+            formControlName="usuario"
+          />
+          &nbsp;
+          <span *ngIf="esCampoInvalido('usuario')" class="text-danger">*</span>
+        </div>
+  
       </div>
-      <div class="col-sm-8 inptSpace">
-        <p-select [options]="licenciasDropdown" [(ngModel)]="empresa.idLicencia" optionValue="idLicencia"
-          optionLabel="nombreLicencia" class="inptSize w-full md:w-70" placeholder="Selecciona una licencia" />&nbsp;
-        <span *ngIf="esCampoInvalido(empresa.idLicencia)" class="text-danger">*</span>
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="Correo"> Correo: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <input
+            pInputText
+            id="Correo"
+            class="inptSize"
+            formControlName="correo"
+          />&nbsp;
+          <span *ngIf="esCampoInvalido('correo')" class="text-danger">*</span>
+        </div>
       </div>
-    </div>
-
-    <div class="row inptSpace">
-      <div class="col-sm-4">
-        <label for="NombreAdmin">Nombre (del administrador): </label>
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="fInicio">Inicio: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <p-datepicker class="inptSize" formControlName="vInicio" [iconDisplay]="'input'" [showIcon]="true"
+            inputId="icondisplay" dateFormat="dd/mm/yy" />
+          <span *ngIf="esCampoInvalido('vInicio')" class="text-danger">*</span>
+        </div>
       </div>
-      <div class="col-sm-8 inptSpace">
-        <input pInputText class="inptSize" id="Nombre" [(ngModel)]="empresa.nombre" />&nbsp;
-        <span *ngIf="esCampoInvalido(empresa.nombre)" class="text-danger">*</span>
+  
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="fTerminacion">Terminación: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <p-datepicker class="inptSize" formControlName="vTerminacion" [iconDisplay]="'input'" [showIcon]="true"
+            inputId="icondisplay" dateFormat="dd/mm/yy" />
+          <span *ngIf="esCampoInvalido('vTerminacion')" class="text-danger">*</span>
+        </div>
       </div>
-    </div>
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="APaterno">Apellido Paterno: </label>
+      <div class="row inptSpace" *ngIf="!insertar">
+        <div class="col-sm-4 lbl">
+          <label for="Estatus"> Estatus: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <p-checkbox formControlName="activo" [binary]="true" />
+        </div>
       </div>
-      <div class="col-sm-8 inptSpace">
-        <input
-          pInputText
-          id="ApellidoPaterno"
-          class="inptSize"
-          [(ngModel)]="empresa.apellidoPaterno"
-        />&nbsp;
-        <span *ngIf="esCampoInvalido(empresa.apellidoPaterno)" class="text-danger">*</span>
-      </div>
-    </div>
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="AMaterno"> Apellido Materno: </label>
-      </div>
-      <div class="col-sm-8 inptSpace">
-        <input
-          pInputText
-          id="ApellidoMaterno"
-          class="inptSize"
-          [(ngModel)]="empresa.apellidoMaterno"
-        />&nbsp;
-      </div>
-    </div>
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="Usuario"> Usuario: </label>
-      </div>
-      <div class="col-sm-8 inptSpace">
-        <input
-          pInputText
-          id="Usuario"
-          class="inptSize"
-          [(ngModel)]="empresa.usuarioAdministrador"
-          disabled
-        />
-        &nbsp;
-        <span *ngIf="esCampoInvalido(empresa.usuarioAdministrador)" class="text-danger">*</span>
-      </div>
-
-    </div>
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="Correo"> Correo: </label>
-      </div>
-      <div class="col-sm-8 inptSpace">
-        <input
-          pInputText
-          id="Correo"
-          class="inptSize"
-          [(ngModel)]="empresa.correoAdministrador"
-        />&nbsp;
-        <span *ngIf="esCampoInvalido(empresa.correoAdministrador)" class="text-danger">*</span>
-      </div>
-    </div>
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="fInicio">Inicio: </label>
-      </div>
-      <div class="col-sm-8 inptSpace">
-        <p-datepicker class="inptSize" [(ngModel)]="empresa.vInicio" [iconDisplay]="'input'" [showIcon]="true"
-          inputId="icondisplay" dateFormat="dd/mm/yy" />
-        <span *ngIf="esCampoInvalido(empresa.vInicio)" class="text-danger">*</span>
-      </div>
-    </div>
-
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="fTerminacion">Terminación: </label>
-      </div>
-      <div class="col-sm-8 inptSpace">
-        <p-datepicker class="inptSize" [(ngModel)]="empresa.vTerminacion" [iconDisplay]="'input'" [showIcon]="true"
-          inputId="icondisplay" dateFormat="dd/mm/yy" />
-        <span *ngIf="esCampoInvalido(empresa.vTerminacion)" class="text-danger">*</span>
-      </div>
-    </div>
-    <div class="row inptSpace" *ngIf="!insertar">
-      <div class="col-sm-4 lbl">
-        <label for="Estatus"> Estatus: </label>
-      </div>
-      <div class="col-sm-8 inptSpace">
-        <p-checkbox [(ngModel)]="empresaActiva" [binary]="true" />
-      </div>
-    </div>
+    </form>
 
 
   </ng-template>
