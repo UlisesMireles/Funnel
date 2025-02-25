@@ -16,7 +16,7 @@ namespace Funnnel.Logic
             _loginData = loginData;
             _email = email;
         }
-        public async Task<UsuarioLogin> Autenticar(string user, string contrasena)
+        public async Task<Usuario> Autenticar(string user, string contrasena)
         {
             if (!string.IsNullOrEmpty(contrasena))
                 contrasena = Encrypt.Encriptar(contrasena);

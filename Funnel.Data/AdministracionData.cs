@@ -143,7 +143,7 @@ namespace Funnel.Data
             return result;
         }
 
-        public async Task<BaseOut> CambiarPass(UsuarioData user)
+        public async Task<BaseOut> CambiarPass(UsuarioLogin user)
         {
             BaseOut result = new BaseOut();
             try
