@@ -21,8 +21,8 @@
     <ProjectReference Include="..\funnel.client\funnel.client.esproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\Funnel.Models\Funnel.Models.csproj" />
-    <ProjectReference Include="..\Funnnel.Logic\Funnnel.Logic.csproj" />
+    <ProjectReference Include="..\Funnel.Models\FunnelTenant.Models.csproj" />
+    <ProjectReference Include="..\Funnnel.Logic\FunnelTenant.Logic.csproj" />
   </ItemGroup>
 
 </Project>

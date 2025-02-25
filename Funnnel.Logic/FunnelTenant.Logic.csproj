@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Funnel.Data\Funnel.Data.csproj" />
-    <ProjectReference Include="..\Funnel.Models\Funnel.Models.csproj" />
+    <ProjectReference Include="..\Funnel.Data\FunnelTenant.Data.csproj" />
+    <ProjectReference Include="..\Funnel.Models\FunnelTenant.Models.csproj" />
   </ItemGroup>
 
 </Project>

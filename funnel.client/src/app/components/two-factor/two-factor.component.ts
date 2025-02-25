@@ -114,4 +114,7 @@ export class TwoFactorComponent {
       },
     });
   }
+  cerrarModal() {
+    this.router.navigate(['']);
+  }
 }
