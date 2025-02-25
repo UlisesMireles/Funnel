@@ -15,9 +15,9 @@
           <ng-template class="divAccionesTabla" #caption>
             <div class="row">
               <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
-                <p-button label="" icon="pi pi-refresh" (click)="reset()" severity="secondary"
+                <p-button label="" icon="bi bi-arrow-clockwise" (click)="reset()" severity="secondary"
                   [ngStyle]="{'margin-right': '5px'}" />
-                <p-button label="" icon="pi pi-plus" severity="secondary" (click)="inserta()" />
+                <p-button label="" icon="bi bi-plus" severity="secondary" (click)="inserta()" />
               </div>
             </div>
           </ng-template>
@@ -77,7 +77,7 @@
           <ng-template #body let-sector>
             <tr class="custom-header3 custom-row filas">
               <td>
-                <p-button type="button" icon="pi pi-pencil" (click)="actualiza(sector)" text />
+                <p-button type="button" icon="bi bi-pencil" (click)="actualiza(sector)" text />
               </td>
               <td style="font-weight: bold;">{{ sector.nombreSector }}</td>
               <td class="fixed-width-column">{{ sector.descripcionSector }}</td>
