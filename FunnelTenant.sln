@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Funnel.Server", "Funnel.Server\Funnel.Server.csproj", "{20F65D50-573E-4C64-A93E-2853AF64A709}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnelTenant.Server", "Funnel.Server\FunnelTenant.Server.csproj", "{20F65D50-573E-4C64-A93E-2853AF64A709}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "funnel.client", "funnel.client\funnel.client.esproj", "{688F2035-E31F-46FE-ABA7-8F10A7BD9D94}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Funnel.Data", "Funnel.Data\Funnel.Data.csproj", "{78355EFC-2F51-4BE8-A518-122D4AC578AC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnelTenant.Data", "Funnel.Data\FunnelTenant.Data.csproj", "{78355EFC-2F51-4BE8-A518-122D4AC578AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Funnel.Models", "Funnel.Models\Funnel.Models.csproj", "{A2EFF100-557C-4EA4-8B1D-CA3AD3559F87}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnelTenant.Models", "Funnel.Models\FunnelTenant.Models.csproj", "{A2EFF100-557C-4EA4-8B1D-CA3AD3559F87}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Funnnel.Logic", "Funnnel.Logic\Funnnel.Logic.csproj", "{027BBBAF-C094-4235-BB95-7673ADF19540}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunnelTenant.Logic", "Funnnel.Logic\FunnelTenant.Logic.csproj", "{027BBBAF-C094-4235-BB95-7673ADF19540}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
