@@ -16,9 +16,9 @@ namespace Funnel.Data
             _connectionString = configuration.GetConnectionString("FunelDatabase");
         }
 
-        public async Task<UsuarioLogin> Autenticar(string user, string contrasena)
+        public async Task<Usuario> Autenticar(string user, string contrasena)
         {
-            UsuarioLogin usuario = new UsuarioLogin();
+            Usuario usuario = new Usuario();
             try
             {
                 IList<ParameterSQl> list = new List<ParameterSQl>
