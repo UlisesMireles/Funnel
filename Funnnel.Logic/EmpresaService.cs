@@ -12,21 +12,21 @@ namespace Funnnel.Logic
         {
             _EmpresaData = EmpresaData;
         }
-        public async Task<BaseOut> INS_UPD_Empresa(INS_UPD_Empresa request)
+        public async Task<BaseOut> GuardarEmpresa(GuardarEmpresaDto request)
         {
-            return await _EmpresaData.INS_UPD_Empresa(request);
+            return await _EmpresaData.GuardarEmpresa(request);
         }
-        public async Task<List<SEL_Empresas>> SEL_Empresas()
+        public async Task<List<EmpresasDto>> ConsultarEmpresas()
         {
-            return await _EmpresaData.SEL_Empresas();
+            return await _EmpresaData.ConsultarEmpresas();
         }
-        public async Task<List<SEL_Admins>> SEL_Admins()
+        public async Task<List<AdminsEmpresaDto>> ConsultaAdminsEmpresas()
         {
-            return await _EmpresaData.SEL_Admins();
+            return await _EmpresaData.ConsultaAdminsEmpresas();
         }
-        public async Task<List<Catalog_Licencias>> Catalog_Licencias()
+        public async Task<List<ComboLicenciasDto>> ComboLicencias()
         {
-            return await _EmpresaData.Catalog_Licencias();
+            return await _EmpresaData.ComboLicencias();
         }
     }
 }

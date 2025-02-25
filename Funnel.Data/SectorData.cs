@@ -14,7 +14,7 @@ namespace Funnel.Data
         {
             _connectionString = configuration.GetConnectionString("FunelDatabase");
         }
-        public async Task<BaseOut> INS_UPD_Sector(INS_UPD_Sector request)
+        public async Task<BaseOut> GuardarSector(GuardarSectorDto request)
         {
             BaseOut result = new BaseOut();
 
@@ -22,12 +22,12 @@ namespace Funnel.Data
             {
                 IList<ParameterSQl> list = new List<ParameterSQl>
                 {
-                    DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.bandera ),
-                    DataBase.CreateParameterSql("@pIdSector", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.idSector),
-                    DataBase.CreateParameterSql("@pNombreSector", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.nombreSector),
-                    DataBase.CreateParameterSql("@pDescripcionSector", SqlDbType.VarChar, 200, ParameterDirection.Input, false, null, DataRowVersion.Default, request.descripcionSector),
-                    DataBase.CreateParameterSql("@pIdUsuarioCreador", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.idUsuarioCreador),
-                    DataBase.CreateParameterSql("@pActivo", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.activo),
+                    DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Bandera ?? (object)DBNull.Value ),
+                    DataBase.CreateParameterSql("@pIdSector", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.IdSector),
+                    DataBase.CreateParameterSql("@pNombreSector", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.NombreSector ?? (object)DBNull.Value),
+                    DataBase.CreateParameterSql("@pDescripcionSector", SqlDbType.VarChar, 200, ParameterDirection.Input, false, null, DataRowVersion.Default, request.DescripcionSector ?? (object)DBNull.Value),
+                    DataBase.CreateParameterSql("@pIdUsuarioCreador", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.IdUsuarioCreador),
+                    DataBase.CreateParameterSql("@pActivo", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Activo),
                 };
 
                 // Ejecutar el SP sin leer datos
@@ -38,7 +38,7 @@ namespace Funnel.Data
 
                     }
                 }
-                switch (request.bandera)
+                switch (request.Bandera)
                 {
                     case "UPD-SECTOR":
                         result.ErrorMessage = "El sector se actualizó correctamente.";
@@ -55,7 +55,7 @@ namespace Funnel.Data
             }
             catch (Exception ex)
             {
-                switch (request.bandera)
+                switch (request.Bandera)
                 {
                     case "UPD-SECTOR":
                         result.ErrorMessage = "Error al actualizar el sector: " + ex.Message;
@@ -73,9 +73,9 @@ namespace Funnel.Data
 
             return result;
         }
-        public async Task<List<SEL_Sectores>> SEL_Sectores()
+        public async Task<List<SectoresDto>> ConsultarSectores()
         {
-            List<SEL_Sectores> result = new List<SEL_Sectores>();
+            List<SectoresDto> result = new List<SectoresDto>();
             IList<ParameterSQl> list = new List<ParameterSQl>{
                 DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, "SEL-SECTORES")
             };
@@ -83,23 +83,23 @@ namespace Funnel.Data
             {
                 while (reader.Read())
                 {
-                    var dto = new SEL_Sectores();
-                    dto.idSector = ComprobarNulos.CheckIntNull(reader["IdSector"]);
-                    dto.nombreSector = ComprobarNulos.CheckStringNull(reader["NombreSector"]);
-                    dto.descripcionSector = ComprobarNulos.CheckStringNull(reader["DescripcionSector"]);
-                    dto.fechaCreacion = ComprobarNulos.CheckStringNull(reader["FechaCreacion"]);
-                    dto.usuarioCreador = ComprobarNulos.CheckStringNull(reader["UsuarioCreador"]);
-                    dto.fechaModificacion = ComprobarNulos.CheckStringNull(reader["FechaModificacion"]);
-                    dto.usuarioModifico = ComprobarNulos.CheckStringNull(reader["UsuarioModifico"]);
-                    dto.desEstatusActivo = ComprobarNulos.CheckStringNull(reader["DesEstatusActivo"]);
+                    var dto = new SectoresDto();
+                    dto.IdSector = ComprobarNulos.CheckIntNull(reader["IdSector"]);
+                    dto.NombreSector = ComprobarNulos.CheckStringNull(reader["NombreSector"]);
+                    dto.DescripcionSector = ComprobarNulos.CheckStringNull(reader["DescripcionSector"]);
+                    dto.FechaCreacion = ComprobarNulos.CheckStringNull(reader["FechaCreacion"]);
+                    dto.UsuarioCreador = ComprobarNulos.CheckStringNull(reader["UsuarioCreador"]);
+                    dto.FechaModificacion = ComprobarNulos.CheckStringNull(reader["FechaModificacion"]);
+                    dto.UsuarioModifico = ComprobarNulos.CheckStringNull(reader["UsuarioModifico"]);
+                    dto.DesEstatusActivo = ComprobarNulos.CheckStringNull(reader["DesEstatusActivo"]);
                     result.Add(dto);
                 }
             }
             return result;
         }
-        public async Task<List<SEL_Sectores_CMB>> SEL_Sectores_CMB()
+        public async Task<List<ComboSectoresDto>> ComboSectores()
         {
-            List<SEL_Sectores_CMB> result = new List<SEL_Sectores_CMB>();
+            List<ComboSectoresDto> result = new List<ComboSectoresDto>();
             IList<ParameterSQl> list = new List<ParameterSQl>{
                 DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, "SEL-SECTORES-CMB")
             };
@@ -107,10 +107,10 @@ namespace Funnel.Data
             {
                 while (reader.Read())
                 {
-                    var dto = new SEL_Sectores_CMB();
-                    dto.idSector = ComprobarNulos.CheckIntNull(reader["IdSector"]);
-                    dto.nombreSector = ComprobarNulos.CheckStringNull(reader["NombreSector"]);
-                    dto.descripcionSector = ComprobarNulos.CheckStringNull(reader["DescripcionSector"]);
+                    var dto = new ComboSectoresDto();
+                    dto.IdSector = ComprobarNulos.CheckIntNull(reader["IdSector"]);
+                    dto.NombreSector = ComprobarNulos.CheckStringNull(reader["NombreSector"]);
+                    dto.DescripcionSector = ComprobarNulos.CheckStringNull(reader["DescripcionSector"]);
                     result.Add(dto);
                 }
             }

@@ -15,7 +15,7 @@ namespace Funnel.Data
             _connectionString = configuration.GetConnectionString("FunelDatabase");
         }
 
-        public async Task<BaseOut> INS_UPD_Empresa(INS_UPD_Empresa request)
+        public async Task<BaseOut> GuardarEmpresa(GuardarEmpresaDto request)
         {
             BaseOut result = new BaseOut();
 
@@ -23,23 +23,23 @@ namespace Funnel.Data
             {
                 IList<ParameterSQl> list = new List<ParameterSQl>
                 {
-                    DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.bandera ),
-                    DataBase.CreateParameterSql("@pIdEmpresa", SqlDbType.Int, 0, ParameterDirection.Input, false,null, DataRowVersion.Default, request.idEmpresa ),
-                    DataBase.CreateParameterSql("@pNombreEmpresa", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.nombreEmpresa ),
-                    DataBase.CreateParameterSql("@pIdAdministrador", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.idAdministrador),
-                    DataBase.CreateParameterSql("@pIdLicencia", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.idLicencia),
-                    DataBase.CreateParameterSql("@pAlias", SqlDbType.VarChar, 20, ParameterDirection.Input, false, null, DataRowVersion.Default, request.alias ?? (object)DBNull.Value),
-                    DataBase.CreateParameterSql("@pRFC", SqlDbType.VarChar, 20, ParameterDirection.Input, false, null, DataRowVersion.Default, request.rfc ?? (object)DBNull.Value),
-                    DataBase.CreateParameterSql("@pVInicio", SqlDbType.DateTime, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.vInicio),
-                    DataBase.CreateParameterSql("@pVTerminacion", SqlDbType.DateTime, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.vTerminacion),
-                    DataBase.CreateParameterSql("@pUsuarioCreador", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.usuarioCreador),
-                    DataBase.CreateParameterSql("@pNombre", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.nombre ),
-                    DataBase.CreateParameterSql("@pApellidoPaterno", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.apellidoPaterno),
-                    DataBase.CreateParameterSql("@pApellidoMaterno", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.apellidoMaterno),
-                    DataBase.CreateParameterSql("@pIniciales", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.iniciales),
-                    DataBase.CreateParameterSql("@pCorreo", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.correo),
-                    DataBase.CreateParameterSql("@pUsuario", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.usuario),
-                    DataBase.CreateParameterSql("@pUrlSitio", SqlDbType.VarChar, 500, ParameterDirection.Input, false, null, DataRowVersion.Default, request.urlSitio),
+                    DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Bandera ?? (object)DBNull.Value ),
+                    DataBase.CreateParameterSql("@pIdEmpresa", SqlDbType.Int, 0, ParameterDirection.Input, false,null, DataRowVersion.Default, request.IdEmpresa ),
+                    DataBase.CreateParameterSql("@pNombreEmpresa", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.NombreEmpresa ?? (object)DBNull.Value ),
+                    DataBase.CreateParameterSql("@pIdAdministrador", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.IdAdministrador),
+                    DataBase.CreateParameterSql("@pIdLicencia", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.IdLicencia),
+                    DataBase.CreateParameterSql("@pAlias", SqlDbType.VarChar, 20, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Alias ?? (object)DBNull.Value),
+                    DataBase.CreateParameterSql("@pRFC", SqlDbType.VarChar, 20, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Rfc ?? (object)DBNull.Value),
+                    DataBase.CreateParameterSql("@pVInicio", SqlDbType.DateTime, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.VInicio),
+                    DataBase.CreateParameterSql("@pVTerminacion", SqlDbType.DateTime, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.VTerminacion),
+                    DataBase.CreateParameterSql("@pUsuarioCreador", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.UsuarioCreador),
+                    DataBase.CreateParameterSql("@pNombre", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Nombre ?? (object)DBNull.Value ),
+                    DataBase.CreateParameterSql("@pApellidoPaterno", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.ApellidoPaterno ?? (object)DBNull.Value),
+                    DataBase.CreateParameterSql("@pApellidoMaterno", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.ApellidoMaterno ?? (object)DBNull.Value),
+                    DataBase.CreateParameterSql("@pIniciales", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Iniciales ?? (object)DBNull.Value),
+                    DataBase.CreateParameterSql("@pCorreo", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Correo ?? (object)DBNull.Value),
+                    DataBase.CreateParameterSql("@pUsuario", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Usuario ?? (object)DBNull.Value),
+                    DataBase.CreateParameterSql("@pUrlSitio", SqlDbType.VarChar, 500, ParameterDirection.Input, false, null, DataRowVersion.Default, request.UrlSitio ?? (object)DBNull.Value),
                     DataBase.CreateParameterSql("@pActivo", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.activo)
                 };
 
@@ -51,7 +51,7 @@ namespace Funnel.Data
 
                     }
                 }
-                switch (request.bandera)
+                switch (request.Bandera)
                 {
                     case "UPD-EMPRESA":
                         result.ErrorMessage = "La empresa se actualizó correctamente.";
@@ -68,7 +68,7 @@ namespace Funnel.Data
             }
             catch (Exception ex)
             {
-                switch (request.bandera)
+                switch (request.Bandera)
                 {
                     case "UPD-EMPRESA":
                         result.ErrorMessage = "Error al actualizar empresa: " + ex.Message;
@@ -87,9 +87,9 @@ namespace Funnel.Data
             return result;
         }
 
-        public async Task<List<SEL_Empresas>> SEL_Empresas()
+        public async Task<List<EmpresasDto>> ConsultarEmpresas()
         {
-            List<SEL_Empresas> result = new List<SEL_Empresas>();
+            List<EmpresasDto> result = new List<EmpresasDto>();
             IList<ParameterSQl> list = new List<ParameterSQl>
             {
                 DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, "SEL-EMPRESAS"),
@@ -98,11 +98,11 @@ namespace Funnel.Data
             {
                 while (reader.Read())
                 {
-                    var dto = new SEL_Empresas();
+                    var dto = new EmpresasDto();
                     dto.IdEmpresa = ComprobarNulos.CheckIntNull(reader["IdEmpresa"]);
                     dto.NombreEmpresa = ComprobarNulos.CheckStringNull(reader["NombreEmpresa"]);
                     dto.Alias = ComprobarNulos.CheckStringNull(reader["Alias"]);
-                    dto.RFC = ComprobarNulos.CheckStringNull(reader["RFC"]);
+                    dto.Rfc = ComprobarNulos.CheckStringNull(reader["RFC"]);
                     dto.VInicio = ComprobarNulos.CheckDateTimeNull(reader["VInicio"]);
                     dto.VTerminacion = ComprobarNulos.CheckDateTimeNull(reader["VTerminacion"]);
                     dto.IdLicencia = ComprobarNulos.CheckIntNull(reader["IdLicencia"]);
@@ -127,9 +127,9 @@ namespace Funnel.Data
             }
             return result;
         }
-        public async Task<List<SEL_Admins>> SEL_Admins()
+        public async Task<List<AdminsEmpresaDto>> ConsultaAdminsEmpresas()
         {
-            List<SEL_Admins> result = new List<SEL_Admins>();
+            List<AdminsEmpresaDto> result = new List<AdminsEmpresaDto>();
             IList<ParameterSQl> list = new List<ParameterSQl>
             {
                 DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, "SEL-ADMINISTRADORES"),
@@ -138,7 +138,7 @@ namespace Funnel.Data
             {
                 while (reader.Read())
                 {
-                    var dto = new SEL_Admins();
+                    var dto = new AdminsEmpresaDto();
                     dto.IdMiembro = ComprobarNulos.CheckIntNull(reader["IdMiembro"]);
                     dto.Nombre = ComprobarNulos.CheckStringNull(reader["Nombre"]);
                     result.Add(dto);
@@ -148,9 +148,9 @@ namespace Funnel.Data
         }
 
 
-        public async Task<List<Catalog_Licencias>> Catalog_Licencias()
+        public async Task<List<ComboLicenciasDto>> ComboLicencias()
         {
-            List<Catalog_Licencias> result = new List<Catalog_Licencias>();
+            List<ComboLicenciasDto> result = new List<ComboLicenciasDto>();
             IList<ParameterSQl> list = new List<ParameterSQl>
             {
                 DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, "SEL-LICENCIAS"),
@@ -159,7 +159,7 @@ namespace Funnel.Data
             {
                 while (reader.Read())
                 {
-                    var dto = new Catalog_Licencias();
+                    var dto = new ComboLicenciasDto();
                     dto.IdLicencia = ComprobarNulos.CheckIntNull(reader["IdLicencia"]);
                     dto.NombreLicencia = ComprobarNulos.CheckStringNull(reader["NombreLicencia"]);
                     result.Add(dto);
