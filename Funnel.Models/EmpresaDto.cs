@@ -1,12 +1,12 @@
 ﻿
 namespace Funnel.Models
 {
-    public class SEL_Empresas
+    public class EmpresasDto
     {
         public int IdEmpresa { get; set; }
         public string? NombreEmpresa { get; set; }
         public string? Alias { get; set; }
-        public string? RFC { get; set; }
+        public string? Rfc { get; set; }
         public DateTime VInicio { get; set; }
         public DateTime VTerminacion { get; set; }
         public int IdLicencia { get; set; }

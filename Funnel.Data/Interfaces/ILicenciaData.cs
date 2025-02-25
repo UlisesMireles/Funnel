@@ -5,7 +5,7 @@ namespace Funnel.Data.Interfaces
 {
     public interface ILicenciaData
     {
-        public Task<List<SEL_Licencias>> SEL_Licencias();
-        public Task<BaseOut> INS_UPD_Licencia(INS_UPD_Licencia request);
+        public Task<List<LicenciaDto>> ConsultarLicencias();
+        public Task<BaseOut> GuardarLicencia(GuardarLicenciaDto request);
     }
 }

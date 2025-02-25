@@ -16,28 +16,29 @@ namespace Funnel.Server.Controllers
         }
 
         [HttpPost("[action]/")]
-        public async Task<ActionResult<BaseOut>> INS_UPD_Empresa(INS_UPD_Empresa request)
+        public async Task<ActionResult<BaseOut>> GuardarEmpresa(GuardarEmpresaDto request)
         {
-            var respuesta = await _empresaService.INS_UPD_Empresa(request);
+            var respuesta = await _empresaService.GuardarEmpresa(request);
             return Ok(respuesta);
         }
         [HttpGet("[action]/")]
-        public async Task<ActionResult<List<SEL_Empresas>>> SEL_Empresas()
+        public async Task<ActionResult<List<EmpresasDto>>> ConsultarEmpresas()
         {
-            var respuesta = await _empresaService.SEL_Empresas();
+            var respuesta = await _empresaService.ConsultarEmpresas();
             return Ok(respuesta);
         }
         [HttpGet("[action]/")]
-        public async Task<ActionResult<List<SEL_Admins>>> SEL_Admins()
+        public async Task<ActionResult<List<AdminsEmpresaDto>>> ConsultaAdminsEmpresas()
         {
-            var respuesta = await _empresaService.SEL_Admins();
+            var respuesta = await _empresaService.ConsultaAdminsEmpresas();
             return Ok(respuesta);
         }
         [HttpGet("[action]/")]
-        public async Task<ActionResult<List<Catalog_Licencias>>> Catalog_Licencias()
+        public async Task<ActionResult<List<ComboLicenciasDto>>> ComboLicencias()
         {
-            var respuesta = await _empresaService.Catalog_Licencias();
+            var respuesta = await _empresaService.ComboLicencias();
             return Ok(respuesta);
         }
     }
 }
+

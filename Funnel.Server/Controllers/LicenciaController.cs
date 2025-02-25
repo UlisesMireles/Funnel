@@ -15,15 +15,15 @@ namespace Funnel.Server.Controllers
             _licenciaService = licenciaService;
         }
         [HttpPost("[action]/")]
-        public async Task<ActionResult<BaseOut>> INS_UPD_Licencia(INS_UPD_Licencia request)
+        public async Task<ActionResult<BaseOut>> GuardarLicencia(GuardarLicenciaDto request)
         {
-            var respuesta = await _licenciaService.INS_UPD_Licencia(request);
+            var respuesta = await _licenciaService.GuardarLicencia(request);
             return Ok(respuesta);
         }
         [HttpGet("[action]/")]
-        public async Task<ActionResult<List<SEL_Licencias>>> SEL_Licencias()
+        public async Task<ActionResult<List<LicenciaDto>>> ConsultarLicencias()
         {
-            var respuesta = await _licenciaService.SEL_Licencias();
+            var respuesta = await _licenciaService.ConsultarLicencias();
             return Ok(respuesta);
         }
     }

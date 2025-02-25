@@ -12,13 +12,13 @@ namespace Funnnel.Logic
         {
             _licenciaData = licenciaData;
         }
-        public async Task<BaseOut> INS_UPD_Licencia(INS_UPD_Licencia request)
+        public async Task<BaseOut> GuardarLicencia(GuardarLicenciaDto request)
         {
-            return await _licenciaData.INS_UPD_Licencia(request);
+            return await _licenciaData.GuardarLicencia(request);
         }
-        public async Task<List<SEL_Licencias>> SEL_Licencias()
+        public async Task<List<LicenciaDto>> ConsultarLicencias()
         {
-            return await _licenciaData.SEL_Licencias();
+            return await _licenciaData.ConsultarLicencias();
         }
 
     }
