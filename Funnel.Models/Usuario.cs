@@ -2,7 +2,7 @@
 
 namespace Funnel.Models
 {
-    public class UsuarioLogin : BaseOut
+    public class Usuario : BaseOut
     {
         public int IdUsuario { get; set; }
         public string? TipoUsuario { get; set; }
@@ -20,16 +20,7 @@ namespace Funnel.Models
         public bool? Activo { get; set; }
     }
 
-    public class Usuario: BaseOut
-    {
-        public int IdUsuario { get; set; }
-        public string? Username { get; set; }
-        public string? Correo { get; set; }
-        public string? TipoUsuario { get; set; }
-        public string? RutaFoto { get; set; }
-    }
-
-    public class UsuarioData
+    public class UsuarioLogin
     {
         public string? Usuario { get; set; }
         public string? Pass { get; set; }

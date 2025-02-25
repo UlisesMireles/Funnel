@@ -16,7 +16,7 @@ namespace Funnel.Server.Controllers
         }
 
         [HttpPost("[action]/")]
-        public async Task<ActionResult<UsuarioLogin>> Autenticacion(UsuarioData usr)
+        public async Task<ActionResult<Usuario>> Autenticacion(UsuarioLogin usr)
         {
             var respuesta = await _loginService.Autenticar(usr.Usuario, usr.Pass);
             if (respuesta.IdUsuario > 0)
