@@ -45,7 +45,11 @@ export class LoginComponent {
     this.authService.login(this.loginForm.get('usuario')?.value, this.loginForm.get('password')?.value).subscribe({
       next: (data: any) => {
         if (data.result && data.idUsuario > 0) {
-          this.router.navigate(['/two-factor']);
+          if (environment.production) {
+            this.router.navigate(['/two-factor']);
+          } else {
+            this.router.navigate(['/empresas']);
+          }
         } else {
           this.showErrors = true;
           this.errorLogin = "Usuario y/o Contraseña no validos."
