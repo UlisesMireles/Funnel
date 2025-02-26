@@ -14,14 +14,14 @@ export class EmpresasService {
 
   // Método GET
   getEmpresas(): Observable<any> {
-    return this.http.get(this.baseUrl +'api/empresa/SEL_Empresas');
+    return this.http.get(this.baseUrl +'api/empresa/ConsultarEmpresas');
   }
   getLicencias(): Observable<any> {
-    return this.http.get(this.baseUrl + 'api/empresa/Catalog_Licencias');
+    return this.http.get(this.baseUrl + 'api/empresa/ComboLicencias');
   }
 
   // Método POST
   postINSUPDEmpresa(data: requestEmpresa): Observable<any> {
-    return this.http.post(this.baseUrl+"api/empresa/INS_UPD_Empresa", data);
+    return this.http.post(this.baseUrl+"api/empresa/GuardarEmpresa", data);
   }
 }

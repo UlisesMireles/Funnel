@@ -15,12 +15,12 @@ export class SectoresService {
   constructor(private http: HttpClient ) {}
 
   getSectores(): Observable<any>{
-    return this.http.get(this.baseUrl + 'api/Sector/SEL_Sectores');
+    return this.http.get(this.baseUrl + 'api/Sector/ConsultarSectores');
   }
   getSectores_cmb(): Observable<any>{
-    return this.http.get(this.baseUrl + 'api/Sector/SEL_Sectores_CMB');
+    return this.http.get(this.baseUrl + 'api/Sector/ComboSectores');
   }
   postINSUPDSector(data: requestSector): Observable <baseOut>{
-    return this.http.post<baseOut>(this.baseUrl+'api/Sector/INS_UPD_Sector', data);
+    return this.http.post<baseOut>(this.baseUrl+'api/Sector/GuardarSector', data);
   }
 }
