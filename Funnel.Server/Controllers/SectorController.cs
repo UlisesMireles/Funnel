@@ -17,21 +17,21 @@ namespace Funnel.Server.Controllers
         }
 
         [HttpPost("[action]/")]
-        public async Task<ActionResult<BaseOut>> INS_UPD_Sector(INS_UPD_Sector request)
+        public async Task<ActionResult<BaseOut>> GuardarSector(GuardarSectorDto request)
         {
-            var respuesta = await _sectorService.INS_UPD_Sector(request);
+            var respuesta = await _sectorService.GuardarSector(request);
             return Ok(respuesta);
         }
         [HttpGet("[action]/")]
-        public async Task<ActionResult<List<SEL_Sectores>>> SEL_Sectores()
+        public async Task<ActionResult<List<SectoresDto>>> ConsultarSectores()
         {
-            var respuesta = await _sectorService.SEL_Sectores();
+            var respuesta = await _sectorService.ConsultarSectores();
             return Ok(respuesta);
         }
         [HttpGet("[action]/")]
-        public async Task<ActionResult<List<SEL_Sectores_CMB>>> SEL_Sectores_CMB()
+        public async Task<ActionResult<List<ComboSectoresDto>>> ComboSectores()
         {
-            var respuesta = await _sectorService.SEL_Sectores_CMB();
+            var respuesta = await _sectorService.ComboSectores();
             return Ok(respuesta);
         }
     }

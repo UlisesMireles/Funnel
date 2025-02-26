@@ -15,16 +15,16 @@ namespace Funnel.Data
         {
             _connectionString = configuration.GetConnectionString("FunelDatabase");
         }
-        public async Task<BaseOut> INS_UPD_Licencia(INS_UPD_Licencia request)
+        public async Task<BaseOut> GuardarLicencia(GuardarLicenciaDto request)
         {
             BaseOut result=new BaseOut();
             try
             {
                 IList<ParameterSQl> list = new List<ParameterSQl>
                 {
-                    DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.bandera ),
+                    DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.bandera ?? (object)DBNull.Value),
                     DataBase.CreateParameterSql("@pIdLicencia", SqlDbType.Int, 0, ParameterDirection.Input, false,null, DataRowVersion.Default, request.IdLicencia ),
-                    DataBase.CreateParameterSql("@pNombreLicencia", SqlDbType.VarChar, 100, ParameterDirection.Input, false,null, DataRowVersion.Default, request.NombreLicencia ),
+                    DataBase.CreateParameterSql("@pNombreLicencia", SqlDbType.VarChar, 100, ParameterDirection.Input, false,null, DataRowVersion.Default, request.NombreLicencia ?? (object)DBNull.Value),
                     DataBase.CreateParameterSql("@pCantidadUsuarios", SqlDbType.Int, 0, ParameterDirection.Input, false,null, DataRowVersion.Default, request.CantidadUsuarios ),
                     DataBase.CreateParameterSql("@pCantidadOportunidades", SqlDbType.Int, 0, ParameterDirection.Input, false,null, DataRowVersion.Default, request.CantidadOportunidades ),
                     DataBase.CreateParameterSql("@pIdUsuarioCreador", SqlDbType.Int, 0, ParameterDirection.Input, false,null, DataRowVersion.Default, request.IdUsuarioCreador),
@@ -75,9 +75,9 @@ namespace Funnel.Data
             return result;
         }
 
-        public async Task<List<SEL_Licencias>> SEL_Licencias()
+        public async Task<List<LicenciaDto>> ConsultarLicencias()
         {
-            List<SEL_Licencias> result = new List<SEL_Licencias>();
+            List<LicenciaDto> result = new List<LicenciaDto>();
             IList<ParameterSQl> list = new List<ParameterSQl>
             {
                 DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, "SEL-LICENCIAS"),
@@ -86,7 +86,7 @@ namespace Funnel.Data
             {
                 while (reader.Read())
                 {
-                    var dto = new SEL_Licencias();
+                    var dto = new LicenciaDto();
                     dto.IdLicencia = ComprobarNulos.CheckIntNull(reader["IdLicencia"]);
                     dto.NombreLicencia = ComprobarNulos.CheckStringNull(reader["NombreLicencia"]);
                     dto.CantidadUsuarios = ComprobarNulos.CheckIntNull(reader["CantidadUsuarios"]);
