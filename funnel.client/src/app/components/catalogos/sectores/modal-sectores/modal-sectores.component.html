@@ -14,41 +14,40 @@
 
   <ng-template pTemplate="content">
 
-
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="nombreEmpresa">Nombre del Sector: </label>
+    <form [formGroup]="form">
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="nombreEmpresa">Nombre del Sector: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <input
+            pInputText
+            class="inptSize"
+            id="nombreLicencia"
+            formControlName="nombreSector"
+          />&nbsp;
+          <span *ngIf="esCampoInvalido('nombreSector')" class="text-danger">*</span>
+        </div>
       </div>
-      <div class="col-sm-8 inptSpace">
-        <input
-          pInputText
-          class="inptSize"
-          id="nombreLicencia"
-          [(ngModel)]="sector.nombreSector"
-        />&nbsp;
-        <span *ngIf="esCampoInvalido(sector.nombreSector)" class="text-danger">*</span>
+  
+      <div class="row inptSpace">
+        <div class="col-sm-4 lbl">
+          <label for="alias">Decripción: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <textarea rows="5" cols="24" pTextarea formControlName="descripcionSector"></textarea>
+          <span *ngIf="esCampoInvalido('descripcionSector')" class="text-danger">*</span>
+        </div>
       </div>
-    </div>
-
-    <div class="row inptSpace">
-      <div class="col-sm-4 lbl">
-        <label for="alias">Decripción: </label>
+      <div class="row inptSpace" *ngIf="!insertar">
+        <div class="col-sm-4 lbl">
+          <label for="Estatus"> Estatus: </label>
+        </div>
+        <div class="col-sm-8 inptSpace">
+          <p-checkbox formControlName="activo" [binary]="true" />
+        </div>
       </div>
-      <div class="col-sm-8 inptSpace">
-        <textarea rows="5" cols="24" pTextarea [(ngModel)]="sector.descripcionSector"></textarea>
-        <span *ngIf="esCampoInvalido(sector.descripcionSector)" class="text-danger">*</span>
-      </div>
-    </div>
-    <div class="row inptSpace" *ngIf="!insertar">
-      <div class="col-sm-4 lbl">
-        <label for="Estatus"> Estatus: </label>
-      </div>
-      <div class="col-sm-8 inptSpace">
-        <p-checkbox [(ngModel)]="sectorActivo" [binary]="true" />
-      </div>
-    </div>
-
-
+    </form>
 
   </ng-template>
 
