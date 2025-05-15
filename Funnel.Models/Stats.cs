@@ -9,5 +9,7 @@
         public int OportunidadesRegistradas { get; set; }
         public bool Estatus { get; set; }
         public string? DescripcionEstatus { get; set; }
+        public DateTime FechaUltimoIngreso { get; set; }
+        public string? UsuarioUltimoIngreso { get; set; }
     }
 }

@@ -36,20 +36,30 @@
               <th pSortableColumn="oportunidadesRegistradas">
                 Oportunidades Registradas
               </th>
+              <th pSortableColumn="oportunidadesRegistradas">
+                Último Ingreso
+              </th>
+              <th pSortableColumn="oportunidadesRegistradas">
+                Usuario U/ Ingreso
+              </th>
               <th pSortableColumn="estatus">
                 Estatus
               </th>
             </tr>
             <tr class="custom-header2">
-              <th> <input pInputText [ngStyle]="{'width': '100%'}" type="text" [(ngModel)]="filterStatus"
-                  (ngModelChange)="updateFilter($event, 'empresa')"></th>
+              <th>
+                <input pInputText [ngStyle]="{'width': '100%'}" type="text" [(ngModel)]="filterStatus"
+                       (ngModelChange)="updateFilter($event, 'empresa')">
+              </th>
+              <th></th>
+              <th></th>
               <th></th>
               <th></th>
               <th></th>
               <th></th>
               <th>
                 <p-select [options]="EstatusDropdown" [(ngModel)]="selectedEstatus" (onChange)="FiltrarPorEstatus()"
-                  placeholder="Seleccionar Estatus" optionLabel="label" optionValue="value" [appendTo]="'body'">
+                          placeholder="Seleccionar Estatus" optionLabel="label" optionValue="value" [appendTo]="'body'">
                 </p-select>
               </th>
             </tr>
@@ -68,6 +78,8 @@
               <td>{{ stat.usuariosRegistrados }}</td>
               <td>{{ stat.oportunidadesActivas }}</td>
               <td>{{ stat.oportunidadesRegistradas }}</td>
+              <td>{{ stat.fechaUltimoIngreso }}</td>
+              <td>{{ stat.usuarioUltimoIngreso }}</td>
 
               <td>{{ stat.estatus === true ? "Activo" : "Inactivo" }}</td>
             </tr>
@@ -79,7 +91,8 @@
               <td>{{ getVisibleTotal('usuariosRegistrados',dt) }}</td>
               <td>{{ getVisibleTotal('oportunidadesActivas',dt) }}</td>
               <td> {{ getVisibleTotal('oportunidadesRegistradas',dt) }}</td>
-
+              <td></td>
+              <td></td>
               <td></td>
             </tr>
           </ng-template>

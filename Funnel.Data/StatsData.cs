@@ -29,6 +29,8 @@ namespace Funnel.Data
                     stat.UsuariosRegistrados = ComprobarNulos.CheckIntNull(reader["UsuariosRegistrados"]);
                     stat.OportunidadesActivas = ComprobarNulos.CheckIntNull(reader["OportunidadesActivas"]);
                     stat.OportunidadesRegistradas = ComprobarNulos.CheckIntNull(reader["OportunidadesRegistradas"]);
+                    stat.FechaUltimoIngreso = ComprobarNulos.CheckDateTimeNull(reader["FechaUltimoIngreso"]);
+                    stat.UsuarioUltimoIngreso = ComprobarNulos.CheckStringNull(reader["UsuarioUltimoIngreso"]);
                     stats.Add(stat);
                 }
             }

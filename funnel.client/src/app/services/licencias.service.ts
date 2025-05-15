@@ -14,10 +14,10 @@ export class LicenciasService {
   baseUrl:string = environment.baseURL;
   constructor(private http: HttpClient ) {}
   getLicencias(): Observable<any>{
-    return this.http.get(this.baseUrl + 'api/Licencia/GuardarLicencia');
+    return this.http.get(this.baseUrl + 'api/Licencia/ConsultarLicencias');
   }
   postINSUPDLicencia(data: requestLicencia): Observable <baseOut>{
-    return this.http.post<baseOut>(this.baseUrl + 'api/Licencia/ConsultarLicencias', data);
+    return this.http.post<baseOut>(this.baseUrl + 'api/Licencia/GuardarLicencia', data);
   }
 }
 
