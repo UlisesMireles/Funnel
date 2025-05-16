@@ -28,5 +28,9 @@ namespace Funnnel.Logic
         {
             return await _EmpresaData.ComboLicencias();
         }
+        public async Task<BaseOut> GuardarImagen(List<IFormFile> imagen, GuardarEmpresaDto request)
+        {
+            return await _EmpresaData.GuardarImagen(imagen, request);
+        }
     }
 }

@@ -9,5 +9,6 @@ namespace Funnnel.Logic.Interfaces
         public Task<List<EmpresasDto>> ConsultarEmpresas();
         public Task<List<AdminsEmpresaDto>> ConsultaAdminsEmpresas();
         public Task<List<ComboLicenciasDto>> ComboLicencias();
+        Task<BaseOut> GuardarImagen(List<IFormFile> imagen, GuardarEmpresaDto request);
     }
 }

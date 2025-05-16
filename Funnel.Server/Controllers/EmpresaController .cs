@@ -39,6 +39,12 @@ namespace Funnel.Server.Controllers
             var respuesta = await _empresaService.ComboLicencias();
             return Ok(respuesta);
         }
+        [HttpPost("[action]")]
+        public async Task<ActionResult<GuardarEmpresaDto>> GuardarImagen([FromForm] List<IFormFile> imagen, [FromForm] GuardarEmpresaDto request)
+        {
+            var result = await _empresaService.GuardarImagen(imagen, request);
+            return Ok(result);
+        }
     }
 }
 
