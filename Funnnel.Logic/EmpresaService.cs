@@ -1,7 +1,9 @@
 ﻿using Funnel.Data.Interfaces;
 using Funnel.Models;
 using Funnel.Models.Base;
+using Funnel.Models.Dto;
 using Funnnel.Logic.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace Funnnel.Logic
 {
@@ -27,6 +29,10 @@ namespace Funnnel.Logic
         public async Task<List<ComboLicenciasDto>> ComboLicencias()
         {
             return await _EmpresaData.ComboLicencias();
+        }
+        public Task<BaseOut> GuardarImagenEmpresa(List<IFormFile> imagen, GuardarEmpresaDto request)
+        {
+            return _EmpresaData.GuardarImagenEmpresa(imagen, request);
         }
     }
 }

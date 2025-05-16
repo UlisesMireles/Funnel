@@ -4,6 +4,9 @@ using Microsoft.Extensions.Configuration;
 using Funnel.Data.Utils;
 using Funnel.Data.Interfaces;
 using Funnel.Models.Base;
+using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Funnel.Models.Dto;
 
 namespace Funnel.Data
 {
@@ -13,6 +16,72 @@ namespace Funnel.Data
         public EmpresaData(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("FunelDatabase");
+        }
+
+        public async Task<BaseOut> GuardarImagenEmpresa(List<IFormFile> imagen, GuardarEmpresaDto request)
+        {
+            BaseOut result = new BaseOut();
+            var formatosPermitidos = new List<string> { ".jpg", ".png", ".jpeg" };
+            string carpetaDestino = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "LogosEmpresas");
+
+            try
+            {
+                if (!Directory.Exists(carpetaDestino))
+                {
+                    Directory.CreateDirectory(carpetaDestino);
+                }
+
+                // Procesar imagen primero
+                if (imagen != null && imagen.Any())
+                {
+                    foreach (var file in imagen)
+                    {
+                        var extension = Path.GetExtension(file.FileName).ToLower();
+
+                        if (!formatosPermitidos.Contains(extension))
+                        {
+                            result.ErrorMessage = $"Formato de archivo {extension} no permitido.";
+                            result.Result = false;
+                            return result;
+                        }
+
+                        var nombreBase = $"{request.Alias}_{request.IdEmpresa}";
+                        var nombreArchivoNuevo = $"{nombreBase}{extension}";
+                        var rutaArchivoNuevo = Path.Combine(carpetaDestino, nombreArchivoNuevo);
+
+                        // Eliminar imágenes anteriores
+                        foreach (var formato in formatosPermitidos)
+                        {
+                            var rutaAnterior = Path.Combine(carpetaDestino, $"{nombreBase}{formato}");
+                            if (File.Exists(rutaAnterior))
+                            {
+                                File.Delete(rutaAnterior);
+                            }
+                        }
+
+                        using (var stream = new FileStream(rutaArchivoNuevo, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+
+                        request.ArchivoImagen = nombreArchivoNuevo;
+                    }
+                }
+
+                // Guardar la empresa con la imagen
+                var resultado = await GuardarEmpresa(request);
+
+                result.Result = resultado.Result;
+                result.ErrorMessage = resultado.ErrorMessage;
+                result.Id = resultado.Id;
+            }
+            catch (Exception ex)
+            {
+                result.ErrorMessage = "Error al guardar la empresa: " + ex.Message;
+                result.Result = false;
+            }
+
+            return result;
         }
 
         public async Task<BaseOut> GuardarEmpresa(GuardarEmpresaDto request)
@@ -40,7 +109,8 @@ namespace Funnel.Data
                     DataBase.CreateParameterSql("@pCorreo", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Correo ?? (object)DBNull.Value),
                     DataBase.CreateParameterSql("@pUsuario", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Usuario ?? (object)DBNull.Value),
                     DataBase.CreateParameterSql("@pUrlSitio", SqlDbType.VarChar, 500, ParameterDirection.Input, false, null, DataRowVersion.Default, request.UrlSitio ?? (object)DBNull.Value),
-                    DataBase.CreateParameterSql("@pActivo", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.activo)
+                    DataBase.CreateParameterSql("@pActivo", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.activo),
+                    DataBase.CreateParameterSql("@pArchivoImagen", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.ArchivoImagen ?? (object)DBNull.Value)
                 };
 
                 // Ejecutar el SP sin leer datos
@@ -54,11 +124,13 @@ namespace Funnel.Data
                 switch (request.Bandera)
                 {
                     case "UPD-EMPRESA":
+                        await ActualizarLogoEmpresa(request.IdEmpresa, request.ArchivoImagen);
                         result.ErrorMessage = "La empresa se actualizó correctamente.";
                         result.Id = 1;
                         result.Result = true;
                         break;
                     case "INS-EMPRESA":
+                        await ActualizarLogoEmpresa(result.Id, request.ArchivoImagen);
                         result.ErrorMessage = "La empresa se insertó correctamente.";
                         result.Id = 1;
                         result.Result = true;
@@ -165,6 +237,40 @@ namespace Funnel.Data
                     result.Add(dto);
                 }
             }
+            return result;
+        }
+
+        public async Task<BaseOut> ActualizarLogoEmpresa(int? idEmpresa, string nombreArchivoNuevo)
+        {
+            BaseOut result = new BaseOut();
+
+            try
+            {
+                IList<ParameterSQl> parametros = new List<ParameterSQl>
+                {
+                    DataBase.CreateParameterSql("@pBandera", SqlDbType.VarChar, 30, ParameterDirection.Input, false, null, DataRowVersion.Default, "UPDATE-LOGO"),
+                    DataBase.CreateParameterSql("@pIdEmpresa", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, idEmpresa),
+                    DataBase.CreateParameterSql("@pArchivoImagen", SqlDbType.VarChar, 300, ParameterDirection.Input, false, null, DataRowVersion.Default, nombreArchivoNuevo)
+                };
+
+                using (IDataReader reader = await DataBase.GetReaderSql("F_Tenant", CommandType.StoredProcedure, parametros, _connectionString))
+                {
+                    while (reader.Read())
+                    {
+
+                    }
+                }
+
+                result.Result = true;
+                result.ErrorMessage = "Imagen actualizada correctamente.";
+                result.Id = idEmpresa.Value;
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.ErrorMessage = "Error al actualizar la imagen: " + ex.Message;
+            }
+
             return result;
         }
     }

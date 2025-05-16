@@ -1,5 +1,6 @@
 ﻿using Funnel.Models;
 using Funnel.Models.Base;
+using Funnel.Models.Dto;
 using Funnnel.Logic.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -38,6 +39,12 @@ namespace Funnel.Server.Controllers
         {
             var respuesta = await _empresaService.ComboLicencias();
             return Ok(respuesta);
+        }
+        [HttpPost("[action]")]
+        public async Task<ActionResult<GuardarEmpresaDto>> GuardarImagenEmpresa([FromForm] List<IFormFile> imagen, [FromForm] GuardarEmpresaDto request)
+        {
+            var result = await _empresaService.GuardarImagenEmpresa(imagen, request);
+            return Ok(result);
         }
     }
 }

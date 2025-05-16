@@ -1,9 +1,11 @@
-﻿namespace Funnel.Models
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Funnel.Models
 {
     public class GuardarEmpresaDto
     {
         public string? Bandera { get; set; }
-        public int IdEmpresa { get; set; }
+        public int? IdEmpresa { get; set; }
         public string? NombreEmpresa { get; set; }
         public int IdAdministrador { get; set; }
         public int IdLicencia { get; set; }
@@ -20,5 +22,9 @@
         public string? Usuario { get; set; }
         public string? UrlSitio { get; set; }
         public int activo { get; set; }
+        public IFormFile? Imagen { get; set; }
+        public string? ArchivoImagen { get; set; }
+        public int? Estatus { get; set; }
+
     }
 }
