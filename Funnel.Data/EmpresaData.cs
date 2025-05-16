@@ -22,54 +22,74 @@ namespace Funnel.Data
         {
             BaseOut result = new BaseOut();
             var formatosPermitidos = new List<string> { ".jpg", ".png", ".jpeg" };
-            string carpetaDestino = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "LogosEmpresas");
+            string carpetaDestino = Path.Combine(Directory.GetCurrentDirectory(), "LogosEmpresas");
+
+            if (!Directory.Exists(carpetaDestino))
+            {
+                Directory.CreateDirectory(carpetaDestino);
+            }
+
+            if (imagen != null && imagen.Any())
+            {
+                foreach (var file in imagen)
+                {
+                    var extension = Path.GetExtension(file.FileName).ToLower();
+
+                    if (!formatosPermitidos.Contains(extension))
+                    {
+                        result.ErrorMessage = $"Formato de archivo {extension} no permitido.";
+                        result.Result = false;
+                        return result;
+                    }
+
+                    var nombreBase = $"{request.Alias}_{request.IdEmpresa}";
+                    var nombreArchivoNuevo = $"{nombreBase}{extension}";
+                    var rutaArchivoNuevo = Path.Combine(carpetaDestino, nombreArchivoNuevo);
+
+                    foreach (var formato in formatosPermitidos)
+                    {
+                        var rutaAnterior = Path.Combine(carpetaDestino, $"{nombreBase}{formato}");
+                        if (File.Exists(rutaAnterior))
+                        {
+                            File.Delete(rutaAnterior);
+                        }
+                    }
+
+                    using (var stream = new FileStream(rutaArchivoNuevo, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    request.ArchivoImagen = nombreArchivoNuevo;
+                }
+            }
 
             try
             {
-                if (!Directory.Exists(carpetaDestino))
+                var insertaImagen = new GuardarEmpresaDto
                 {
-                    Directory.CreateDirectory(carpetaDestino);
-                }
+                    Bandera = request.Bandera,
+                    IdEmpresa = request.IdEmpresa,
+                    NombreEmpresa = request.NombreEmpresa,
+                    IdAdministrador = request.IdAdministrador,
+                    IdLicencia = request.IdLicencia,
+                    Alias = request.Alias,
+                    Rfc = request.Rfc,
+                    VInicio = request.VInicio,
+                    VTerminacion = request.VTerminacion,
+                    UsuarioCreador = request.UsuarioCreador,
+                    Nombre = request.Nombre,
+                    ApellidoPaterno = request.ApellidoPaterno,
+                    ApellidoMaterno = request.ApellidoMaterno,
+                    Iniciales = request.Iniciales,
+                    Correo = request.Correo,
+                    Usuario = request.Usuario,
+                    UrlSitio = request.UrlSitio,
+                    Estatus = request.Estatus,
+                    ArchivoImagen = request.ArchivoImagen
+                };
 
-                // Procesar imagen primero
-                if (imagen != null && imagen.Any())
-                {
-                    foreach (var file in imagen)
-                    {
-                        var extension = Path.GetExtension(file.FileName).ToLower();
-
-                        if (!formatosPermitidos.Contains(extension))
-                        {
-                            result.ErrorMessage = $"Formato de archivo {extension} no permitido.";
-                            result.Result = false;
-                            return result;
-                        }
-
-                        var nombreBase = $"{request.Alias}_{request.IdEmpresa}";
-                        var nombreArchivoNuevo = $"{nombreBase}{extension}";
-                        var rutaArchivoNuevo = Path.Combine(carpetaDestino, nombreArchivoNuevo);
-
-                        // Eliminar imágenes anteriores
-                        foreach (var formato in formatosPermitidos)
-                        {
-                            var rutaAnterior = Path.Combine(carpetaDestino, $"{nombreBase}{formato}");
-                            if (File.Exists(rutaAnterior))
-                            {
-                                File.Delete(rutaAnterior);
-                            }
-                        }
-
-                        using (var stream = new FileStream(rutaArchivoNuevo, FileMode.Create))
-                        {
-                            await file.CopyToAsync(stream);
-                        }
-
-                        request.ArchivoImagen = nombreArchivoNuevo;
-                    }
-                }
-
-                // Guardar la empresa con la imagen
-                var resultado = await GuardarEmpresa(request);
+                var resultado = await GuardarEmpresa(insertaImagen);
 
                 result.Result = resultado.Result;
                 result.ErrorMessage = resultado.ErrorMessage;
