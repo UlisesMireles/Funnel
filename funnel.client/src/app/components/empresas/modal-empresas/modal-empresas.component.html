@@ -173,15 +173,15 @@
         </div>
        
         <div class="col-sm-10 d-flex align-items-center justify-content-end">
-          <ng-container *ngIf="!selectedFile">
+          <ng-container *ngIf="!selectedFile && !selectedFileName">
             <input type="text" class="form-control form-control-sm me-2" placeholder="" disabled style="max-width: 200px;" />
             <button class="btn btn-sm btn-seleccionar" (click)="abrirInput()">Seleccionar</button>
             <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
           </ng-container>
-          <ng-container *ngIf="selectedFile">
+          <ng-container *ngIf="selectedFile || selectedFileName">
             <div style="display: flex; align-items: center; margin-right: 5px;">
               <div class="rounded-circle bg-success" style="width: 20px; height: 20px; margin-right: 10px;"></div>
-              <span class="me-3">{{ selectedFile.name }}</span>
+              <span class="me-3">{{ selectedFile?.name || selectedFileName }}</span>
               <button class="btn btn-link text-danger p-0" (click)="removerFoto()">
                 <span class="me-1">❌</span> Remover
               </button>

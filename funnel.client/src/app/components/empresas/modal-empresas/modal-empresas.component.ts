@@ -103,6 +103,8 @@ export class ModalEmpresasComponent {
         selectedFile: [this.selectedFile],
         activo: [this.empresaActiva]
       }); 
+       this.selectedFile = null
+      this.selectedFileName = this.empresa.archivoImagen || ''; 
     } else {
       this.formEmpresas = this.fb.group({
         idEmpresa: [0],
@@ -124,10 +126,10 @@ export class ModalEmpresasComponent {
         urlSitio:['www.', Validators.required],
         selectedFile: [this.selectedFile],
         activo: [1]
-      });  
+      });
     }
     this.formEmpresas.controls['usuario'].disable();
-    this.selectedFileOriginal = this.selectedFile;
+    
   }
   close() {
     this.visible = false;
@@ -250,7 +252,6 @@ export class ModalEmpresasComponent {
         formData.append('imagen', this.selectedFile, nombreArchivo);
       }
     
-  console.log(formData.values, "holis");
 
   if (this.selectedFile instanceof File) {
     formData.append('imagen', this.selectedFile, this.selectedFile.name);

@@ -20,7 +20,7 @@ namespace Funnel.Models
                 public string? Correo { get; set; }
                 public string? Usuario { get; set; }
                 public string? UrlSitio { get; set; }
-                public int activo { get; set; }
+                public int Activo { get; set; }
                 public IFormFile? Imagen { get; set; }
                 public string? ArchivoImagen { get; set; }
                 public int? Estatus { get; set; }

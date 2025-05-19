@@ -85,7 +85,7 @@ namespace Funnel.Data
                     Correo = request.Correo,
                     Usuario = request.Usuario,
                     UrlSitio = request.UrlSitio,
-                    Estatus = request.Estatus,
+                    Activo = request.Activo,
                     ArchivoImagen = request.ArchivoImagen
                 };
 
@@ -129,7 +129,7 @@ namespace Funnel.Data
                     DataBase.CreateParameterSql("@pCorreo", SqlDbType.VarChar, 100, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Correo ?? (object)DBNull.Value),
                     DataBase.CreateParameterSql("@pUsuario", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Usuario ?? (object)DBNull.Value),
                     DataBase.CreateParameterSql("@pUrlSitio", SqlDbType.VarChar, 500, ParameterDirection.Input, false, null, DataRowVersion.Default, request.UrlSitio ?? (object)DBNull.Value),
-                    DataBase.CreateParameterSql("@pActivo", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.activo),
+                    DataBase.CreateParameterSql("@pActivo", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Activo),
                     DataBase.CreateParameterSql("@pArchivoImagen", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.ArchivoImagen ?? (object)DBNull.Value)
                 };
 
@@ -213,6 +213,7 @@ namespace Funnel.Data
                     dto.OportAct = ComprobarNulos.CheckIntNull(reader["OportunidadAct"]);
                     dto.Activo = ComprobarNulos.CheckIntNull(reader["Activo"]);
                     dto.UrlSitio = ComprobarNulos.CheckStringNull(reader["UrlSitio"]);
+                    dto.ArchivoImagen = ComprobarNulos.CheckStringNull(reader["ArchivoImagen"]);
 
                     result.Add(dto);
                 }

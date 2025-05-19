@@ -29,5 +29,6 @@ namespace Funnel.Models.Dto
         public string? UrlSitio { get; set; }
         public int Activo { get; set; }
         public int UsuarioCreador { get; set; }
+        public string? ArchivoImagen { get; set; }
     }
 }
