@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild,  ElementRef  } from '@angular/core';
 
 /*Primeng*/
 import { MessageService } from 'primeng/api';
@@ -29,6 +29,10 @@ export class ModalEmpresasComponent {
   empresaActiva: boolean = false;
   licenciasDropdown:dropdownLicencia[] = [];
   selectedLicencia: number | undefined;
+  selectedFile: File | null = null;
+  selectedFileName: string = '';
+  formModificado: boolean = false;
+  selectedFileOriginal: File | null = null;
 
   formEmpresas!: FormGroup;
   userId: number = 0; 
@@ -36,6 +40,8 @@ export class ModalEmpresasComponent {
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() closeModal: EventEmitter<void> = new EventEmitter();
   @Output() result: EventEmitter<baseOut> = new EventEmitter();
+
+  @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
   constructor(private empresasService: EmpresasService, private messageService: MessageService, private fb: FormBuilder,) { 
     this.userId = parseInt(localStorage.getItem('currentUser')!);
@@ -94,6 +100,7 @@ export class ModalEmpresasComponent {
         correo: [this.empresa.correoAdministrador, Validators.required],
         usuario:[this.empresa.usuarioAdministrador],
         urlSitio:[this.empresa.urlSitio, Validators.required],
+        selectedFile: [this.selectedFile],
         activo: [this.empresaActiva]
       }); 
     } else {
@@ -115,11 +122,12 @@ export class ModalEmpresasComponent {
         correo: ['', Validators.required],
         usuario:[''],
         urlSitio:['www.', Validators.required],
+        selectedFile: [this.selectedFile],
         activo: [1]
       });  
     }
     this.formEmpresas.controls['usuario'].disable();
-
+    this.selectedFileOriginal = this.selectedFile;
   }
   close() {
     this.visible = false;
@@ -138,78 +146,131 @@ export class ModalEmpresasComponent {
     });
   }
   guardarEmpresa() {
-    if (this.formEmpresas.invalid) {
-      Object.keys(this.formEmpresas.controls).forEach(key => {
-        const control = this.formEmpresas.get(key);
-        control?.markAsTouched();
-      });
-      return;
-    }
-    if (this.camposInvalidosInsertar()) {
-      this.mostrarToastError();
-      return;
-    }
-    if (!this.request) {
-      this.request = {} as requestEmpresa;
-    }
-    this.request = this.formEmpresas.getRawValue();
-    this.formEmpresas.controls['iniciales'].setValue(this.getIniciales());
-    this.formEmpresas.controls['activo'].setValue(1);
-
-    this.empresasService.postINSUPDEmpresa(this.request).subscribe(
-      {
-        next: (result: baseOut) => {
-          this.result.emit(result);
-          this.visible = false;
-          this.visibleChange.emit(this.visible);
-          this.closeModal.emit();
-        },
-        error: (error: baseOut) => {
-          this.result.emit(error);
-          this.visible = false;
-          this.visibleChange.emit(this.visible);
-          this.closeModal.emit();
-        }
-      }
-    );
+  if (this.formEmpresas.invalid) {
+    Object.keys(this.formEmpresas.controls).forEach(key => {
+      const control = this.formEmpresas.get(key);
+      control?.markAsTouched();
+    });
+    return;
   }
+  if (this.camposInvalidosInsertar()) {
+    this.mostrarToastError();
+    return;
+  }
+
+  this.formEmpresas.controls['iniciales'].setValue(this.getIniciales());
+  this.formEmpresas.controls['activo'].setValue(1);
+
+  const formValue = this.formEmpresas.getRawValue();
+  const formData = new FormData();
+
+  for (const key in formValue) {
+    if (key === 'selectedFile') continue; 
+    const value = formValue[key];
+    if (value !== null && value !== undefined) {
+      if (value instanceof Date) {
+        formData.append(key, value.toISOString());
+      } else {
+        formData.append(key, value.toString());
+      }
+    }
+  }
+
+  if (this.selectedFile instanceof File) {
+    formData.append('imagen', this.selectedFile, this.selectedFile.name);
+  }
+
+  this.empresasService.postINSUPDEmpresa(formData).subscribe({
+    next: (result: baseOut) => {
+      this.result.emit(result);
+      this.visible = false;
+      this.visibleChange.emit(this.visible);
+      this.closeModal.emit();
+    },
+    error: (error: baseOut) => {
+      this.result.emit(error);
+      this.visible = false;
+      this.visibleChange.emit(this.visible);
+      this.closeModal.emit();
+    }
+  });
+}
   actualizaEmpresa() {
-    if (!this.request) {
-      this.request = {} as requestEmpresa;
-    }
-    if (this.formEmpresas.invalid) {
-      Object.keys(this.formEmpresas.controls).forEach(key => {
-        const control = this.formEmpresas.get(key);
-        control?.markAsTouched();
-      });
-      return;
+  if (this.formEmpresas.invalid) {
+    Object.keys(this.formEmpresas.controls).forEach(key => {
+      const control = this.formEmpresas.get(key);
+      control?.markAsTouched();
+    });
+    return;
+  }
+
+  if (this.camposInvalidosEditar()) {
+    this.mostrarToastError();
+        console.log(this.formEmpresas);
+    return;
+
+  }
+
+  this.formEmpresas.controls['bandera'].setValue('UPD-EMPRESA');
+  this.formEmpresas.controls['iniciales'].setValue(this.getIniciales());
+  
+  const formValue = this.formEmpresas.getRawValue();
+  formValue.activo = this.formEmpresas.controls['activo'].value ? 1 : 0;
+
+  console.log(formValue);
+  const formData = new FormData();
+  for (const key in formValue) {
+    if (key === 'selectedFile') continue;
+    const value = formValue[key];
+    if (value !== null && value !== undefined) {
+      if (value instanceof Date) {
+        formData.append(key, value.toISOString());
+      } else {
+        formData.append(key, value.toString());
+      }
     }
 
-    if (this.camposInvalidosEditar()) {
-      this.mostrarToastError();
-      return;
-    }
-    this.formEmpresas.controls['bandera'].setValue('UPD-EMPRESA');
-    this.formEmpresas.controls['iniciales'].setValue(this.getIniciales());
-    this.request = this.formEmpresas.getRawValue();
-    this.request.activo = this.formEmpresas.controls['activo'].value ? 1 : 0;
-    this.empresasService.postINSUPDEmpresa(this.request).subscribe(
-      {
-        next: (result: baseOut) => {
-          this.result.emit(result);
-          this.visible = false;
-          this.visibleChange.emit(this.visible);
-          this.closeModal.emit();
-        },
-        error: (error: baseOut)=> {
-          this.result.emit(error);
-          this.visible = false;
-          this.visibleChange.emit(this.visible);
-          this.closeModal.emit();
-        }
-      }
-    );
+    
   }
+
+  let nombreArchivo = '';
+      if (this.selectedFile instanceof File) {
+      const extension = this.selectedFile.name.split('.').pop();
+
+      const alias = formValue.alias || '';
+      const id = formValue.idEmpresa || '';
+
+      nombreArchivo = `${alias}_${id}`;
+
+
+      nombreArchivo = `${nombreArchivo}.${extension}`;
+
+
+        // Agrega la imagen con el nuevo nombre
+        formData.append('imagen', this.selectedFile, nombreArchivo);
+      }
+    
+  console.log(formData.values, "holis");
+
+  if (this.selectedFile instanceof File) {
+    formData.append('imagen', this.selectedFile, this.selectedFile.name);
+  }
+
+  this.empresasService.postINSUPDEmpresa(formData).subscribe({
+    next: (result: baseOut) => {
+      this.result.emit(result);
+      this.visible = false;
+      this.visibleChange.emit(this.visible);
+      this.closeModal.emit();
+    },
+    error: (error: baseOut) => {
+      this.result.emit(error);
+      this.visible = false;
+      this.visibleChange.emit(this.visible);
+      this.closeModal.emit();
+    }
+  });
+}
   getIniciales(): string {
     const obtenerIniciales = (texto: string | undefined): string|undefined => {
       return texto!
@@ -324,6 +385,24 @@ export class ModalEmpresasComponent {
     });
   }
 
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      this.selectedFileName = this.selectedFile.name;
+    }
+  }
 
+  removerFoto() {
+    this.selectedFile = null;
+    this.selectedFileName = '';
+    if (this.fileInput) {
+      this.fileInput.nativeElement.value = '';
+    }
+  }
+
+  abrirInput(): void {
+    this.fileInput.nativeElement.click();
+  }
 
 }
