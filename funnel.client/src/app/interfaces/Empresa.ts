@@ -45,4 +45,6 @@ export interface dataEmpresa {
   urlSitio?: string;
   activo: number;
   usuarioCreador: number;
+  archivoImagen?: string;
+  imagen?: File;
 }

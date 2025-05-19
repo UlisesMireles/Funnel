@@ -21,7 +21,7 @@ export class EmpresasService {
   }
 
   // Método POST
-  postINSUPDEmpresa(data: requestEmpresa): Observable<any> {
-    return this.http.post(this.baseUrl+"api/empresa/GuardarEmpresa", data);
+  postINSUPDEmpresa(formData: FormData): Observable<any> {
+    return this.http.post(this.baseUrl+"api/empresa/GuardarImagenEmpresa", formData);
   }
 }
