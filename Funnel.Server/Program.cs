@@ -3,6 +3,7 @@ using Funnel.Data.Interfaces;
 using Funnnel.Logic;
 using Funnnel.Logic.Interfaces;
 using Funnnel.Logic.Utils;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -56,6 +57,13 @@ var app = builder.Build();
 app.UseDefaultFiles();
 app.MapStaticAssets();
 
+app.UseStaticFiles();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "LogosEmpresas")),
+    RequestPath = "/LogosEmpresas"
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
