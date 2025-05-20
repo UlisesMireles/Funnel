@@ -12,6 +12,7 @@ import { baseOut } from '../../../interfaces/utils/baseOut'
 import { dataEmpresa } from '../../../interfaces/Empresa';
 import { dropdownLicencia } from '../../../interfaces/Licencia';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { environment } from '../../../../enviroment/enviroment';
 
 @Component({
   selector: 'app-modal-empresas',
@@ -33,6 +34,10 @@ export class ModalEmpresasComponent {
   selectedFileName: string = '';
   formModificado: boolean = false;
   selectedFileOriginal: File | null = null;
+
+  imagePreview: string | ArrayBuffer | null = null;
+  baseUrl: string = environment.baseURL;
+  rutaImgen: string = this.baseUrl + 'LogosEmpresas/';
 
   formEmpresas!: FormGroup;
   userId: number = 0; 
@@ -103,8 +108,14 @@ export class ModalEmpresasComponent {
         selectedFile: [this.selectedFile],
         activo: [this.empresaActiva]
       }); 
-       this.selectedFile = null
-      this.selectedFileName = this.empresa.archivoImagen || ''; 
+       if (this.empresa.archivoImagen) {
+        this.selectedFile = { name: this.empresa.archivoImagen } as File;
+        this.selectedFileName = this.empresa.archivoImagen;
+        this.imagePreview = this.baseUrl + 'LogosEmpresas/' + this.empresa.archivoImagen;
+      } else {
+        this.imagePreview = null;
+      }
+      this.selectedFile = null;
     } else {
       this.formEmpresas = this.fb.group({
         idEmpresa: [0],
@@ -127,6 +138,8 @@ export class ModalEmpresasComponent {
         selectedFile: [this.selectedFile],
         activo: [1]
       });
+      this.imagePreview = null;
+      this.selectedFileName = '';
     }
     this.formEmpresas.controls['usuario'].disable();
     
@@ -386,19 +399,29 @@ export class ModalEmpresasComponent {
     });
   }
 
-  onFileSelected(event: Event): void {
+    removerFoto() {
+    this.selectedFile = null;
+    this.selectedFileName = '';
+    this.imagePreview = null;
+    this.formModificado = true;
+    
+    if (this.fileInput) {
+      this.fileInput.nativeElement.value = '';
+    }
+  }
+
+    onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
       this.selectedFileName = this.selectedFile.name;
-    }
-  }
+      this.formModificado = true;
 
-  removerFoto() {
-    this.selectedFile = null;
-    this.selectedFileName = '';
-    if (this.fileInput) {
-      this.fileInput.nativeElement.value = '';
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview = e.target?.result as string;
+      };
+      reader.readAsDataURL(this.selectedFile);
     }
   }
 
