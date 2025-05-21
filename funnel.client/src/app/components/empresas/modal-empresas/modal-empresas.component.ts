@@ -38,7 +38,7 @@ export class ModalEmpresasComponent {
   imagePreview: string | ArrayBuffer | null = null;
   baseUrl: string = environment.baseURL;
   rutaImgen: string = this.baseUrl + 'LogosEmpresas/';
-  rutaImgenDefault: string = this.baseUrl + 'LogosEmpresas/GlupointBlanco.png';
+  rutaImgenDefault: string = this.baseUrl + 'LogosEmpresas/logotipo-glupoint.png';
 
   formEmpresas!: FormGroup;
   userId: number = 0; 
@@ -114,7 +114,7 @@ export class ModalEmpresasComponent {
         this.selectedFileName = this.empresa.archivoImagen;
         this.imagePreview = this.baseUrl + 'LogosEmpresas/' + this.empresa.archivoImagen;
       } else {
-        this.imagePreview = this.imagePreview = this.rutaImgenDefault;;
+        this.imagePreview = this.imagePreview = this.rutaImgenDefault;
       }
     } else {
       this.formEmpresas = this.fb.group({
