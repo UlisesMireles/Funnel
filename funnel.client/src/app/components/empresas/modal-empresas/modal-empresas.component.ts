@@ -38,6 +38,7 @@ export class ModalEmpresasComponent {
   imagePreview: string | ArrayBuffer | null = null;
   baseUrl: string = environment.baseURL;
   rutaImgen: string = this.baseUrl + 'LogosEmpresas/';
+  rutaImgenDefault: string = this.baseUrl + 'LogosEmpresas/logodefault.png';
 
   formEmpresas!: FormGroup;
   userId: number = 0; 
@@ -113,9 +114,8 @@ export class ModalEmpresasComponent {
         this.selectedFileName = this.empresa.archivoImagen;
         this.imagePreview = this.baseUrl + 'LogosEmpresas/' + this.empresa.archivoImagen;
       } else {
-        this.imagePreview = null;
+        this.imagePreview = this.imagePreview = this.rutaImgenDefault;;
       }
-      this.selectedFile = null;
     } else {
       this.formEmpresas = this.fb.group({
         idEmpresa: [0],
