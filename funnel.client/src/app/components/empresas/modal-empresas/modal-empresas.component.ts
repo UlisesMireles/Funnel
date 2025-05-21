@@ -38,7 +38,7 @@ export class ModalEmpresasComponent {
   imagePreview: string | ArrayBuffer | null = null;
   baseUrl: string = environment.baseURL;
   rutaImgen: string = this.baseUrl + 'LogosEmpresas/';
-  rutaImgenDefault: string = this.baseUrl + 'LogosEmpresas/logodefault.png';
+  rutaImgenDefault: string = this.baseUrl + 'LogosEmpresas/GlupointBlanco.png';
 
   formEmpresas!: FormGroup;
   userId: number = 0; 
