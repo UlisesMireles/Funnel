@@ -47,6 +47,16 @@ export class TwoFactorComponent {
     this.startTimer();
   }
   onCodigoChange(value: number): void {
+    if (this.codigo && this.codigo.toString().length === 6) {
+      this.EnviarCodigo();
+      this.messageService.add({
+            severity: 'success',
+            summary: 'Éxito',
+            detail: 'El código ha sido enviado.',
+      });
+      this.codigo = null;
+      this.disabled = true;
+    }
     if (value && value.toString().length === 6) {
       this.disabled = false;
     }else{
