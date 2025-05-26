@@ -2,7 +2,11 @@
   [(visible)]="visible"
   [modal]="true"
   [closable]="true"
-  [style]="{ width: '60rem' }"
+  [style]="{ width: '65rem' }"
+  [contentStyle]="{ 
+    'overflow': 'visible', 
+    'max-height': 'none'   
+  }"
   (onHide)="close()"
   (onShow)="onDialogShow()"
   class="bodyDialog"
@@ -28,6 +32,7 @@
         margin-bottom: 0.3rem;
         color: #555;
         font-size: 0.9rem;
+        text-align: left;
       }
       .form-input {
         width: 100%;
@@ -37,6 +42,7 @@
         margin: 0.8rem 0;
         font-size: 1rem;
         grid-column: span 3;
+        text-align: left;
       }
       .logo-group {
         display: flex;
@@ -76,8 +82,7 @@
 
     <form [formGroup]="formEmpresas" class="three-column-form">
       <h4 class="section-title">Datos de la empresa</h4>
-      
-      <!-- Fila 1 -->
+
       <div class="form-group uniform-input">
         <label class="form-label">Nombre de Empresa:</label>
         <input pInputText formControlName="nombreEmpresa" class="form-input" />
@@ -96,7 +101,6 @@
         <span *ngIf="esCampoInvalido('rfc')" class="text-danger">*</span>
       </div>
 
-      <!-- Fila 2 -->
       <div class="form-group uniform-input">
         <label class="form-label">Url de sitio:</label>
         <input pInputText formControlName="urlSitio" class="form-input" />
@@ -107,48 +111,47 @@
         <label class="form-label">Licencia:</label>
         <p-dropdown [options]="licenciasDropdown" formControlName="idLicencia" 
                    optionValue="idLicencia" optionLabel="nombreLicencia" 
-                   placeholder="Seleccionar" [style]="{width: '100%'}"></p-dropdown>
+                   placeholder="Seleccionar"   
+                   [style]="{ width: '100%', 'text-align': 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' }">
+        </p-dropdown>
         <span *ngIf="esCampoInvalido('idLicencia')" class="text-danger">*</span>
       </div>
 
-      <div class="form-group">
-  <label class="form-label">Logo:</label>
-  <div class="logo-group" style="display: flex; align-items: flex-start; gap: 1rem; margin-left: 2rem; margin-top: -0.5rem;">
-    <ng-container *ngIf="imagePreview">
-      <div style="display: flex; align-items: center; gap: 1.5rem;">
-        <!-- Vista previa de la imagen sin marco -->
-        <div style="width: 150px; height: 150px; display: flex; justify-content: center; align-items: center;">
-          <img [src]="imagePreview" alt="Logo preview" 
-               style="max-width: 100%; max-height: 100%; object-fit: contain;">
+      <div class="form-group" style="position: relative; height: 80px;"> <!-- Contenedor relativo con altura fija -->
+        <label class="form-label">Logo:</label>
+        <div class="logo-group" style="position: absolute; top: 25px; left: 2rem; display: flex; align-items: center; gap: 1rem;">
+          <ng-container *ngIf="imagePreview">
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+              <div style="width: 120px; height: 120px; display: flex; justify-content: center; align-items: center;">
+                <img [src]="imagePreview" alt="Logo preview" 
+                    style="width: 100%; height: 100%; object-fit: contain;">
+              </div>
+              <button class="btn btn-link text-danger p-0" style="margin-left: 1rem;" (click)="removerFoto()">
+                <span class="me-1">❌</span> Remover
+              </button>
+            </div>
+          </ng-container>
+          
+          <ng-container *ngIf="!imagePreview">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-left: -2rem; margin-top: 0.1rem;">
+              <input type="text" class="p-inputtext" placeholder="Ninguna imagen seleccionada" disabled 
+                    style="width: 210px; margin-right: 1rem;">
+              <button pButton pRipple type="button" label="Seleccionar" (click)="abrirInput()" 
+                      class="p-button-sm"></button>
+              <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
+            </div>
+          </ng-container>
         </div>
-        <!-- Botón Remover -->
-        <button class="btn btn-link text-danger p-0" style="margin-left: 1rem;" (click)="removerFoto()">
-          <span class="me-1">❌</span> Remover
-        </button>
       </div>
-    </ng-container>
-    
-    <ng-container *ngIf="!imagePreview">
-      <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <input type="text" class="p-inputtext" placeholder="Ninguna imagen seleccionada" disabled 
-               style="width: 200px; margin-right: 0.5rem;">
-        <button pButton pRipple type="button" label="Seleccionar" (click)="abrirInput()" 
-                class="p-button-sm"></button>
-        <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
-      </div>
-    </ng-container>
-  </div>
-</div>
 
-      <!-- Fila 3 -->
-      <div class="form-group">
+      <div class="form-group" style="margin-top: -20px;">
         <label class="form-label">Inicio:</label>
         <p-datepicker formControlName="vInicio" [showIcon]="true" dateFormat="dd/mm/yy" 
                      [style]="{width: '100%'}" inputStyleClass="form-input"></p-datepicker>
         <span *ngIf="esCampoInvalido('vInicio')" class="text-danger">*</span>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" style="margin-top: -20px;">
         <label class="form-label">Terminación:</label>
         <p-datepicker formControlName="vTerminacion" [showIcon]="true" dateFormat="dd/mm/yy" 
                      [style]="{width: '100%'}" inputStyleClass="form-input"></p-datepicker>
@@ -156,8 +159,7 @@
       </div>
 
       <h4 class="section-title">Datos de Usuario Administrador</h4>
-      
-      <!-- Fila 4 -->
+
       <div class="form-group uniform-input">
         <label class="form-label">Nombre:</label>
         <input pInputText formControlName="nombre" class="form-input" />
@@ -175,7 +177,6 @@
         <input pInputText formControlName="apellidoMaterno" class="form-input" />
       </div>
 
-      <!-- Fila 5 -->
       <div class="form-group uniform-input">
         <label class="form-label">Usuario:</label>
         <input pInputText formControlName="usuario" class="form-input" />
