@@ -46,6 +46,12 @@ namespace Funnel.Server.Controllers
             var result = await _empresaService.GuardarImagenEmpresa(imagen, request);
             return Ok(result);
         }
+        [HttpGet("[action]/")]
+        public async Task<ActionResult<BaseOut>> ObtenerImagenEmpresa(int IdEmpresa)
+        {
+            var respuesta = await _empresaService.ObtenerImagenEmpresa(IdEmpresa);
+            return Ok(respuesta);
+        }
     }
 }
 

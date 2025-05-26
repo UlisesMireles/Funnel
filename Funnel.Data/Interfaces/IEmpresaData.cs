@@ -12,5 +12,6 @@ namespace Funnel.Data.Interfaces
         public Task<List<AdminsEmpresaDto>> ConsultaAdminsEmpresas();
         public Task<List<ComboLicenciasDto>> ComboLicencias();
         public Task<BaseOut> GuardarImagenEmpresa(List<IFormFile> imagen, GuardarEmpresaDto request);
+        public Task<BaseOut> ObtenerImagenEmpresa(int IdEmpresa);
     }
 }

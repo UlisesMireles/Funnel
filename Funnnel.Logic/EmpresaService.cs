@@ -34,5 +34,9 @@ namespace Funnnel.Logic
         {
             return _EmpresaData.GuardarImagenEmpresa(imagen, request);
         }
+        public async Task<BaseOut> ObtenerImagenEmpresa(int IdEmpresa)
+        {
+            return await _EmpresaData.ObtenerImagenEmpresa(IdEmpresa);
+        }
     }
 }
