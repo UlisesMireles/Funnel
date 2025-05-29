@@ -49,11 +49,7 @@ export class TwoFactorComponent {
   onCodigoChange(value: number): void {
     if (this.codigo && this.codigo.toString().length === 6) {
       this.EnviarCodigo();
-      this.messageService.add({
-            severity: 'success',
-            summary: 'Éxito',
-            detail: 'El código ha sido enviado.',
-      });
+     
       this.codigo = null;
       this.disabled = true;
     }
@@ -71,6 +67,11 @@ export class TwoFactorComponent {
   enviarCorreoTwoFactor() {
     this.authService.reenviarTwoFactor(this.datosUsuario.usuario, this.datosUsuario.pass).subscribe({
       next: () => {
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Éxito',
+          detail: 'El código se ha reenviado a tu correo ',
+        });
         this.startTimer();
       },
       error: (err) => {
