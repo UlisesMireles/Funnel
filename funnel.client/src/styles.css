@@ -48,3 +48,10 @@ footer {
         height: 48px;
     }
 }
+.p-datatable-header {
+  background-color: #FFF !important; 
+  padding: 0 !important;
+  position: absolute;
+  right: 0px;
+  top: 16px;
+}
