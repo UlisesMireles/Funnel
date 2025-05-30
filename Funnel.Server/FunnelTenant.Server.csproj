@@ -25,4 +25,8 @@
     <ProjectReference Include="..\Funnnel.Logic\FunnelTenant.Logic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="LogosEmpresas\" />
+  </ItemGroup>
+
 </Project>

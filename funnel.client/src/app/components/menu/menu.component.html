@@ -56,12 +56,17 @@
           </div>
           <div class="user-actions">
             <button type="button" [routerLink]="['/cambiar-contrasena']" class="btn btn-cancel btnmenuuser">
-              Contraseña
-             </button>
-            <button (click)="logout()" type="button" class="btn btn-cancel btnmenuuser">
-              Cerrar Sesión
+              Cambiar ontraseña
             </button>
+            <!--<button (click)="logout()" type="button" class="btn btn-cancel btnmenuuser">
+        Cerrar Sesión
+      </button>-->
           </div>
+        </div>
+        <div class="ms-4" style="justify-content: end;">
+          <button class="menu-item-logout" (click)="logout()">
+            <i class="bi bi-box-arrow-right large-icon" [title]="'Cerrar Sesión'"></i>
+          </button>
         </div>
       </div>
     </div>

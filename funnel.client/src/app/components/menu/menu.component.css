@@ -322,3 +322,23 @@ ul.subm>li>a {
         height: 30px !important;    
     }
 }
+
+.large-icon {
+  font-size: 20px;
+  margin-right: 4px;
+  color: #fff;
+  position: absolute;
+  display: contents;
+}
+.menu-item-logout {
+  height: 30px;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: transparent;
+  border: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  -webkit-text-stroke: 1px;
+}
