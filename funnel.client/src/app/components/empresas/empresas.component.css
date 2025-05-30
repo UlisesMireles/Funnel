@@ -13,11 +13,6 @@
   margin-top: 10px
 }
 
-::ng-deep .p-datatable-header {
-  background-color: #DAD7CF !important;
-  padding: 0 !important;
-  height: 35px;
-}
 
 /*
 ::ng-deep .Iconos .pi {

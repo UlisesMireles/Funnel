@@ -68,7 +68,7 @@ export class ModalEmpresasComponent {
       iniciales: [''],
       correo: ['', Validators.required],
       usuario:[''],
-      urlSitio:['www.', Validators.required],
+      urlSitio:['www.'],
       activo: [1]
     });    
   }
@@ -105,16 +105,18 @@ export class ModalEmpresasComponent {
         iniciales: [this.getIniciales()],
         correo: [this.empresa.correoAdministrador, Validators.required],
         usuario:[this.empresa.usuarioAdministrador],
-        urlSitio:[this.empresa.urlSitio, Validators.required],
+        urlSitio:[this.empresa.urlSitio],
         selectedFile: [this.selectedFile],
         activo: [this.empresaActiva]
       }); 
-       if (this.empresa.archivoImagen) {
+      if (this.empresa.archivoImagen) {
         this.selectedFile = { name: this.empresa.archivoImagen } as File;
         this.selectedFileName = this.empresa.archivoImagen;
-        this.imagePreview = this.baseUrl + 'LogosEmpresas/' + this.empresa.archivoImagen;
+        //this.imagePreview = this.baseUrl + 'LogosEmpresas/' + this.empresa.archivoImagen;
+
+        this.imagePreview = `${this.baseUrl}LogosEmpresas/${this.empresa.archivoImagen}?t=${Date.now()}`;
       } else {
-        this.imagePreview = this.imagePreview = this.rutaImgenDefault;
+        this.imagePreview = null;
       }
     } else {
       this.formEmpresas = this.fb.group({
@@ -134,7 +136,7 @@ export class ModalEmpresasComponent {
         iniciales: [''],
         correo: ['', Validators.required],
         usuario:[''],
-        urlSitio:['www.', Validators.required],
+        urlSitio:['www.'],
         selectedFile: [this.selectedFile],
         activo: [1]
       });
@@ -321,16 +323,14 @@ export class ModalEmpresasComponent {
       this.validarNombreEmpresa()||
       !this.validarRFC(this.formEmpresas.get('rfc')?.value)||
       !this.validarCorreo(this.formEmpresas.get('correo')?.value) ||
-      this.validarAlias() || 
-      !this.validarUrl(this.formEmpresas.get('urlSitio')?.value)
+      this.validarAlias() 
     );
   }
   camposInvalidosEditar(): boolean {
     return (
       !this.validarFechas()||
       !this.validarRFC(this.formEmpresas.get('rfc')?.value)||
-      !this.validarCorreo(this.formEmpresas.get('correo')?.value) ||
-      !this.validarUrl(this.formEmpresas.get('urlSitio')?.value)
+      !this.validarCorreo(this.formEmpresas.get('correo')?.value) 
       
     );
   }
