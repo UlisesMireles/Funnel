@@ -5,7 +5,8 @@
   [style]="{ width: '65rem' }"
   [contentStyle]="{ 
     'overflow': 'visible', 
-    'max-height': 'none'   
+    'max-height': 'none',
+    'padding': '0.5rem 1rem',  
   }"
   (onHide)="close()"
   (onShow)="onDialogShow()"
@@ -21,15 +22,15 @@
       .three-column-form {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        gap: 0.8rem;
+        gap: 0.5rem;
       }
       .form-group {
         display: flex;
         flex-direction: column;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.2rem;
       }
       .form-label {
-        margin-bottom: 0.3rem;
+        margin-bottom: 0.2rem;
         color: #555;
         font-size: 0.9rem;
         text-align: left;
@@ -39,24 +40,26 @@
       }
       .section-title {
         font-weight: bold;
-        margin: 0.8rem 0;
+        margin: 0.5rem 0 0.2rem 0;
         font-size: 1rem;
         grid-column: span 3;
         text-align: left;
       }
       .logo-group {
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         gap: 0.5rem;
       }
       .text-danger {
         color: red;
         font-size: 0.8rem;
-        margin-top: 0.2rem;
+        margin-top: 0.1rem;
       }
-      .p-inputtext, .p-dropdown, .p-calendar {
+      .p-inputtext, .p-dropdown, .p-calendar, .p-datepicker {
         font-size: 0.9rem !important;
         padding: 0.3rem 0.5rem !important;
+        height: 34px !important;
+        text-align: left;
       }
       .p-button-sm {
         padding: 0.25rem 0.5rem !important;
@@ -78,125 +81,209 @@
         padding-top: 0.3rem !important;
         padding-bottom: 0.3rem !important;
       }
+      .p-datepicker .p-inputtext {
+        height: 34px !important;
+        padding: 0.3rem 0.5rem !important;
+      }
+      .logo-container {
+        height: 70px;
+      }
     </style>
 
     <form [formGroup]="formEmpresas" class="three-column-form">
-      <h4 class="section-title">Datos de la empresa</h4>
+  <h4 class="section-title">Datos de la empresa</h4>
 
-      <div class="form-group uniform-input">
-        <label class="form-label">Nombre de Empresa:</label>
-        <input pInputText formControlName="nombreEmpresa" class="form-input" />
-        <span *ngIf="esCampoInvalido('nombreEmpresa')" class="text-danger">*</span>
-      </div>
+  <!-- VISTA PARA INSERTAR (NUEVO REGISTRO) -->
+  <ng-container *ngIf="insertar; else editView">
+    <div class="form-group uniform-input">
+      <label class="form-label">Nombre de Empresa:</label>
+      <input pInputText formControlName="nombreEmpresa" class="form-input" />
+      <span *ngIf="esCampoInvalido('nombreEmpresa')" class="text-danger">*</span>
+    </div>
 
-      <div class="form-group uniform-input">
-        <label class="form-label">Alias:</label>
-        <input pInputText formControlName="alias" (change)="onAliasChange($event)" class="form-input" />
-        <span *ngIf="esCampoInvalido('alias')" class="text-danger">*</span>
-      </div>
+    <div class="form-group uniform-input">
+      <label class="form-label">Alias:</label>
+      <input pInputText formControlName="alias" (change)="onAliasChange($event)" class="form-input" />
+      <span *ngIf="esCampoInvalido('alias')" class="text-danger">*</span>
+    </div>
 
-      <div class="form-group uniform-input">
-        <label class="form-label">RFC:</label>
-        <input pInputText formControlName="rfc" maxlength="13" class="form-input" />
-        <span *ngIf="esCampoInvalido('rfc')" class="text-danger">*</span>
-      </div>
+    <div class="form-group uniform-input">
+      <label class="form-label">RFC:</label>
+      <input pInputText formControlName="rfc" maxlength="13" class="form-input" />
+      <span *ngIf="esCampoInvalido('rfc')" class="text-danger">*</span>
+    </div>
 
       <div class="form-group uniform-input">
         <label class="form-label">Url de sitio:</label>
         <input pInputText formControlName="urlSitio" class="form-input" />
       </div>
 
-      <div class="form-group compact-dropdown">
-        <label class="form-label">Licencia:</label>
-        <p-dropdown [options]="licenciasDropdown" formControlName="idLicencia" 
-                   optionValue="idLicencia" optionLabel="nombreLicencia" 
-                   placeholder="Seleccionar"   
-                   [style]="{ width: '100%', 'text-align': 'center', 'display': 'flex', 'align-items': 'center', 'justify-content': 'center' }">
-        </p-dropdown>
-        <span *ngIf="esCampoInvalido('idLicencia')" class="text-danger">*</span>
-      </div>
+    <div class="form-group compact-dropdown">
+      <label class="form-label">Licencia:</label>
+      <p-dropdown [options]="licenciasDropdown" formControlName="idLicencia" 
+                 optionValue="idLicencia" optionLabel="nombreLicencia" 
+                 placeholder="Seleccionar"  [style]="{'width': '100%','display': 'flex','align-items': 'center'  }"
+                  inputStyle="{'text-align': 'left', 'padding': '0.25rem 0.4rem','height': '30px','width': '100%',  'justify-content': 'flex-end'  }"></p-dropdown>
+      <span *ngIf="esCampoInvalido('idLicencia')" class="text-danger">*</span>
+    </div>
 
-      <div class="form-group" style="position: relative; height: 80px;"> <!-- Contenedor relativo con altura fija -->
-        <label class="form-label">Logo:</label>
-        <div class="logo-group" style="position: absolute; top: 25px; left: 2rem; display: flex; align-items: center; gap: 1rem;">
-          <ng-container *ngIf="imagePreview">
-            <div style="display: flex; align-items: center; gap: 1.5rem;">
-              <div style="width: 120px; height: 120px; display: flex; justify-content: center; align-items: center;">
-                <img [src]="imagePreview" alt="Logo preview" 
-                    style="width: 100%; height: 100%; object-fit: contain;">
-              </div>
-              <button class="btn btn-link text-danger p-0" style="margin-left: 1rem;" (click)="removerFoto()">
-                <span class="me-1">❌</span> Remover
-              </button>
+    <div class="form-group" style="position: relative; height: 80px;">
+      <label class="form-label">Logo:</label>
+      <div class="logo-group" style="position: absolute; top: 25px; left: 2rem; display: flex; align-items: center; gap: 1rem;">
+        <ng-container *ngIf="imagePreview">
+          <div style="display: flex; align-items: center; gap: 1.5rem; margin-top:-10px;">
+            <div style="width: 120px; height: 120px; display: flex; justify-content: center; align-items: center;">
+              <img [src]="imagePreview" alt="Logo preview" style="width: 100%; height: 100%; object-fit: contain;">
             </div>
-          </ng-container>
-          
-          <ng-container *ngIf="!imagePreview">
-            <div style="display: flex; align-items: center; gap: 0.5rem; margin-left: -2rem; margin-top: 0.1rem;">
-              <input type="text" class="p-inputtext" placeholder="Ninguna imagen seleccionada" disabled 
-                    style="width: 210px; margin-right: 1rem;">
-              <button pButton pRipple type="button" label="Seleccionar" (click)="abrirInput()" 
-                      class="p-button-sm"></button>
-              <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
-            </div>
-          </ng-container>
-        </div>
+            <button class="btn btn-link text-danger p-0" style="margin-left: 1rem;" (click)="removerFoto()">
+              <span class="me-1">❌</span> Remover
+            </button>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!imagePreview">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-left: -2rem; margin-top: 0px;">
+            <input type="text" class="p-inputtext" placeholder="Ninguna imagen seleccionada" disabled 
+                  style="width: 210px; margin-right: 1rem;">
+            <button pButton pRipple type="button" label="Seleccionar" (click)="abrirInput()" class="p-button-sm"></button>
+            <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
+          </div>
+        </ng-container>
       </div>
+    </div>
 
-      <div class="form-group" style="margin-top: -20px;">
-        <label class="form-label">Inicio:</label>
+    <div class="form-group uniform-input" style="margin-top: -20px;">
+      <label class="form-label">Inicio:</label>
         <p-datepicker formControlName="vInicio" [showIcon]="true" dateFormat="dd/mm/yy" 
-                     [style]="{width: '100%'}" inputStyleClass="form-input"></p-datepicker>
+                     [style]="{width: '100%'}" inputStyleClass="form-input"
+                     [inputStyle]="{'height': '34px', 'padding': '0.3rem 0.5rem'}">
+        </p-datepicker>
         <span *ngIf="esCampoInvalido('vInicio')" class="text-danger">*</span>
-      </div>
+    </div>
 
-      <div class="form-group" style="margin-top: -20px;">
-        <label class="form-label">Terminación:</label>
+    <div class="form-group uniform-input" style="margin-top: -20px;">
+      <label class="form-label">Terminación:</label>
         <p-datepicker formControlName="vTerminacion" [showIcon]="true" dateFormat="dd/mm/yy" 
-                     [style]="{width: '100%'}" inputStyleClass="form-input"></p-datepicker>
+                     [style]="{width: '100%'}" inputStyleClass="form-input"
+                     [inputStyle]="{'height': '34px', 'padding': '0.3rem 0.5rem'}">
+        </p-datepicker>
         <span *ngIf="esCampoInvalido('vTerminacion')" class="text-danger">*</span>
-      </div>
+    </div>
+  </ng-container>
 
-      <h4 class="section-title">Datos de Usuario Administrador</h4>
+  <!-- VISTA PARA EDITAR (REGISTRO EXISTENTE) -->
+  <ng-template #editView>
+    <div class="form-group uniform-input">
+      <label class="form-label">Alias:</label>
+      <input pInputText formControlName="alias" (change)="onAliasChange($event)" class="form-input" />
+      <span *ngIf="esCampoInvalido('alias')" class="text-danger">*</span>
+    </div>
 
-      <div class="form-group uniform-input">
-        <label class="form-label">Nombre:</label>
-        <input pInputText formControlName="nombre" class="form-input" />
-        <span *ngIf="esCampoInvalido('nombre')" class="text-danger">*</span>
-      </div>
+    <div class="form-group uniform-input">
+      <label class="form-label">RFC:</label>
+      <input pInputText formControlName="rfc" maxlength="13" class="form-input" />
+      <span *ngIf="esCampoInvalido('rfc')" class="text-danger">*</span>
+    </div>
 
-      <div class="form-group uniform-input">
-        <label class="form-label">Apellido Paterno:</label>
-        <input pInputText formControlName="apellidoPaterno" class="form-input" />
-        <span *ngIf="esCampoInvalido('apellidoPaterno')" class="text-danger">*</span>
+    <div class="form-group" style="position: relative; height: 80px;">
+      <label class="form-label">Logo:</label>
+      <div class="logo-group" style="position: absolute; top: 25px; left: 2rem; display: flex; align-items: center; gap: 1rem;">
+        <ng-container *ngIf="imagePreview">
+          <div style="display: flex; align-items: center; gap: 1.5rem; margin-top:-10px;">
+            <div style="width: 120px; height: 120px; display: flex; justify-content: center; align-items: center;">
+              <img [src]="imagePreview" alt="Logo preview" style="width: 100%; height: 100%; object-fit: contain;">
+            </div>
+            <button class="btn btn-link text-danger p-0" style="margin-left: 1rem;" (click)="removerFoto()">
+              <span class="me-1">❌</span> Remover
+            </button>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="!imagePreview">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-left: -2rem; margin-top: 0px;">
+            <input type="text" class="p-inputtext" placeholder="Ninguna imagen seleccionada" disabled 
+                  style="width: 210px; margin-right: 1rem;">
+            <button pButton pRipple type="button" label="Seleccionar" (click)="abrirInput()" class="p-button-sm"></button>
+            <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
+          </div>
+        </ng-container>
       </div>
+    </div>
 
-      <div class="form-group uniform-input">
-        <label class="form-label">Apellido Materno:</label>
-        <input pInputText formControlName="apellidoMaterno" class="form-input" />
-      </div>
+    <div class="form-group uniform-input" style="margin-top: -25px;">
+      <label class="form-label">Url de sitio:</label>
+      <input pInputText formControlName="urlSitio" class="form-input" />
+    </div>
 
-      <div class="form-group uniform-input">
-        <label class="form-label">Usuario:</label>
-        <input pInputText formControlName="usuario" class="form-input" />
-        <span *ngIf="esCampoInvalido('usuario')" class="text-danger">*</span>
-      </div>
+    <div class="form-group compact-dropdown" style="margin-top: -25px;">
+      <label class="form-label">Licencia:</label>
+      <p-dropdown [options]="licenciasDropdown" formControlName="idLicencia" 
+                 optionValue="idLicencia" optionLabel="nombreLicencia" 
+                 placeholder="Seleccionar"  [style]="{'width': '100%','display': 'flex','align-items': 'center'  }"
+                  inputStyle="{'text-align': 'left', 'padding': '0.25rem 0.4rem','height': '30px','width': '100%',  'justify-content': 'flex-end'  }"></p-dropdown>
+      <span *ngIf="esCampoInvalido('idLicencia')" class="text-danger">*</span>
+    </div>
+    <div></div> 
 
-      <div class="form-group uniform-input">
-        <label class="form-label">Correo:</label>
-        <input pInputText formControlName="correo" class="form-input" />
-        <span *ngIf="esCampoInvalido('correo')" class="text-danger">*</span>
-      </div>
+    <div class="form-group uniform-input">
+      <label class="form-label">Inicio:</label>
+      <input 
+        pInputText 
+        [value]="formEmpresas.get('vInicio')?.value | date:'dd/MM/yyyy'"
+        readonly
+        class="form-input"
+        style="background-color: #e2e8f0; color: #64748b;cursor: not-allowed;"
+      />
+    </div>
 
-      <div *ngIf="!insertar" class="form-group">
-        <label class="form-label">Estatus:</label>
-        <p-checkbox formControlName="activo" [binary]="true" 
-                   [style]="{'margin-top': '0.3rem'}"></p-checkbox>
-      </div>
-    </form>
+    <div class="form-group uniform-input">
+      <label class="form-label">Terminación:</label>
+        <p-datepicker formControlName="vTerminacion" [showIcon]="true" dateFormat="dd/mm/yy" 
+                     [style]="{width: '100%'}" inputStyleClass="form-input"
+                     [inputStyle]="{'height': '34px', 'padding': '0.3rem 0.5rem'}">
+        </p-datepicker>
+        <span *ngIf="esCampoInvalido('vTerminacion')" class="text-danger">*</span>
+    </div>
+  </ng-template>
+
+  <h4 class="section-title">Datos de Usuario Administrador</h4>
+  <div class="form-group uniform-input">
+    <label class="form-label">Nombre:</label>
+    <input pInputText formControlName="nombre" class="form-input" />
+    <span *ngIf="esCampoInvalido('nombre')" class="text-danger">*</span>
+  </div>
+
+  <div class="form-group uniform-input">
+    <label class="form-label">Apellido Paterno:</label>
+    <input pInputText formControlName="apellidoPaterno" class="form-input" />
+    <span *ngIf="esCampoInvalido('apellidoPaterno')" class="text-danger">*</span>
+  </div>
+
+  <div class="form-group uniform-input">
+    <label class="form-label">Apellido Materno:</label>
+    <input pInputText formControlName="apellidoMaterno" class="form-input" />
+  </div>
+
+  <div class="form-group uniform-input">
+    <label class="form-label">Usuario:</label>
+    <input pInputText formControlName="usuario" class="form-input" />
+    <span *ngIf="esCampoInvalido('usuario')" class="text-danger">*</span>
+  </div>
+
+  <div class="form-group uniform-input">
+    <label class="form-label">Correo:</label>
+    <input pInputText formControlName="correo" class="form-input" />
+    <span *ngIf="esCampoInvalido('correo')" class="text-danger">*</span>
+  </div>
+
+  <div *ngIf="!insertar" class="form-group">
+    <label class="form-label">Estatus:</label>
+    <p-checkbox formControlName="activo" [binary]="true" 
+               [style]="{'margin-top': '0.2rem', 'margin-right': '300px'}"></p-checkbox>
+  </div>
+</form>
   </ng-template>
 
   <ng-template pTemplate="footer">
+   <div style="margin-top: -1.5rem; margin-bottom: -1rem;">
     <button
       *ngIf="!insertar"
       pButton
@@ -220,5 +307,6 @@
       class="p-button-secondary"
       [style]="{'font-size': '0.9rem', 'padding': '0.3rem 0.8rem'}"
     ></button>
-  </ng-template>
+  </div>
+</ng-template>
 </p-dialog>
