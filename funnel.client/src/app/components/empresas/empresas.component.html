@@ -12,17 +12,17 @@
           [rows]="10" [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)" [showCurrentPageReport]="true"
           paginatorPosition="both" [columnResizeMode]="'fit'" [resizableColumns]="true" [scrollable]="true" 
           [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
-          <ng-template class="divAccionesTabla" #caption>
-            <div class="row">
-              <div class="col inDivDatatableHeader" style="text-align:right; margin-right:5px">
+            <ng-template #caption>
+              <div class="row">
+                <div class="col inDivDatatableHeader" style="text-align: right; margin-right: 5px;">
+                  <p-button label="" icon="bi bi-arrow-clockwise" (click)="reset()" severity="secondary"styleClass="custom-button"  
+                  [style]="{'width': '30px',      'height': '30px',    'margin-right': '5px'}"></p-button>
 
-                <p-button label="" icon="bi bi-arrow-clockwise"(click)="reset()" severity="secondary"
-                  [ngStyle]="{'margin-right': '5px'}" />
-                <p-button label="" icon="bi bi-plus" severity="secondary" (click)="inserta()" />
+                  <p-button label="" icon="bi bi-plus" severity="secondary" (click)="inserta()"styleClass="custom-button"  
+                  [style]="{'width': '30px', 'height': '30px'  }"></p-button>
+                </div>
               </div>
-            </div>
-          </ng-template>
-
+            </ng-template>
           <ng-template #header>
             <tr class="custom-header">
               <th></th>

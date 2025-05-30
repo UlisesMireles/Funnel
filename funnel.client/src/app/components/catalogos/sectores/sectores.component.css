@@ -201,3 +201,13 @@
   overflow-wrap: anywhere;
   line-height: 1.4;
 }
+
+::ng-deep .p-datatable .p-datatable-header {
+  border-bottom: none !important;
+  padding-bottom: 0 !important;
+}
+
+::ng-deep .inDivDatatableHeader {
+  border: none !important;
+  box-shadow: none !important;
+}
