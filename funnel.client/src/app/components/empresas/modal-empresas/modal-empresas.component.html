@@ -28,6 +28,7 @@
         display: flex;
         flex-direction: column;
         margin-bottom: 0.2rem;
+        position: relative;
       }
       .form-label {
         margin-bottom: 0.2rem;
@@ -52,8 +53,12 @@
       }
       .text-danger {
         color: red;
-        font-size: 0.8rem;
+        font-size: 1rem;
         margin-top: 0.1rem;
+        position: absolute;
+        bottom: -1rem;       
+        left: 160px;
+        height: 1rem; 
       }
       .p-inputtext, .p-dropdown, .p-calendar, .p-datepicker {
         font-size: 0.9rem !important;
@@ -175,13 +180,13 @@
     <div class="form-group uniform-input">
       <label class="form-label">Alias:</label>
       <input pInputText formControlName="alias" (change)="onAliasChange($event)" class="form-input" />
-      <span *ngIf="esCampoInvalido('alias')" class="text-danger">*</span>
+      <span *ngIf="esCampoInvalido('alias')" class="text-danger" style="position: absolute; bottom: -1rem; left: 160; top:60px">*</span>
     </div>
 
     <div class="form-group uniform-input">
       <label class="form-label">RFC:</label>
       <input pInputText formControlName="rfc" maxlength="13" class="form-input" />
-      <span *ngIf="esCampoInvalido('rfc')" class="text-danger">*</span>
+      <span *ngIf="esCampoInvalido('rfc')" class="text-danger" style="position: absolute; bottom: -1rem; left: 160; top:60px">*</span>
     </div>
 
     <div class="form-group" style="position: relative; height: 80px;">
