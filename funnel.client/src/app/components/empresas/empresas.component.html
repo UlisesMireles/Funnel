@@ -119,13 +119,13 @@
                 <p-button type="button" icon="bi bi-pencil" (click)="actualiza(empresa)" text />
               </td>
               <td>
-                <div style="width: 60px; height: 60px; display: flex; align-items: center;">
-                  <img *ngIf="empresa.archivoImagen" 
-                      [src]="getLogoUrl(empresa.archivoImagen)"
+                <div *ngIf="empresa.archivoImagen" class="imagen-container">
+                  <img [src]="getLogoUrl(empresa.archivoImagen)"
                       (error)="handleImageError($event)"
                       style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px;"
                       alt="Logo de {{empresa.nombreEmpresa}}">
                 </div>
+                <div *ngIf="!empresa.archivoImagen" class="imagen-placeholder"></div>
               </td>
               <td style="font-weight: bold;">{{ empresa.nombreEmpresa }}</td>
               <td>{{ empresa.alias }}</td>
