@@ -26,6 +26,9 @@
           <ng-template #header>
             <tr class="custom-header">
               <th></th>
+              <th pSortableColumn="imagen">
+                Logo
+              </th>
               <th pSortableColumn="nombreEmpresa">
                 Empresa
               </th>
@@ -69,6 +72,7 @@
             </tr>
             <tr class="custom-header2">
               <th></th>
+              <th></th> 
               <th>
                 <input pInputText type="text" [(ngModel)]="filterEmpresas"
                   (ngModelChange)="updateFilter($event, 'nombreEmpresa')">
@@ -112,6 +116,15 @@
             <tr class="custom-header3 filas">
               <td>
                 <p-button type="button" icon="bi bi-pencil" (click)="actualiza(empresa)" text />
+              </td>
+              <td>
+                <div style="width: 60px; height: 60px; display: flex; align-items: center;">
+                  <img *ngIf="empresa.archivoImagen" 
+                      [src]="getLogoUrl(empresa.archivoImagen)"
+                      (error)="handleImageError($event)"
+                      style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px;"
+                      alt="Logo de {{empresa.nombreEmpresa}}">
+                </div>
               </td>
               <td style="font-weight: bold;">{{ empresa.nombreEmpresa }}</td>
               <td>{{ empresa.alias }}</td>
