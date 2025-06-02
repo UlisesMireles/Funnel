@@ -193,7 +193,6 @@ export class EmpresasComponent implements OnInit {
     }
   }
 
-    // Método para construir la URL del logo
   getLogoUrl(nombreArchivo: string): string {
     return `${this.baseUrl}LogosEmpresas/${nombreArchivo}?t=${Date.now()}`;
   }
@@ -202,6 +201,5 @@ export class EmpresasComponent implements OnInit {
   handleImageError(event: Event) {
     const imgElement = event.target as HTMLImageElement;
     imgElement.style.display = 'none';
-    // Opcional: puedes mostrar un placeholder aquí si lo prefieres
   }
 }
