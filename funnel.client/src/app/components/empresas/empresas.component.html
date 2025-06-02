@@ -66,7 +66,7 @@
               <th pSortableColumn="oportEmp" style="padding: 0px 5px !important">
                 Oport <br />Reg
               </th>
-              <th pSortableColumn="activo">
+              <th pSortableColumn="activo" style="width: 90px!important">
                 Estatus
               </th>
             </tr>
@@ -99,8 +99,9 @@
               <th></th>
 
               <th>
-                <p-select [options]="EstatusDropdown" [(ngModel)]="selectedEstatus" (onChange)="FiltrarPorEstatus()"
-                  placeholder="Seleccionar Estatus" [appendTo]="'body'" optionLabel="label" optionValue="value">
+                <p-select [ngStyle]="{'height': '28px', 'min-width': '100px', 'font-size': '10px'}" 
+                          [options]="EstatusDropdown" [(ngModel)]="selectedEstatus" (onChange)="FiltrarPorEstatus()"
+                          placeholder="Seleccionar Estatus" [appendTo]="'body'" optionLabel="label" optionValue="value">
                 </p-select>
               </th>
             </tr>
@@ -139,7 +140,7 @@
               <td>{{ empresa.cantidadOportunidades }}</td>
               <td>{{ empresa.oportAct }}</td>
               <td>{{ empresa.oportEmp }}</td>
-              <td>{{ empresa.activo === 1 ? "Activo" : "Inactivo" }}</td>
+              <td style="text-align: center; width: 90px;">{{ empresa.activo === 1 ? "Activo" : "Inactivo" }}</td>
             </tr>
           </ng-template>
           <ng-template #footer>

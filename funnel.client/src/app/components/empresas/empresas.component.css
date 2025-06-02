@@ -202,3 +202,18 @@
   border: none !important;
   box-shadow: none !important;
 }
+
+/* Estilo específico para la columna de Estatus */
+::ng-deep .p-datatable .p-datatable-thead > tr > th:nth-last-child(1),
+::ng-deep .p-datatable .p-datatable-tbody > tr > td:nth-last-child(1) {
+  width: 90px !important;  /* Ajusta este valor según necesites */
+  min-width: 90px !important;
+  max-width: 90px !important;
+  text-align: center;
+  padding: 0 -5px !important;
+}
+
+/* Asegura que el dropdown de filtro no haga crecer la columna */
+::ng-deep .custom-header2 th:nth-last-child(1) .p-select {
+  width: 100% !important;
+}
