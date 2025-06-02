@@ -1,7 +1,7 @@
 <div class="loginComponent">
   <div id="menuDiv">
       <div class="header-autenticacion">
-          <img [src]="baseUrl + '/assets/img/SFS blanco.png'" style="cursor: pointer;width:120px;" />
+          <img [src]="baseUrl + '/assets/img/logotipo-glupoint.png'" style="cursor: pointer;width:140px;" />
       </div>
   </div>
 
@@ -11,9 +11,12 @@
               <div class="row justify-content-center">
                   <div class="col-lg-4 col-md-3"></div>
                   <div class="col-lg-4 col-md-6 mt-4">
-                    
-                    <p-panel header="Doble Autentificación" class="custom-panel">
-                      <i class="bi bi-x-lg float-end" (click)="cerrarModal()" style="margin-top: -41px;cursor:pointer;"></i>
+                     <div class="centered-container">
+                      <div class="logo-veriq">
+                                <h3 style="color:#fff;font-weight:bold;padding-top:20px;">Doble Autenticación</h3>
+                            </div>
+                    <p-panel class="custom-panel">
+                      <i class="bi bi-x-lg float-end" (click)="cerrarModal()" style="margin-top: -100px;cursor:pointer; color:#fff; font-size: 20px;"></i>
 
                       <div class="row rowFrm" style="text-align: left;">
 
@@ -40,6 +43,7 @@
                     </p-panel>
                   </div>
                   <div class="col-lg-4 col-md-3"></div>
+              </div>
               </div>
           </div>
       </div>
