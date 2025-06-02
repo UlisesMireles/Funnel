@@ -114,3 +114,34 @@ input[type="checkbox"] {
 ::ng-deep .p-inputnumber-input{
   text-align: center;
 }
+
+/* Añade estas clases al final de tu archivo CSS */
+
+.centered-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 500px;
+  padding: 0 15px; 
+}
+
+::ng-deep .p-panel {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.container-all {
+  height: calc(100vh - 60px); 
+}
+
+.logo-veriq {
+    background-color: #AFABAB;
+    text-align: center;
+    /*background-image: url('img/SFS login.png');*/
+    height: 82px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    background-size: 170px 87px;
+}
