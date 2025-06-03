@@ -22,11 +22,11 @@
   border-bottom: 10px solid #7F7F7F;
 }
 
-.container-all {
+/*.container-all {
   flex: 1;
   position: relative;
   overflow: hidden;
-}
+}*/
 
 .imagenFondo {
 background-repeat: no-repeat;
@@ -64,6 +64,9 @@ height: 100%;
   background-repeat: no-repeat;
   background-position: 50% 50%;
   background-size: 170px 87px;
+  overflow: hidden;
+  border-top-left-radius: 6px; 
+  border-top-right-radius: 6px;
 }
 
 .tituloLogin {
@@ -103,19 +106,18 @@ input[type="checkbox"] {
 .ml-custom {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
-::ng-deep .p-panel {
+.p-panel {
   width: fit-content;
   max-width: 500px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
 }
-::ng-deep .p-panel-header{
+.p-panel-header{
   font-size: 22px;
 }
-::ng-deep .p-inputnumber-input{
+.p-inputnumber-input{
   text-align: center;
 }
 
-/* Añade estas clases al final de tu archivo CSS */
 
 .centered-container {
   position: absolute;
@@ -127,10 +129,10 @@ input[type="checkbox"] {
   padding: 0 15px; 
 }
 
-::ng-deep .p-panel {
+/*::ng-deep .p-panel {
   width: 100% !important;
   max-width: 100% !important;
-}
+}*/*
 
 .container-all {
   height: calc(100vh - 60px); 

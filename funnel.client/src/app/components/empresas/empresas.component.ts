@@ -11,6 +11,7 @@ import { EmpresasService } from '../../services/empresas.service';
 /*Interfaces*/
 import { dataEmpresa } from '../../interfaces/Empresa';
 import { baseOut } from '../../interfaces/utils/baseOut';
+import { environment } from '../../../enviroment/enviroment';
 
 @Component({
   selector: 'app-empresas',
@@ -24,6 +25,7 @@ export class EmpresasComponent implements OnInit {
   empresas: dataEmpresa[] = [];
   empresasOriginal: dataEmpresa[] = [];
   empresaSeleccionada!: dataEmpresa;
+  baseUrl: string = environment.baseURL;
 
   licenciasDropdown: { label: string; value: number }[] = [];
   EstatusDropdown = [
@@ -189,5 +191,15 @@ export class EmpresasComponent implements OnInit {
         detail: result.errorMessage,
       });
     }
+  }
+
+  getLogoUrl(nombreArchivo: string): string {
+    return `${this.baseUrl}LogosEmpresas/${nombreArchivo}?t=${Date.now()}`;
+  }
+
+  // Manejo de errores de imagen
+  handleImageError(event: Event) {
+    const imgElement = event.target as HTMLImageElement;
+    imgElement.style.display = 'none';
   }
 }
