@@ -141,24 +141,24 @@ namespace Funnel.Data
                 {
                     while (reader.Read())
                     {
-
+                        switch (request.Bandera)
+                        {
+                            case "UPD-EMPRESA":
+                                await ActualizarLogoEmpresa(request.IdEmpresa, request.ArchivoImagen);
+                                result.ErrorMessage = "La empresa se actualizó correctamente.";
+                                result.Id = 1;
+                                result.Result = true;
+                                break;
+                            case "INS-EMPRESA":
+                                await ActualizarLogoEmpresa(result.Id, request.ArchivoImagen);
+                                result.Id = 1;
+                                result.Result = ComprobarNulos.CheckBooleanNull(reader["Ok"]);
+                                result.ErrorMessage = result.Result ? "La empresa se insertó correctamente." : ComprobarNulos.CheckStringNull(reader["ErrorMessage"]);
+                                break;
+                        }
                     }
                 }
-                switch (request.Bandera)
-                {
-                    case "UPD-EMPRESA":
-                        await ActualizarLogoEmpresa(request.IdEmpresa, request.ArchivoImagen);
-                        result.ErrorMessage = "La empresa se actualizó correctamente.";
-                        result.Id = 1;
-                        result.Result = true;
-                        break;
-                    case "INS-EMPRESA":
-                        await ActualizarLogoEmpresa(result.Id, request.ArchivoImagen);
-                        result.ErrorMessage = "La empresa se insertó correctamente.";
-                        result.Id = 1;
-                        result.Result = true;
-                        break;
-                }
+                
 
             }
             catch (Exception ex)
