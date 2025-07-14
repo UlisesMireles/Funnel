@@ -4,6 +4,8 @@ namespace Funnel.Data.Utils
 {
     public static class ComprobarNulos
     {
+        private static DBNull value;
+
         public static T CheckNull<T>(object obj)
         {
             return (obj == DBNull.Value ? default(T) : (T)obj);
@@ -54,6 +56,14 @@ namespace Funnel.Data.Utils
         public static DateTime CheckJsonPropertyDateTimeNull(JsonElement obj, string propiedad)
         {
             return obj.TryGetProperty(propiedad, out var valueCreditos) ? Convert.ToDateTime(obj.GetProperty(propiedad).ToString()) : new DateTime();
+        }
+
+        internal static bool CheckBoolNull(object value)
+        {
+            if (value == DBNull.Value || value == null)
+                return false;
+
+            return value is bool ? (bool)value : Convert.ToInt32(value) == 1;
         }
     }
 }

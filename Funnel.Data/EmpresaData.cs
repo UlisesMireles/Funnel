@@ -89,7 +89,8 @@ namespace Funnel.Data
                     Usuario = request.Usuario,
                     UrlSitio = request.UrlSitio,
                     Activo = request.Activo,
-                    ArchivoImagen = request.ArchivoImagen
+                    ArchivoImagen = request.ArchivoImagen,
+                    PermitirDecimales = request.PermitirDecimales
                 };
 
                 var resultado = await GuardarEmpresa(insertaImagen);
@@ -133,7 +134,8 @@ namespace Funnel.Data
                     DataBase.CreateParameterSql("@pUsuario", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Usuario ?? (object)DBNull.Value),
                     DataBase.CreateParameterSql("@pUrlSitio", SqlDbType.VarChar, 500, ParameterDirection.Input, false, null, DataRowVersion.Default, request.UrlSitio ?? (object)DBNull.Value),
                     DataBase.CreateParameterSql("@pActivo", SqlDbType.Int, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.Activo),
-                    DataBase.CreateParameterSql("@pArchivoImagen", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.ArchivoImagen ?? (object)DBNull.Value)
+                    DataBase.CreateParameterSql("@pArchivoImagen", SqlDbType.VarChar, 50, ParameterDirection.Input, false, null, DataRowVersion.Default, request.ArchivoImagen ?? (object)DBNull.Value),
+                    DataBase.CreateParameterSql("@pPermitirDecimales", SqlDbType.Bit, 0, ParameterDirection.Input, false, null, DataRowVersion.Default, request.PermitirDecimales)
                 };
 
                 // Ejecutar el SP sin leer datos
@@ -217,6 +219,7 @@ namespace Funnel.Data
                     dto.Activo = ComprobarNulos.CheckIntNull(reader["Activo"]);
                     dto.UrlSitio = ComprobarNulos.CheckStringNull(reader["UrlSitio"]);
                     dto.ArchivoImagen = ComprobarNulos.CheckStringNull(reader["ArchivoImagen"]);
+                    dto.PermitirDecimales = ComprobarNulos.CheckBoolNull(reader["PermitirDecimales"]);  
 
                     result.Add(dto);
                 }

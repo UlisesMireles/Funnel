@@ -16,6 +16,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { PaginatorModule } from 'primeng/paginator';
 import { PanelModule } from 'primeng/panel';
 import { DividerModule } from 'primeng/divider';
+import { InputSwitchModule } from 'primeng/inputswitch';
 
 
 import { MenubarModule } from 'primeng/menubar';
@@ -109,7 +110,8 @@ import { TwoFactorComponent } from './components/two-factor/two-factor.component
     PaginatorModule,
     PanelModule,
     PasswordModule,
-    DividerModule
+    DividerModule,
+    InputSwitchModule
   ],
   providers: [
     { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },

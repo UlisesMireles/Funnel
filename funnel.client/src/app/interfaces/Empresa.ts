@@ -18,6 +18,8 @@ export interface requestEmpresa {
   usuario: string | undefined;
   urlSitio: string | undefined;
   activo: number | undefined;
+  permitirDecimales?: boolean | number;
+
 }
 
 // Se utiliza para la llenar la tabla en la vista
@@ -47,4 +49,5 @@ export interface dataEmpresa {
   usuarioCreador: number;
   archivoImagen?: string;
   imagen?: File;
+  permitirDecimales: number;
 }
