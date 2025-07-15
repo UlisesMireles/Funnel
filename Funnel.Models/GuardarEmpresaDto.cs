@@ -24,5 +24,6 @@ namespace Funnel.Models
                 public IFormFile? Imagen { get; set; }
                 public string? ArchivoImagen { get; set; }
                 public int? Estatus { get; set; }
-        }
+                public bool PermitirDecimales { get; set; }
+    }
 }

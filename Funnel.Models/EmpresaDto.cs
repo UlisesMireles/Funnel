@@ -30,5 +30,6 @@ namespace Funnel.Models.Dto
         public int Activo { get; set; }
         public int UsuarioCreador { get; set; }
         public string? ArchivoImagen { get; set; }
+        public bool PermitirDecimales { get; set; }
     }
 }

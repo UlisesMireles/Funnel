@@ -69,7 +69,8 @@ export class ModalEmpresasComponent {
       correo: ['', Validators.required],
       usuario:[''],
       urlSitio:['www.'],
-      activo: [1]
+      activo: [1],
+      permitirDecimales: [false]
     });    
   }
 
@@ -85,8 +86,10 @@ export class ModalEmpresasComponent {
     this.getLicencias();    
     this.selectedLicencia = this.empresa.idLicencia;
     this.empresaActiva = this.empresa?.activo === 1;
+    const permitirDecimalesActivo = Boolean(this.empresa?.permitirDecimales); 
     this.empresa.vInicio = new Date(this.empresa.vInicio);
     this.empresa.vTerminacion = new Date(this.empresa.vTerminacion);
+
     if (!this.insertar) {
       this.formEmpresas = this.fb.group({ 
         idEmpresa: [this.empresa.idEmpresa],
@@ -107,7 +110,8 @@ export class ModalEmpresasComponent {
         usuario:[this.empresa.usuarioAdministrador],
         urlSitio:[this.empresa.urlSitio],
         selectedFile: [this.selectedFile],
-        activo: [this.empresaActiva]
+        activo: [this.empresaActiva],
+        permitirDecimales: permitirDecimalesActivo
       }); 
       if (this.empresa.archivoImagen) {
         this.selectedFile = { name: this.empresa.archivoImagen } as File;
@@ -138,7 +142,8 @@ export class ModalEmpresasComponent {
         usuario:[''],
         urlSitio:['www.'],
         selectedFile: [this.selectedFile],
-        activo: [1]
+        activo: [1],
+        permitirDecimales: [false]
       });
       this.imagePreview = null;
       this.selectedFileName = '';
@@ -192,6 +197,7 @@ export class ModalEmpresasComponent {
       }
     }
   }
+  formData.append('permitirDecimales', formValue.permitirDecimales.toString());
 
   if (this.selectedFile instanceof File) {
     formData.append('imagen', this.selectedFile, this.selectedFile.name);
@@ -249,7 +255,7 @@ export class ModalEmpresasComponent {
 
     
   }
-
+  formData.append('permitirDecimales', formValue.permitirDecimales.toString());
   let nombreArchivo = '';
       if (this.selectedFile instanceof File) {
       const extension = this.selectedFile.name.split('.').pop();
