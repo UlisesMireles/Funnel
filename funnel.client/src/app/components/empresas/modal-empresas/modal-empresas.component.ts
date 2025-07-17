@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild,  ElementRef  } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild,  ElementRef, ChangeDetectorRef  } from '@angular/core';
 
 /*Primeng*/
 import { MessageService } from 'primeng/api';
@@ -49,7 +49,8 @@ export class ModalEmpresasComponent {
 
   @ViewChild('fileInput') fileInput!: ElementRef<HTMLInputElement>;
 
-  constructor(private empresasService: EmpresasService, private messageService: MessageService, private fb: FormBuilder,) { 
+  constructor(private empresasService: EmpresasService, private messageService: MessageService, private fb: FormBuilder,
+    private cd: ChangeDetectorRef) { 
     this.userId = parseInt(localStorage.getItem('currentUser')!);
     this.formEmpresas = this.fb.group({
       idEmpresa: [0],
@@ -119,6 +120,7 @@ export class ModalEmpresasComponent {
         //this.imagePreview = this.baseUrl + 'LogosEmpresas/' + this.empresa.archivoImagen;
 
         this.imagePreview = `${this.baseUrl}LogosEmpresas/${this.empresa.archivoImagen}?t=${Date.now()}`;
+        this.cd.detectChanges();
       } else {
         this.imagePreview = null;
       }
@@ -202,7 +204,6 @@ export class ModalEmpresasComponent {
   if (this.selectedFile instanceof File) {
     formData.append('imagen', this.selectedFile, this.selectedFile.name);
   }
-
   this.empresasService.postINSUPDEmpresa(formData).subscribe({
     next: (result: baseOut) => {
       this.result.emit(result);
@@ -240,7 +241,6 @@ export class ModalEmpresasComponent {
   const formValue = this.formEmpresas.getRawValue();
   formValue.activo = this.formEmpresas.controls['activo'].value ? 1 : 0;
 
-  console.log(formValue);
   const formData = new FormData();
   for (const key in formValue) {
     if (key === 'selectedFile') continue;
@@ -257,7 +257,7 @@ export class ModalEmpresasComponent {
   }
   formData.append('permitirDecimales', formValue.permitirDecimales.toString());
   let nombreArchivo = '';
-      if (this.selectedFile instanceof File) {
+      if (this.selectedFile ) {
       const extension = this.selectedFile.name.split('.').pop();
 
       const alias = formValue.alias || '';
@@ -270,13 +270,13 @@ export class ModalEmpresasComponent {
 
 
         // Agrega la imagen con el nuevo nombre
-        formData.append('imagen', this.selectedFile, nombreArchivo);
+        formData.append('archivoImagen', nombreArchivo);
       }
     
 
-  if (this.selectedFile instanceof File) {
-    formData.append('imagen', this.selectedFile, this.selectedFile.name);
-  }
+    if (this.selectedFile instanceof File) {
+      formData.append('imagen', this.selectedFile, this.selectedFile.name);
+    }
 
   this.empresasService.postINSUPDEmpresa(formData).subscribe({
     next: (result: baseOut) => {
@@ -426,6 +426,7 @@ export class ModalEmpresasComponent {
       const reader = new FileReader();
       reader.onload = (e) => {
         this.imagePreview = e.target?.result as string;
+        this.cd.detectChanges();
       };
       reader.readAsDataURL(this.selectedFile);
     }

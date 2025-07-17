@@ -50,4 +50,5 @@ export interface dataEmpresa {
   archivoImagen?: string;
   imagen?: File;
   permitirDecimales: number;
+  logoUrl?: string;
 }

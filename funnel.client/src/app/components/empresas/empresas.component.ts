@@ -26,7 +26,7 @@ export class EmpresasComponent implements OnInit {
   empresasOriginal: dataEmpresa[] = [];
   empresaSeleccionada!: dataEmpresa;
   baseUrl: string = environment.baseURL;
-
+  logoUrl: string = '';
   licenciasDropdown: { label: string; value: number }[] = [];
   EstatusDropdown = [
     { label: 'Todo', value: null },
@@ -62,7 +62,12 @@ export class EmpresasComponent implements OnInit {
   getEmpresas() {
     this.empresasService.getEmpresas().subscribe({
       next: (result: dataEmpresa[]) => {
-        this.empresasOriginal = result;
+        this.empresasOriginal = result.map(e => ({
+          ...e,
+          logoUrl: e.archivoImagen
+            ? `${this.baseUrl}LogosEmpresas/${e.archivoImagen}?t=${Date.now()}`
+            : ''
+        }));
         this.loading = false;
         this.cdr.detectChanges();
         this.selectedEstatus = true;
@@ -196,6 +201,7 @@ export class EmpresasComponent implements OnInit {
   getLogoUrl(nombreArchivo: string): string {
     return `${this.baseUrl}LogosEmpresas/${nombreArchivo}?t=${Date.now()}`;
   }
+
 
   // Manejo de errores de imagen
   handleImageError(event: Event) {
