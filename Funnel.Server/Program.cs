@@ -34,6 +34,8 @@ builder.Services.AddScoped<IAdministracionData, AdministracionData>();
 builder.Services.AddScoped<IAdministracionService, AdministracionService>();
 builder.Services.AddScoped<IStatsData, StatsData>();
 builder.Services.AddScoped<IStatsService, StatsService>();
+builder.Services.AddScoped<ICostoIaService, CostoIaService>();
+builder.Services.AddScoped<ICostoIaData, CostoIaData>();
 
 
 
