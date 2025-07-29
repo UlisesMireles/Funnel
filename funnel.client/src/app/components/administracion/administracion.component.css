@@ -47,9 +47,37 @@
   width: 20px;
 }
 
-::ng-deep .p-paginator .p-component {
-  text-align: left !important;
+/* Ajustes para el paginador */
+::ng-deep .p-paginator {
+  display: flex;
+  justify-content: flex-start !important;
+  padding: 0.6rem 0.5rem !important; 
+  font-size: 0.85rem !important; 
 }
+
+::ng-deep .p-paginator .p-paginator-first,
+::ng-deep .p-paginator .p-paginator-prev,
+::ng-deep .p-paginator .p-paginator-next,
+::ng-deep .p-paginator .p-paginator-last,
+::ng-deep .p-paginator .p-paginator-page {
+  min-width: 1.5rem !important;
+  height: 1.5rem !important;
+  margin: 0.1rem !important;
+}
+
+::ng-deep .p-paginator .p-dropdown {
+  height: 2rem !important;
+}
+
+::ng-deep .p-paginator .p-paginator-current {
+  font-size: 0.85rem !important;
+  padding: 0 0.5rem !important;
+}
+
+::ng-deep .p-paginator-bottom {
+  justify-content: flex-start !important;
+}
+
 
 ::ng-deep .p-toast {
   top: 50% !important;

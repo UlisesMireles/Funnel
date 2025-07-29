@@ -6,10 +6,9 @@
     <div class="col-12">
       <div class="row contrenedorTabla">
         <div *ngIf="loading">Cargando...</div>
-        <p-table *ngIf="!loading" #dt [stripedRows]="true" [value]="licencias"
-          [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)"
-          [first]="first" [showCurrentPageReport]="true" [columnResizeMode]="'fit'" [resizableColumns]="true"
-          [scrollable]="true" paginatorPosition="both"
+        <p-table *ngIf="!loading" #dt [value]="licencias" dataKey="id" [rows]="10"
+          [showCurrentPageReport]="false" [rowsPerPageOptions]="[10, 20, 50]" [paginator]="true" paginatorPosition="both"
+          [pageLinks]="1"
           currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
           <ng-template #caption>
               <div class="row">
@@ -30,7 +29,7 @@
               </th>
               <th pSortableColumn="cantidadUsuarios"> Cantidad Usuarios Activos</th>
               <th pSortableColumn="cantidadOportunidades">
-                Cantidad Oortunidades en Proceso
+                Cantidad Oportunidades en Proceso
               </th>
               <th pSortableColumn="Activo">
                 Estatus

@@ -8,10 +8,10 @@
         <!-- Mostrar un indicador de carga si la variable loading es true -->
         <div *ngIf="loading">Cargando...</div>
 
-        <p-table *ngIf="!loading" #dt [stripedRows]="true" [tableStyle]="{ 'min-width': '50rem' }" [value]="empresas" [paginator]="true"
-          [rows]="10" [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)" [showCurrentPageReport]="true"
-          paginatorPosition="both" [columnResizeMode]="'fit'" [resizableColumns]="true" [scrollable]="true" 
-          [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
+        <p-table *ngIf="!loading" #dt [value]="empresas" dataKey="id" [rows]="10"
+          [showCurrentPageReport]="false" [rowsPerPageOptions]="[10, 20, 50]" [paginator]="true" paginatorPosition="both"
+          [pageLinks]="1"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
             <ng-template #caption>
               <div class="row">
                 <div class="col inDivDatatableHeader" style="text-align: right; margin-right: 5px;">
