@@ -62,6 +62,7 @@ import { ModalSectoresComponent } from './components/catalogos/sectores/modal-se
 import { StatsComponent } from './components/stats/stats.component';
 import { CambiarContrasenaComponent, TwoFactorDialog } from './components/cambiar-contrasena/cambiar-contrasena.component';
 import { TwoFactorComponent } from './components/two-factor/two-factor.component';
+import { ReporteCostoIaComponent } from './components/reporte-costo-ia/reporte-costo-ia.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,7 +81,8 @@ import { TwoFactorComponent } from './components/two-factor/two-factor.component
     StatsComponent,
     CambiarContrasenaComponent,
     TwoFactorDialog,
-    TwoFactorComponent
+    TwoFactorComponent,
+    ReporteCostoIaComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
