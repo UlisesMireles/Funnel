@@ -28,7 +28,8 @@ namespace Funnel.Data
                     dto.CostoTotalL= ComprobarNulos.CheckDecimalNull(reader["CostoTotalL"]);
                     dto.TokenEntrada = ComprobarNulos.CheckIntNull(reader["TokenEntrada"]);
                     dto.TokenSalida = ComprobarNulos.CheckIntNull(reader["TokenSalida"]);
-                    dto.FechaPregunta = ComprobarNulos.CheckDateTimeNull(reader["FechaPregunta"]);
+                    dto.Anio = ComprobarNulos.CheckIntNull(reader["Anio"]);
+                    dto.Mes = ComprobarNulos.CheckIntNull(reader["Mes"]);
                     result.Add(dto);
                 }
             }

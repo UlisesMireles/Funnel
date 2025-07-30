@@ -8,6 +8,7 @@
         public decimal CostoTotalL { get; set; }
         public int TokenEntrada { get; set; }
         public int TokenSalida { get; set; }
-        public  DateTime FechaPregunta { get; set; }
+        public  int Anio { get; set; }
+        public int Mes { get; set; }
     }
 }

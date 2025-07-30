@@ -4,5 +4,6 @@ export interface ReporteCostoIa {
     costoTotalL: number;
     tokenEntrada: number;
     tokenSalida: number;
-    fechaPregunta: Date;
+    anio: number;
+    mes: number;
 }

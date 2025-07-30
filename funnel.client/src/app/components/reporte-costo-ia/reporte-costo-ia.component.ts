@@ -34,6 +34,7 @@ export class ReporteCostoIaComponent {ngOnInit(): void {
   first: number = 0;
   rows: number = 10;
   searchValue: string = '';
+  
   getReporte() {
     this.reporteCostoIaService.getReporte().subscribe({
       next: (result: ReporteCostoIa[]) => {
