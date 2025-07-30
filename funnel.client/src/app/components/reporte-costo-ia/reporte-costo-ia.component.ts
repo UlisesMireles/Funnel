@@ -35,14 +35,20 @@ export class ReporteCostoIaComponent {ngOnInit(): void {
   rows: number = 10;
   searchValue: string = '';
   
+  // Filtros
+  selectedAnio: number | null = null;
+  selectedMes: number | null = null;
+  aniosDisponibles: number[] = [];
+  mesesDisponibles: number[] = [];
   getReporte() {
     this.reporteCostoIaService.getReporte().subscribe({
       next: (result: ReporteCostoIa[]) => {
-        this.reporte = result;
         this.reporteOriginal = result;
+        this.aniosDisponibles = [...new Set(result.map(item => item.anio))].sort();
+        this.mesesDisponibles = [...new Set(result.map(item => item.mes))].sort((a, b) => a - b);
+        this.applyFilters();
         this.loading = false;
       },
-      
       error: (error) => {
         this.messageService.add({
           severity: 'error',
@@ -53,6 +59,51 @@ export class ReporteCostoIaComponent {ngOnInit(): void {
       },
     });
   }
+
+  applyFilters() {
+    let filteredData = [...this.reporteOriginal];
+
+    // Aplicar filtro por año si está seleccionado
+    if (this.selectedAnio) {
+      filteredData = filteredData.filter(item => item.anio === this.selectedAnio);
+    }
+
+    // Aplicar filtro por mes si está seleccionado
+    if (this.selectedMes) {
+      filteredData = filteredData.filter(item => item.mes === this.selectedMes);
+    }
+
+    // Consolidar datos por empresa
+    const consolidatedData: ReporteCostoIa[] = [];
+    const empresas = new Set(filteredData.map(item => item.nombreEmpresa));
+
+    empresas.forEach(empresa => {
+      const empresaData = filteredData.filter(item => item.nombreEmpresa === empresa);
+      const consolidatedItem: ReporteCostoIa = {
+        nombreEmpresa: empresa,
+        costoTotalL: empresaData.reduce((sum, item) => sum + (item.costoTotalL || 0), 0),
+        tokenEntrada: empresaData.reduce((sum, item) => sum + (item.tokenEntrada || 0), 0),
+        tokenSalida: empresaData.reduce((sum, item) => sum + (item.tokenSalida || 0), 0),
+        anio: this.selectedAnio || 0, // Mostrar el año filtrado o 0 si no hay filtro
+        mes: this.selectedMes || 0 // Mostrar el mes filtrado o 0 si no hay filtro
+        ,
+        idEmpresa: 0
+      };
+      consolidatedData.push(consolidatedItem);
+    });
+
+    this.reporte = consolidatedData;
+    this.first = 0; // Resetear paginación
+  }
+
+  onAnioChange() {
+    this.applyFilters();
+  }
+
+  onMesChange() {
+    this.applyFilters();
+  }
+
   
   next() {
     this.first = this.first + this.rows;
@@ -66,6 +117,9 @@ export class ReporteCostoIaComponent {ngOnInit(): void {
     this.first = 0;
     this.dt.reset();
     this.getReporte();
+    this.selectedAnio = null;
+    this.selectedMes = null;
+    this.applyFilters();
   }
     pageChange(event: LazyLoadEvent) {
       if (event.first !== undefined) {
