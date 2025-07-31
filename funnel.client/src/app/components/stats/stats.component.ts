@@ -43,6 +43,7 @@ export class StatsComponent {
   first: number = 0;
   rows: number = 10;
   searchValue: string = '';
+  titulo: string ='Consulta general de estadísticas';
   getStats() {
     this.statsService.getStats().subscribe({
       next: (result: Stats[]) => {
@@ -104,4 +105,12 @@ export class StatsComponent {
     }
     return registrosVisibles.reduce((acc: number, stat: Stats) => acc + Number(stat[campo as keyof Stats] || 0), 0);
   }
+ camTitulo(opcion: number) {
+  if (opcion === 0) {
+    this.titulo = 'Consulta general de estadísticas';
+  } else if (opcion === 1) {
+    this.titulo = 'Reporte de Costo de IA por Empresa';
+  }
+}
+   
 }

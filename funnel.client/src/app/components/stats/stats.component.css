@@ -200,3 +200,33 @@
   border: none !important;
   box-shadow: none !important;
 }
+
+/* Estilos personalizados para las pestañas */
+
+.custom-tabs .bi {
+  font-size: 1.5rem;
+  margin-right: 0rem;
+}
+
+.custom-tabs .nav-link {
+  color: #11489b !important;
+  border-bottom: 3px solid transparent;
+}
+
+
+.custom-tabs .nav-link:hover {
+  color: #084298 !important;
+}
+
+.custom-tabs {
+  display: inline-flex;
+  border-bottom: 1px solid #dee2e6;
+  position: absolute;
+  left: 25px;
+  top: 110px;
+  z-index: 2;
+}
+
+.custom-tabs .nav-link.active {
+  color: #3c3e41 !important;
+}

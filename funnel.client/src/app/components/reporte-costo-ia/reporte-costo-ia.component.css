@@ -227,28 +227,18 @@
   border: none !important;
   box-shadow: none !important;
 }
-/* Estilos para los dropdowns */
-.dropdown-filtro .p-dropdown {
-  height: 30px !important; /* Hace los filtros menos altos */
-  min-height: 30px !important;
-  margin-left: 10px; /* Mueve los filtros más a la derecha */
+.dropdown-filtro.p-dropdown {
+  height: 30px;            
 }
-
-/* Ajusta el contenedor principal para alinear los elementos a la derecha */
-.row.align-items-center {
-  justify-content: flex-end; 
-  padding-right: 10px;
+::ng-deep .dropdown-filtro .p-select-label {
+  margin-top: -5px;
 }
-
-/* Ajusta el botón de reset */
-.inDivDatatableHeader {
-  padding-left: 0 !important;
-  margin-left: 10px; /* Más espacio entre los dropdowns y el botón */
+.filtros-container {
+  margin-top: -30px; 
+  margin-right: 45px; 
+  display: flex;
+  justify-content: flex-end;
 }
-
-/* Ajusta el texto dentro de los dropdowns */
-.dropdown-filtro .p-dropdown-label {
-  padding-top: 5px !important;
-  padding-bottom: 5px !important;
-  font-size: 14px !important;
+.filtro-item {
+  padding-right: 5px; 
 }
