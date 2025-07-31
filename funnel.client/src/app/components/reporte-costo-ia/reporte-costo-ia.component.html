@@ -8,40 +8,31 @@
 
         <!-- Tabla -->
         <div *ngIf="loading">Cargando...</div>
-        <p-table *ngIf="!loading" #dt [stripedRows]="true" [value]="reporte" [paginator]="true"
-          [rows]="10" [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)" [showCurrentPageReport]="true"
-          paginatorPosition="both" [columnResizeMode]="'fit'" [resizableColumns]="true" [scrollable]="true"
-          [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
-
+        <p-table *ngIf="!loading" #dt [value]="reporte" dataKey="id" [rows]="10"
+          [showCurrentPageReport]="false" [rowsPerPageOptions]="[10, 20, 50]" [paginator]="true" paginatorPosition="both"
+          [pageLinks]="1"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
          <ng-template class="divAccionesTabla" #caption>
-  <div class="row align-items-center">
-    <div class="col-auto ">
-      <p-dropdown class="dropdown-filtro" 
-        [options]="aniosDisponibles" [(ngModel)]="selectedAnio" 
-        (onChange)="onAnioChange()" [showClear]="true" placeholder="Año">
-        <ng-template let-item pTemplate="item">
-          {{item}}
-        </ng-template>
-      </p-dropdown>
-    </div>
-    <div class="col-auto">
-      <p-dropdown class="dropdown-filtro"
-        [options]="mesesDisponibles" [(ngModel)]="selectedMes" 
-        (onChange)="onMesChange()" [showClear]="true" placeholder="Mes">
-        <ng-template let-item pTemplate="item">
-          {{item}}
-        </ng-template>
-      </p-dropdown>
-    </div>
-    <div class="col text-end inDivDatatableHeader">
-      <p-button label="" icon="bi bi-arrow-clockwise" (click)="reset()" severity="secondary"
-        styleClass="custom-button"  
-        [style]="{'width': '30px', 'height': '30px', 'margin-right': '5px'}"></p-button>
-    </div>
-  </div>
-</ng-template>
-
-
+          <div class="row align-items-center">
+            <div class="col-auto">
+            <p-dropdown class="dropdown-filtro" 
+              [options]="aniosDisponibles" [(ngModel)]="selectedAnio" 
+              (onChange)="onAnioChange()" optionLabel="label" placeholder="Año">
+            </p-dropdown>
+          </div>
+          <div class="col-auto">
+            <p-dropdown class="dropdown-filtro"
+              [options]="mesesDisponibles" [(ngModel)]="selectedMes" 
+              (onChange)="onMesChange()" optionLabel="label" placeholder="Mes">
+            </p-dropdown>
+          </div>
+            <div class="col text-end inDivDatatableHeader">
+              <p-button label="" icon="bi bi-arrow-clockwise" (click)="reset()" severity="secondary"
+                styleClass="custom-button"  
+                [style]="{'width': '30px', 'height': '30px', 'margin-right': '5px'}"></p-button>
+            </div>
+          </div>
+          </ng-template>
           <ng-template #header>
             <tr class="custom-header">
               <th pSortableColumn="nombreEmpresa">Nombre empresa</th>
@@ -52,7 +43,6 @@
               <th pSortableColumn="mes">Mes</th>
             </tr>
           </ng-template>
-
           <ng-template pTemplate="emptymessage">
             <tr>
               <td colspan="6" class="text-center">No se encontraron registros</td>
@@ -65,11 +55,10 @@
               <td>{{ reporte.costoTotalL | number:'1.2-2' }}</td>
               <td>{{ reporte.tokenEntrada | number }}</td>
               <td>{{ reporte.tokenSalida | number }}</td>
-              <td>{{ reporte.anio || '-' }}</td>
-              <td>{{ reporte.mes || '-' }}</td>
+              <td>{{ reporte.anio}}</td>
+              <td>{{ getNombreMes(reporte.mes) }}</td>
             </tr>
           </ng-template>
-
           <ng-template #footer>
             <tr class="custom-footer">
               <td>Total: </td>

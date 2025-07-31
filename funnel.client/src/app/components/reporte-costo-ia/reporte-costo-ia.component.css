@@ -48,8 +48,35 @@
   width: 20px;
 }
 
-::ng-deep .p-paginator .p-component {
-  text-align: left !important;
+
+::ng-deep .p-paginator {
+  display: flex;
+  justify-content: flex-start !important;
+  padding: 0.6rem 0.5rem !important; 
+  font-size: 0.85rem !important; 
+}
+
+::ng-deep .p-paginator .p-paginator-first,
+::ng-deep .p-paginator .p-paginator-prev,
+::ng-deep .p-paginator .p-paginator-next,
+::ng-deep .p-paginator .p-paginator-last,
+::ng-deep .p-paginator .p-paginator-page {
+  min-width: 1.5rem !important;
+  height: 1.5rem !important;
+  margin: 0.1rem !important;
+}
+
+::ng-deep .p-paginator .p-dropdown {
+  height: 2rem !important;
+}
+
+::ng-deep .p-paginator .p-paginator-current {
+  font-size: 0.85rem !important;
+  padding: 0 0.5rem !important;
+}
+
+::ng-deep .p-paginator-bottom {
+  justify-content: flex-start !important;
 }
 
 ::ng-deep .p-toast {
@@ -200,7 +227,7 @@
   border: none !important;
   box-shadow: none !important;
 }
-/* Añade estos estilos para los dropdowns */
+/* Estilos para los dropdowns */
 .dropdown-filtro .p-dropdown {
   height: 30px !important; /* Hace los filtros menos altos */
   min-height: 30px !important;
@@ -209,8 +236,8 @@
 
 /* Ajusta el contenedor principal para alinear los elementos a la derecha */
 .row.align-items-center {
-  justify-content: flex-end; /* Alinea todo a la derecha */
-  padding-right: 10px; /* Espacio a la derecha */
+  justify-content: flex-end; 
+  padding-right: 10px;
 }
 
 /* Ajusta el botón de reset */
@@ -224,9 +251,4 @@
   padding-top: 5px !important;
   padding-bottom: 5px !important;
   font-size: 14px !important;
-}
-
-/* Opcional: ajusta el ancho de los dropdowns si es necesario */
-.dropdown-filtro .p-dropdown {
-  width: 120px !important; /* O el ancho que prefieras */
 }

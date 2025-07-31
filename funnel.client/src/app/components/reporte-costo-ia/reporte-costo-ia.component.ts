@@ -36,66 +36,80 @@ export class ReporteCostoIaComponent {ngOnInit(): void {
   searchValue: string = '';
   
   // Filtros
-  selectedAnio: number | null = null;
-  selectedMes: number | null = null;
-  aniosDisponibles: number[] = [];
-  mesesDisponibles: number[] = [];
-  getReporte() {
+  selectedAnio: any = {value: null, label: 'Todos los años'};
+  selectedMes: any = {value: null, label: 'Todos los meses'};
+  aniosDisponibles: any[] = [];
+  mesesDisponibles: any[] = [];
+    getReporte() {
     this.reporteCostoIaService.getReporte().subscribe({
       next: (result: ReporteCostoIa[]) => {
         this.reporteOriginal = result;
-        this.aniosDisponibles = [...new Set(result.map(item => item.anio))].sort();
-        this.mesesDisponibles = [...new Set(result.map(item => item.mes))].sort((a, b) => a - b);
+        
+        const aniosUnicos = [...new Set(result.map(item => item.anio))].sort((a, b) => b - a); 
+        this.aniosDisponibles = [
+          {value: null, label: 'Todos los años'},
+          ...aniosUnicos.map(anio => ({value: anio, label: anio.toString()}))
+        ];
+        
+        const mesesUnicos = [...new Set(result.map(item => item.mes))].sort((a, b) => a - b);
+        this.mesesDisponibles = [
+          {value: null, label: 'Todos los meses'},
+          ...mesesUnicos.map(mes => ({value: mes, label: this.getNombreMes(mes)}))
+        ];
+        
         this.applyFilters();
         this.loading = false;
       },
       error: (error) => {
         this.messageService.add({
           severity: 'error',
-          summary: 'Se ha producido un error.',
-          detail: error.errorMessage,
+          summary: 'Error',
+          detail: 'Error al obtener el reporte'
         });
         this.loading = false;
-      },
+      }
     });
+  }
+
+
+   getNombreMes(mes: number): string {
+    const meses = [
+      'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+    ];
+    return meses[mes - 1] || mes.toString();
   }
 
   applyFilters() {
     let filteredData = [...this.reporteOriginal];
 
-    // Aplicar filtro por año si está seleccionado
-    if (this.selectedAnio) {
-      filteredData = filteredData.filter(item => item.anio === this.selectedAnio);
+    if (this.selectedAnio.value !== null) {
+      filteredData = filteredData.filter(item => item.anio === this.selectedAnio.value);
     }
 
-    // Aplicar filtro por mes si está seleccionado
-    if (this.selectedMes) {
-      filteredData = filteredData.filter(item => item.mes === this.selectedMes);
+    if (this.selectedMes.value !== null) {
+      filteredData = filteredData.filter(item => item.mes === this.selectedMes.value);
     }
 
-    // Consolidar datos por empresa
-    const consolidatedData: ReporteCostoIa[] = [];
-    const empresas = new Set(filteredData.map(item => item.nombreEmpresa));
-
-    empresas.forEach(empresa => {
-      const empresaData = filteredData.filter(item => item.nombreEmpresa === empresa);
-      const consolidatedItem: ReporteCostoIa = {
+    const empresasUnicas = [...new Set(filteredData.map(item => item.nombreEmpresa))];
+    
+    this.reporte = empresasUnicas.map(empresa => {
+      const datosEmpresa = filteredData.filter(item => item.nombreEmpresa === empresa);
+      return {
         nombreEmpresa: empresa,
-        costoTotalL: empresaData.reduce((sum, item) => sum + (item.costoTotalL || 0), 0),
-        tokenEntrada: empresaData.reduce((sum, item) => sum + (item.tokenEntrada || 0), 0),
-        tokenSalida: empresaData.reduce((sum, item) => sum + (item.tokenSalida || 0), 0),
-        anio: this.selectedAnio || 0, // Mostrar el año filtrado o 0 si no hay filtro
-        mes: this.selectedMes || 0 // Mostrar el mes filtrado o 0 si no hay filtro
-        ,
-        idEmpresa: 0
+        costoTotalL: datosEmpresa.reduce((sum, item) => sum + (item.costoTotalL || 0), 0),
+        tokenEntrada: datosEmpresa.reduce((sum, item) => sum + (item.tokenEntrada || 0), 0),
+        tokenSalida: datosEmpresa.reduce((sum, item) => sum + (item.tokenSalida || 0), 0),
+        anio: this.selectedAnio.value || 'Todos', 
+        mes: this.selectedMes.value || 'Todos', 
+        idEmpresa: datosEmpresa[0]?.idEmpresa || 0
       };
-      consolidatedData.push(consolidatedItem);
     });
 
-    this.reporte = consolidatedData;
-    this.first = 0; // Resetear paginación
-  }
+    this.reporte.sort((a, b) => a.nombreEmpresa.localeCompare(b.nombreEmpresa));
+}
 
+  
   onAnioChange() {
     this.applyFilters();
   }
@@ -103,6 +117,7 @@ export class ReporteCostoIaComponent {ngOnInit(): void {
   onMesChange() {
     this.applyFilters();
   }
+
 
   
   next() {
@@ -117,8 +132,8 @@ export class ReporteCostoIaComponent {ngOnInit(): void {
     this.first = 0;
     this.dt.reset();
     this.getReporte();
-    this.selectedAnio = null;
-    this.selectedMes = null;
+    this.selectedAnio = {value: null, label: 'Todos los años'};
+    this.selectedMes = {value: null, label: 'Todos los meses'};
     this.applyFilters();
   }
     pageChange(event: LazyLoadEvent) {
