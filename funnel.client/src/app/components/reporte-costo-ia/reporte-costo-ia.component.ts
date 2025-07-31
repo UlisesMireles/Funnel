@@ -110,9 +110,37 @@ export class ReporteCostoIaComponent {ngOnInit(): void {
 }
 
   
-  onAnioChange() {
-    this.applyFilters();
+onAnioChange() {
+  if (this.selectedAnio.value !== null) {
+    const mesesFiltrados = this.reporteOriginal
+      .filter(item => item.anio === this.selectedAnio.value)
+      .map(item => item.mes);
+    
+    const mesesUnicos = [...new Set(mesesFiltrados)].sort((a, b) => a - b);
+
+    this.mesesDisponibles = [
+      { value: null, label: 'Todos los meses' },
+      ...mesesUnicos.map(mes => ({
+        value: mes,
+        label: this.getNombreMes(mes)
+      }))
+    ];
+  } else {
+    const mesesUnicos = [...new Set(this.reporteOriginal.map(item => item.mes))].sort((a, b) => a - b);
+    this.mesesDisponibles = [
+      { value: null, label: 'Todos los meses' },
+      ...mesesUnicos.map(mes => ({
+        value: mes,
+        label: this.getNombreMes(mes)
+      }))
+    ];
   }
+
+  this.selectedMes = { value: null, label: 'Todos los meses' };
+  
+  this.applyFilters();
+}
+
 
   onMesChange() {
     this.applyFilters();

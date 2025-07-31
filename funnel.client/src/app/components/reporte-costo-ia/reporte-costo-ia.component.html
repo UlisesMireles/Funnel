@@ -63,9 +63,9 @@
           <ng-template #footer>
             <tr class="custom-footer">
               <td>Total: {{ getVisibleTotal('nombreEmpresa',dt) }} </td>
-              <td>{{ getVisibleTotal('costoTotalL', dt) | number:'1.2-2' }}</td>
-              <td>{{ getVisibleTotal('tokenEntrada', dt) | number }}</td>
-              <td>{{ getVisibleTotal('tokenSalida', dt) | number }}</td>
+              <td>USD {{ getVisibleTotal('costoTotalL', dt) | number:'1.2-2' }}</td>
+              <td>USD {{ getVisibleTotal('tokenEntrada', dt) | number }}</td>
+              <td>USD {{ getVisibleTotal('tokenSalida', dt) | number }}</td>
               <td></td>
               <td></td>
             </tr>
