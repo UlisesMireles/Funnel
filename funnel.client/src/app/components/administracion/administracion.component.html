@@ -7,11 +7,10 @@
             <div class="row contenedorTabla">
                 <div *ngIf="loading">Cargando...</div>
 
-                <p-table *ngIf="!loading" #dt [stripedRows]="true" [value]="administradores" [paginator]="true" [rows]="10"
-                    [rowsPerPageOptions]="[10, 20, 50]"  [paginatorPosition]="'both'" (onPage)="pageChange($event)" [showCurrentPageReport]="true"
-                    [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
-                    [globalFilterFields]="['nombreEmpresa', 'alias', 'administrador', 'nombreLicencia']" [columnResizeMode]="'fit'"
-                    [resizableColumns]="true" [scrollable]="true" emptyMessage="No se encontraron registros">
+                <p-table *ngIf="!loading" #dt [value]="administradores" dataKey="id" [rows]="10"
+          [showCurrentPageReport]="false" [rowsPerPageOptions]="[10, 20, 50]" [paginator]="true" paginatorPosition="both"
+          [pageLinks]="1"
+          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
 
                     <ng-template class="divAccionesTabla" #caption>
                         <div class="row">
