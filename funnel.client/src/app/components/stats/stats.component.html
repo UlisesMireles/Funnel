@@ -30,14 +30,8 @@
             <p-table *ngIf="!loading" #dt [stripedRows]="true" [value]="stats" [paginator]="true"
               [rows]="10" [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)" [showCurrentPageReport]="true"
               paginatorPosition="both" [columnResizeMode]="'fit'" [resizableColumns]="true" [scrollable]="true"
-              [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
-          <div class="row contenedorTabla">
-            <!-- Mostrar un indicador de carga si la variable loading es true -->
-            <div *ngIf="loading">Cargando...</div>
-            <p-table *ngIf="!loading" #dt [value]="stats" dataKey="id" [rows]="10"
-              [showCurrentPageReport]="false" [rowsPerPageOptions]="[10, 20, 50]" [paginator]="true" paginatorPosition="both"
-              [pageLinks]="1"
-              currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
+              [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
+              dataKey="id" [pageLinks]="1">
 
               <ng-template class="divAccionesTabla" #caption>
                 <div class="row">

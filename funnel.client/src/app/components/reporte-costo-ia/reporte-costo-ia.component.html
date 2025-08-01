@@ -3,14 +3,15 @@
     <div class="col-12" style="text-align: left;">
     </div>
     <div class="col-12">
-      <div class="row contenedorTabla" style="margin-top: 40px;">
+      <div class="row contenedorTabla" style="margin-top: 40px; ">
 
         <!-- Tabla -->
         <div *ngIf="loading">Cargando...</div>
-        <p-table *ngIf="!loading" #dt [value]="reporte" dataKey="id" [rows]="10"
-          [showCurrentPageReport]="false" [rowsPerPageOptions]="[10, 20, 50]" [paginator]="true" paginatorPosition="both"
-          [pageLinks]="1"
-          currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros">
+        <p-table *ngIf="!loading" #dt [stripedRows]="true" [value]="reporte" [paginator]="true"
+              [rows]="10" [rowsPerPageOptions]="[10, 20, 50]" (onPage)="pageChange($event)" [showCurrentPageReport]="true"
+              paginatorPosition="both" [columnResizeMode]="'fit'" [resizableColumns]="true" [scrollable]="true"
+              [first]="first" currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} Registros"
+              dataKey="id" [pageLinks]="1">
          <ng-template class="divAccionesTabla" #caption>
           <div class="row align-items-center">
           <div class="col text-end inDivDatatableHeader">

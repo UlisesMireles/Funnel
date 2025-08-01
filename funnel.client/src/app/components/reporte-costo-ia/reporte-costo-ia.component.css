@@ -49,12 +49,14 @@
 }
 
 
+/* Ajustes para el paginador */
 ::ng-deep .p-paginator {
   display: flex;
   justify-content: flex-start !important;
   padding: 0.6rem 0.5rem !important; 
   font-size: 0.85rem !important; 
 }
+
 
 ::ng-deep .p-paginator .p-paginator-first,
 ::ng-deep .p-paginator .p-paginator-prev,
