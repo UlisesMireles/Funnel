@@ -48,6 +48,7 @@
   width: 20px;
 }
 
+
 /* Ajustes para el paginador */
 ::ng-deep .p-paginator {
   display: flex;
@@ -55,6 +56,7 @@
   padding: 0.6rem 0.5rem !important; 
   font-size: 0.85rem !important; 
 }
+
 
 ::ng-deep .p-paginator .p-paginator-first,
 ::ng-deep .p-paginator .p-paginator-prev,
@@ -78,7 +80,6 @@
 ::ng-deep .p-paginator-bottom {
   justify-content: flex-start !important;
 }
-
 
 ::ng-deep .p-toast {
   top: 50% !important;
@@ -228,33 +229,18 @@
   border: none !important;
   box-shadow: none !important;
 }
-
-/* Estilos personalizados para las pestañas */
-
-.custom-tabs .bi {
-  font-size: 1.5rem;
-  margin-right: 0rem;
+.dropdown-filtro.p-dropdown {
+  height: 30px;            
 }
-
-.custom-tabs .nav-link {
-  color: #11489b !important;
-  border-bottom: 3px solid transparent;
+::ng-deep .dropdown-filtro .p-select-label {
+  margin-top: -5px;
 }
-
-
-.custom-tabs .nav-link:hover {
-  color: #084298 !important;
+.filtros-container {
+  margin-top: -30px; 
+  margin-right: 45px; 
+  display: flex;
+  justify-content: flex-end;
 }
-
-.custom-tabs {
-  display: inline-flex;
-  border-bottom: 1px solid #dee2e6;
-  position: absolute;
-  left: 25px;
-  top: 110px;
-  z-index: 2;
-}
-
-.custom-tabs .nav-link.active {
-  color: #3c3e41 !important;
+.filtro-item {
+  padding-right: 5px; 
 }

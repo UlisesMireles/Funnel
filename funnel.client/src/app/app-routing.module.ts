@@ -10,6 +10,7 @@ import { SectoresComponent } from './components/catalogos/sectores/sectores.comp
 import { StatsComponent } from './components/stats/stats.component';
 import { CambiarContrasenaComponent } from './components/cambiar-contrasena/cambiar-contrasena.component';
 import { TwoFactorComponent } from './components/two-factor/two-factor.component';
+import { ReporteCostoIaComponent } from './components/reporte-costo-ia/reporte-costo-ia.component';
 
 
 const routes: Routes = [
@@ -23,8 +24,8 @@ const routes: Routes = [
   { path: 'two-factor', component: TwoFactorComponent, title: 'Autenticación', canActivate: [AuthGuard]  },
   { path: 'recuperar-contrasena', component: ResetPasswordComponent, title: 'Recuperar contraseña' },
   { path: 'administracion', component: AdministracionComponent, title: 'Administración', canActivate: [AuthGuard]  },
-  { path: '**', component: EmpresasComponent, title: 'Empresas', canActivate: [AuthGuard]  }
-
+  { path: 'reporte-costo-ia', component: ReporteCostoIaComponent, title: 'Reporte Costo IA', canActivate: [AuthGuard]  },
+  { path: '**', component: EmpresasComponent, title: 'Empresas', canActivate: [AuthGuard]  },
 ];
 
 @NgModule({

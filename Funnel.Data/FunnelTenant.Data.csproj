@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Funnel.Models\FunnelTenant.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Scripts\30-07-2025 ReporteCostoIa\" />
+  </ItemGroup>
+
 </Project>
