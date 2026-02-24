@@ -28,6 +28,7 @@ namespace Funnel.Data
                     DataBase.CreateParameterSql("@pCantidadUsuarios", SqlDbType.Int, 0, ParameterDirection.Input, false,null, DataRowVersion.Default, request.CantidadUsuarios ),
                     DataBase.CreateParameterSql("@pCantidadOportunidades", SqlDbType.Int, 0, ParameterDirection.Input, false,null, DataRowVersion.Default, request.CantidadOportunidades ),
                     DataBase.CreateParameterSql("@pIdUsuarioCreador", SqlDbType.Int, 0, ParameterDirection.Input, false,null, DataRowVersion.Default, request.IdUsuarioCreador),
+                    DataBase.CreateParameterSql("@pCantidadProcesosPermitidos", SqlDbType.Int, 0, ParameterDirection.Input, false,null, DataRowVersion.Default, request.CantidadProcesosPermitidos),
                     DataBase.CreateParameterSql("@pActivo", SqlDbType.Int, 0, ParameterDirection.Input, false,null, DataRowVersion.Default, request.Activo)
 
                 };
@@ -91,6 +92,7 @@ namespace Funnel.Data
                     dto.NombreLicencia = ComprobarNulos.CheckStringNull(reader["NombreLicencia"]);
                     dto.CantidadUsuarios = ComprobarNulos.CheckIntNull(reader["CantidadUsuarios"]);
                     dto.CantidadOportunidades = ComprobarNulos.CheckIntNull(reader["CantidadOportunidades"]);
+                    dto.CantidadProcesosPermitidos = ComprobarNulos.CheckIntNull(reader["CantidadProcesosPermitidos"]);
                     dto.Activo = ComprobarNulos.CheckIntNull(reader["Activo"]);
 
                     result.Add(dto);

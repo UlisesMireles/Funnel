@@ -55,6 +55,7 @@ export class ModalLicenciasComponent {
       this.request.idLicencia = this.licencia.idLicencia;
       this.request.cantidadUsuarios = this.licencia.cantidadUsuarios;
       this.request.cantidadOportunidades = this.licencia.cantidadOportunidades;
+      this.request.cantidadProcesosPermitidos = this.licencia.cantidadProcesosPermitidos;
       this.request.idUsuario = localStorage.getItem('currentUser') as unknown as number;
       this.request.nombreLicencia = this.licencia.nombreLicencia;
       this.request.activo = this.licenciaActiva ? 1 : 0;
@@ -79,6 +80,7 @@ export class ModalLicenciasComponent {
       if (!this.request) {
         this.request = {} as requestLicencia;
       }
+      console.log(this.camposInvalidosInsertar());
       if (this.camposInvalidosInsertar()) {
         this.mostrarToastError();
         return;
@@ -87,6 +89,7 @@ export class ModalLicenciasComponent {
       this.request.idLicencia = this.licencia.idLicencia;
       this.request.cantidadUsuarios = this.licencia.cantidadUsuarios;
       this.request.cantidadOportunidades = this.licencia.cantidadOportunidades;
+      this.request.cantidadProcesosPermitidos = this.licencia.cantidadProcesosPermitidos;
       this.request.idUsuario = localStorage.getItem('currentUser') as unknown as number;
       this.request.nombreLicencia = this.licencia.nombreLicencia;
       this.request.activo =1;
@@ -120,7 +123,8 @@ export class ModalLicenciasComponent {
       return (
         this.esCampoInvalido(this.licencia.nombreLicencia) ||
         this.esCampoInvalido(this.licencia.cantidadUsuarios) ||
-        this.esCampoInvalido(this.licencia.cantidadOportunidades)||
+        this.esCampoInvalido(this.licencia.cantidadOportunidades) ||
+        this.esCampoInvalido(this.licencia.cantidadProcesosPermitidos) ||
         !this.validarNombreLicencia()
       );
     }
@@ -128,7 +132,8 @@ export class ModalLicenciasComponent {
       return (
         this.esCampoInvalido(this.licencia.nombreLicencia) ||
         this.esCampoInvalido(this.licencia.cantidadUsuarios) ||
-        this.esCampoInvalido(this.licencia.cantidadOportunidades)
+        this.esCampoInvalido(this.licencia.cantidadOportunidades) ||
+        this.esCampoInvalido(this.licencia.cantidadProcesosPermitidos)
       );
     }
 

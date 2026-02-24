@@ -10,6 +10,7 @@ export interface requestLicencia{
     nombreLicencia: string | undefined;
     cantidadUsuarios: number;
     cantidadOportunidades: number;
+    cantidadProcesosPermitidos?: number;
     idUsuario:number;
     activo:number;
 }
@@ -18,5 +19,6 @@ export interface SEL_Licencia{
     nombreLicencia:string| undefined;
     cantidadUsuarios: number;
     cantidadOportunidades:number;
+    cantidadProcesosPermitidos?: number;
     activo: number;
 }
